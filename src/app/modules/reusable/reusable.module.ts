@@ -20,15 +20,15 @@ import {SaveApplicationComponent} from './student-application/save-application/s
     SaveSectionComponent,
     SaveApplicationComponent,
   ],
-    imports: [
-        CommonModule,
-        InputTextModule,
-        ButtonModule,
-        ReactiveFormsModule,
-        ToastModule,
-        RadioButtonModule,
-        FormsModule
-    ],
+  imports: [
+    CommonModule,
+    InputTextModule,
+    ButtonModule,
+    ReactiveFormsModule,
+    ToastModule,
+    RadioButtonModule,
+    FormsModule
+  ],
   exports: [
     SaveSubjectComponent,
     SaveStudentComponent

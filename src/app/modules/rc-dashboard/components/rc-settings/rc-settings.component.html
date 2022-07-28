@@ -30,7 +30,8 @@
           <div class="col-md-6 py-2">
             <label class="form-label" for="currYear">Current Academic Year</label>
             <select [formControlName]="'year'" class="form-select" id="currYear">
-              <option *ngFor="let year of academicYears" [selected]="year.id == (schoolSettings ? schoolSettings.curr_year_id : -1)"
+              <option *ngFor="let year of academicYears"
+                      [selected]="year.id == (schoolSettings ? schoolSettings.curr_year_id : -1)"
                       [value]="year.id">
                 {{year.name}}
               </option>
@@ -47,7 +48,8 @@
           <div class="col-md-6 py-2">
             <label class="form-label" for="currSeq">Current Sequence</label>
             <select [formControlName]="'sequence'" class="form-select" id="currSeq">
-              <option *ngFor="let seq of sequences" [selected]="seq.id == ( schoolSettings ? schoolSettings.curr_seq_id : -1)"
+              <option *ngFor="let seq of sequences"
+                      [selected]="seq.id == ( schoolSettings ? schoolSettings.curr_seq_id : -1)"
                       [value]="seq.id">
                 {{seq.name}}
               </option>
@@ -57,12 +59,14 @@
         <div class="row pb-3">
           <div class="col-md-6 py-2">
             <label class="form-label">Min Grade Score</label>
-            <input [formControlName]="'minGrade'" [value]="schoolSettings ? schoolSettings.min_grade: 0" class="form-control"
+            <input [formControlName]="'minGrade'" [value]="schoolSettings ? schoolSettings.min_grade: 0"
+                   class="form-control"
                    type="number">
           </div>
           <div class="col-md-6 py-2">
             <label class="form-label">Max Grade Score</label>
-            <input [formControlName]="'maxGrade'" [value]="schoolSettings ? schoolSettings.max_grade: 0" class="form-control"
+            <input [formControlName]="'maxGrade'" [value]="schoolSettings ? schoolSettings.max_grade: 0"
+                   class="form-control"
                    type="number">
           </div>
         </div>

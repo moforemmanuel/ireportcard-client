@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {environment} from "../../../../../environments/environment";
 import {AuthService} from "../../../../services/auth.service";
 import {MessageService} from "primeng/api";
 import {addToMessageService} from "../../../../utils/message-service.util";

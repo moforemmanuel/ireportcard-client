@@ -1,5 +1,3 @@
-import loader from "@angular-devkit/build-angular/src/webpack/plugins/single-test-transform";
-
 export function deleteUserToken() {
 
 }
@@ -7,6 +5,7 @@ export function deleteUserToken() {
 export interface Settings {
   schoolId: number
 }
+
 const LS_KEY = {
   sessionId: 'session_id',
   settings: 'rc_settings',
@@ -33,7 +32,8 @@ export module LocalStorageUtil {
     const settings = localStorage.getItem(LS_KEY.settings);
     if (settings) {
       return JSON.parse(settings);
-    } return null;
+    }
+    return null;
   }
 
   export const writeRememberMe = (value: boolean) => {
@@ -42,6 +42,6 @@ export module LocalStorageUtil {
 
   export const readRememberMe = (): boolean => {
     const rem = localStorage.getItem(LS_KEY.rememberMe);
-    return rem? rem === 'true': false;
+    return rem ? rem === 'true' : false;
   }
 }
