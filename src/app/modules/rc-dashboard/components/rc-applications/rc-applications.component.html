@@ -14,15 +14,15 @@
       <!-- If the applications are not loading properly for some reason, check that the order of the ngModel and ngModelChange attribs is correct -->
       <div class="col-md-3">
         Academic Year
-        <select (ngModelChange)="loadApplications()" [(ngModel)]="applicationRequest.year_id" class="form-select">
+        <select [(ngModel)]="applicationRequest.year_id" (ngModelChange)="loadApplications()" class="form-select">
           <option [disabled]="true">Select Academic Year</option>
           <option *ngFor="let y of academicYears" [ngValue]="y.id">{{y.name}}</option>
         </select>
       </div>
       <div class="col-md-3">
         Class
-        <select (ngModelChange)="loadApplications()" [(ngModel)]="applicationRequest.class_id" class="form-select">
-          <option [selected]="true" [value]="-1">Select Class</option>
+        <select [(ngModel)]="applicationRequest.class_id" (ngModelChange)="loadApplications()" class="form-select">
+          <option [value]="-1" selected>Select Class</option>
           <option *ngFor="let c of classes" [ngValue]="c.sub_id">{{c.name}}</option>
         </select>
       </div>
@@ -56,14 +56,14 @@
           <td colspan="5">Select all fields above to view student applications</td>
         </tr>
 
-        <tr *ngFor="let a of applications">
-          <td>{{a.student.name}}</td>
-          <td>{{a.student.regno}}</td>
-          <td *ngIf="applicationRequest.class_id < 0">{{a.class_name}}</td>
-          <td>{{a.application.created_at}}</td>
-          <td>{{a.application.number_of_subjects}}</td>
+        <tr *ngFor="let studentAT of studentATs">
+          <td>{{studentAT.student.name}}</td>
+          <td>{{studentAT.student.regno}}</td>
+          <td *ngIf="applicationRequest.class_id < 0">{{studentAT.application.application_key.class_sub_id}}</td>
+          <td>{{studentAT.sat.created_at}}</td>
+          <td>{{studentAT.sat.num_of_subjects}}</td>
           <td>
-            <button (click)="saveApplicationAction(a)" class="btn btn-primary">Edit</button>
+            <button (click)="saveApplicationAction(studentAT)" class="btn btn-primary">Edit</button>
           </td>
         </tr>
         </tbody>
