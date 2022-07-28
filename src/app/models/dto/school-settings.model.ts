@@ -6,5 +6,6 @@ export interface SchoolSettings {
   curr_seq_id: number,
   min_grade: number,
   max_grade: number,
-  application_is_open: boolean
+  application_is_open: boolean,
+  school_id: number,
 }

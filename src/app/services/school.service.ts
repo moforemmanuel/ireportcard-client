@@ -13,7 +13,7 @@ export class SchoolService {
   constructor(private http: HttpClient, @Inject(RC_SCHOOL_API_URL) private schoolApiUrl: string) {
   }
 
-  get(): Observable<School[]> {
+  getAll(): Observable<School[]> {
     return this.http.get<School[]>(this.schoolApiUrl)
   }
 
