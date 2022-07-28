@@ -11,31 +11,31 @@
   </div>
   <div class="py-2">
     <div class="row">
-      <!-- If the class list is not loading properly for some reason, check that the order of the ngModel and ngModelChange attribs is correct -->
+      <!-- If the class list is not loading properly for some reason, check that the order of the [ngModel and ngModelChange] attrib order is followed -->
       <div class="col-md-3">
         Academic Year
-        <select (ngModelChange)="loadGrades()" [(ngModel)]="classListRequest.year_id" class="form-select">
+        <select [(ngModel)]="classListRequest.year_id" (ngModelChange)="loadGrades()" class="form-select">
           <option [disabled]="true">Select Academic Year</option>
           <option *ngFor="let y of academicYears" [ngValue]="y.id">{{y.name}}</option>
         </select>
       </div>
       <div class="col-md-3">
         Class
-        <select (ngModelChange)="loadGrades()" [(ngModel)]="classListRequest.class_id" class="form-select">
+        <select [(ngModel)]="classListRequest.class_id" (ngModelChange)="loadGrades()" class="form-select">
           <option [disabled]="true">Select Class</option>
           <option *ngFor="let c of classes" [ngValue]="c.id">{{c.name}}</option>
         </select>
       </div>
       <div class="col-md-3">
         Subject
-        <select (ngModelChange)="loadGrades()" [(ngModel)]="classListRequest.subject_id" class="form-select">
+        <select [(ngModel)]="classListRequest.subject_id" (ngModelChange)="loadGrades()" class="form-select">
           <option [disabled]="true">Select Subject</option>
           <option *ngFor="let sub of subjects" [ngValue]="sub.id">{{sub.name}}</option>
         </select>
       </div>
       <div class="col-md-3">
         Sequence
-        <select (ngModelChange)="loadGrades()" [(ngModel)]="classListRequest.sequence_id" class="form-select">
+        <select [(ngModel)]="classListRequest.sequence_id" (ngModelChange)="loadGrades()" class="form-select">
           <option [disabled]="true">Select Sequence</option>
           <option *ngFor="let seq of sequences" [ngValue]="seq.id">{{seq.name}}</option>
         </select>
