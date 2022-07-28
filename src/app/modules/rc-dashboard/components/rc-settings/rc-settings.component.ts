@@ -44,7 +44,7 @@ export class RcSettingsComponent implements OnInit {
     private academicYearService: AcademicYearService
   ) {
     this.defaultSettings = {
-      id: -1, school_name: '',
+      id: -1, school_name: '', school_id: -1,
       curr_seq_id: -1, curr_year_id: -1, curr_term: '',
       application_is_open: false, min_grade: 0, max_grade: 0,
     };
@@ -68,8 +68,8 @@ export class RcSettingsComponent implements OnInit {
   patchSettingsForm(schoolSettings: SchoolSettings): void {
     if (schoolSettings == null) {
       schoolSettings = this.defaultSettings;
-      if (this.sequences.length > 0) schoolSettings.curr_seq_id = this.sequences[0].id
-      if (this.academicYears.length > 0) schoolSettings.curr_year_id = this.academicYears[0].id
+      schoolSettings.curr_seq_id = this.sequences.length > 0 ? this.sequences[0].id : -1;
+      schoolSettings.curr_year_id = (this.academicYears.length > 0) ? this.academicYears[0].id : -1;
     }
     this.settingsForm.patchValue({
       "applicationsOpen": schoolSettings.application_is_open,
@@ -87,6 +87,7 @@ export class RcSettingsComponent implements OnInit {
         this.schoolSettings = schoolSettings;
         this.updateSchoolSettingsValid();
         this.patchSettingsForm(this.schoolSettings);
+        console.log(schoolSettings)
         this.loadSettingsInfo();
       }, error: (err) => {
         addToMessageService(this.msgService, 'error', 'Error', `${err.error.message}`)
@@ -109,6 +110,7 @@ export class RcSettingsComponent implements OnInit {
   saveSettingsAction() {
     const settings: SchoolSettings = {
       id: this.schoolSettings ? this.schoolSettings.id : -1,
+      school_id: this.settingsForm.get('schoolId')?.value,
       school_name: this.settingsForm.get('schoolName')?.value,
       application_is_open: this.settingsForm.get('applicationsOpen')?.value,
       min_grade: this.settingsForm.get('minGrade')?.value,
@@ -123,13 +125,19 @@ export class RcSettingsComponent implements OnInit {
         this.schoolSettingsService.save(settings).subscribe({
           next: () => addToMessageService(this.msgService, 'success', 'Saved', 'Settings saved successfully'),
           error: err => addToMessageService(this.msgService, 'error', 'Error', err.error.message),
-          complete: () => this.loadSettings()
+          complete: () => {
+            this.loadSettings();
+            document.location.reload();
+          }
         });
       } else {
         this.schoolSettingsService.update(settings).subscribe({
           next: () => addToMessageService(this.msgService, 'success', 'Saved', 'Settings saved successfully'),
           error: err => addToMessageService(this.msgService, 'error', 'Error', err.error.message),
-          complete: () => this.loadSettings()
+          complete: () => {
+            this.loadSettings();
+            document.location.reload();
+          }
         });
       }
     } else {
@@ -290,17 +298,16 @@ export class RcSettingsComponent implements OnInit {
     const sequenceValid: boolean = sequencesByTerm.find(seq => seq.id == settings.curr_seq_id) != undefined;
 
     {
+      /*
       if (!sequenceValid) {
         errs.push("This sequence is not compatible with this term");
       }
+       */
     }
 
     const gradeValid = settings.min_grade < settings.max_grade;
-
-    {
-      if (!gradeValid) {
-        errs.push("Maximum grade score must be higher than the minimum grade score");
-      }
+    if (!gradeValid) {
+      errs.push("Maximum grade score must be higher than the minimum grade score");
     }
 
     return {valid: sequenceValid && gradeValid, errors: errs};
