@@ -13,6 +13,18 @@ export class StudentApplicationService {
   constructor(@Inject(RC_STUDENT_APPLICATION_API_URL) private apiUrl: string, private http: HttpClient) {
   }
 
+  get(applicationKey: StudentApplicationKey): Observable<StudentApplication> {
+    return this.http.get<StudentApplication>(`${this.apiUrl}`, {
+      params: {classId: applicationKey.class_sub_id, studentId: applicationKey.student_id}
+    });
+  }
+
+  getFull(applicationKey: StudentApplicationKey, yearId: number): Observable<ApplicationResponse> {
+    return this.http.get<ApplicationResponse>(`${this.apiUrl}/one_full`, {
+      params: {yearId: yearId, classId: applicationKey.class_sub_id, studentId: applicationKey.student_id}
+    })
+  }
+
   getAll(): Observable<StudentApplication[]> {
     return this.http.get<StudentApplication[]>(`${this.apiUrl}/all`);
   }
