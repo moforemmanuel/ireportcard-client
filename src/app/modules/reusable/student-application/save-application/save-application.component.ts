@@ -40,10 +40,9 @@ export class SaveApplicationComponent implements OnInit {
   students: Student[] = [];
   academicYears: AcademicYear[] = [];
   classLevels: { id: number, name: string, cl: ClassLevel, cls: ClassLevelSub }[] = [];
-  private readonly defaultSubject: Subject = {id: -1, name: '', section_id: -1, code: '', coefficient: -1};
-
   // TODO arrange this forced undefined removal
   studentAT!: SAT;
+  private readonly defaultSubject: Subject = {id: -1, name: '', section_id: -1, code: '', coefficient: -1};
 
   constructor(
     private fb: FormBuilder,
@@ -65,6 +64,10 @@ export class SaveApplicationComponent implements OnInit {
     };
   }
 
+  get apFormValid(): boolean {
+    return this.apForm.studentId > 0 && this.apForm.classId > 0 && this.apForm.yearId > 0;
+  }
+
   ngOnInit(): void {
     this.loadSubjects();
     this.loadStudents();
@@ -84,10 +87,6 @@ export class SaveApplicationComponent implements OnInit {
 
   resetApplication() {
     this.studentApplicationRes = undefined;
-  }
-
-  get apFormValid(): boolean {
-    return this.apForm.studentId > 0 && this.apForm.classId > 0 && this.apForm.yearId > 0;
   }
 
   getUnregisteredSubjects(): Subject[] {
