@@ -47,4 +47,10 @@ export class StudentApplicationService {
   update(application: StudentApplication): Observable<EntityResponse> {
     return this.http.put<EntityResponse>(`${this.apiUrl}`, application);
   }
+
+  delete(applicationKey: StudentApplicationKey): Observable<EntityResponse> {
+    return this.http.delete<EntityResponse>(`${this.apiUrl}`, {
+      params: {studentId: applicationKey.student_id, classId: applicationKey.class_sub_id,}
+    })
+  }
 }
