@@ -11,7 +11,6 @@ import {catchError, EMPTY, Observable, tap} from 'rxjs';
 import {MessageService} from "primeng/api";
 import {EntityResponse} from "../models/dto/entity.response";
 import {addToMessageService} from "../utils/message-service.util";
-import {LocalStorageUtil} from "../utils/local-storage.util";
 
 @Injectable()
 export class HttpResponseInterceptor implements HttpInterceptor {

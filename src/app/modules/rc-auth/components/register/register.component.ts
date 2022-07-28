@@ -14,7 +14,8 @@ export class RegisterComponent implements OnInit {
   @Output() switchToLogin: EventEmitter<void> = new EventEmitter<void>();
 
   registerForm: FormGroup;
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+
+  constructor(private fb: FormBuilder, private authService: AuthService) {
     this.registerForm = this.fb.group({
       firstName: ["", Validators.required],
       lastName: ["", Validators.required],
@@ -40,7 +41,7 @@ export class RegisterComponent implements OnInit {
     }
     console.log(userReg);
     this.authService.regiser(userReg).subscribe({
-      next: (res) => {
+      next: () => {
         this.switchToLoginForm();
       }
     });

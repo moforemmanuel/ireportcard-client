@@ -4,7 +4,7 @@ import {
   StudentApplication,
   StudentApplicationKey
 } from "../../../../models/dto/student-application.model";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder} from "@angular/forms";
 import {Subject} from "../../../../models/dto/subject.model";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {SubjectService} from "../../../../services/subject.service";
@@ -23,7 +23,8 @@ import {addToMessageService} from "../../../../utils/message-service.util";
 import {MessageService} from "primeng/api";
 import {SAT} from "../../../../app.types";
 
-type ApplicationSubject =  { pending: boolean, subject: Subject };
+type ApplicationSubject = { pending: boolean, subject: Subject };
+
 @Component({
   selector: 'app-save-application',
   templateUrl: './save-application.component.html',
@@ -33,9 +34,11 @@ export class SaveApplicationComponent implements OnInit {
   readonly modal: NgbActiveModal;
   editing: boolean = false;
   studentApplicationRes?: ApplicationResponse;
-  apForm: {studentId: number, classId: number, yearId: number, valid: () => boolean};
+  apForm: { studentId: number, classId: number, yearId: number, valid: () => boolean };
   applicationSubjects: ApplicationSubject[] = [];
-  subjects: Subject[] = []; students: Student[] = []; academicYears: AcademicYear[] = [];
+  subjects: Subject[] = [];
+  students: Student[] = [];
+  academicYears: AcademicYear[] = [];
   classLevels: { id: number, name: string, cl: ClassLevel, cls: ClassLevelSub }[] = [];
   private readonly defaultSubject: Subject = {id: -1, name: '', section_id: -1, code: '', coefficient: -1};
 
@@ -55,9 +58,11 @@ export class SaveApplicationComponent implements OnInit {
     private subjectRegistrationService: SubjectRegistrationService,
   ) {
     this.modal = activeModal;
-    this.apForm = {studentId: -1, classId: -1, yearId: -1, valid: () => {
-      return this.apForm.studentId > 0 && this.apForm.classId > 0 && this.apForm.yearId > 0
-    }};
+    this.apForm = {
+      studentId: -1, classId: -1, yearId: -1, valid: () => {
+        return this.apForm.studentId > 0 && this.apForm.classId > 0 && this.apForm.yearId > 0
+      }
+    };
   }
 
   ngOnInit(): void {
@@ -108,7 +113,7 @@ export class SaveApplicationComponent implements OnInit {
   }
 
   loadAcademicYears = () => {
-    this.academicYearService.getAll().subscribe( (years) => this.academicYears = years)
+    this.academicYearService.getAll().subscribe((years) => this.academicYears = years)
   }
 
   loadClassLevels = () => {
@@ -201,7 +206,7 @@ export class SaveApplicationComponent implements OnInit {
       this.applicationSubjects.push(asp);
     } else {
       const msgDetail: string = asp.pending ?
-        'This subject has already been added for registration, select another.':
+        'This subject has already been added for registration, select another.' :
         'This subject has already been registered.'
       addToMessageService(this.msgService, 'warn', 'Duplicate Subject', msgDetail)
     }
@@ -209,11 +214,11 @@ export class SaveApplicationComponent implements OnInit {
 
   deleteApplication() {
     const confirmDelete = confirm(`Are you sure you want to delete?`);
-    if(this.editing && this.studentApplicationRes && confirmDelete) {
+    if (this.editing && this.studentApplicationRes && confirmDelete) {
       this.studentApplicationService.delete({
         student_id: this.studentApplicationRes?.student.id,
         class_sub_id: this.studentApplicationRes?.application.application_key.class_sub_id
-      }).subscribe((res) => {
+      }).subscribe(() => {
         // close on delete as this does not exist anymore
         this.activeModal.close();
       });

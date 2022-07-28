@@ -1,9 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {
-  ApplicationRequest,
-  ApplicationResponse, StudentApplication,
-  StudentApplicationTrial
-} from "../../../../models/dto/student-application.model";
+import {ApplicationRequest, ApplicationResponse} from "../../../../models/dto/student-application.model";
 import {AcademicYear} from "../../../../models/dto/academic-year.model";
 import {AcademicYearService} from "../../../../services/academic-year.service";
 import {MessageService} from "primeng/api";
@@ -14,9 +10,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {
   SaveApplicationComponent
 } from "../../../reusable/student-application/save-application/save-application.component";
-import {Student} from "../../../../models/dto/student.model";
 import {SAT} from "../../../../app.types";
-
 
 
 @Component({
@@ -91,7 +85,7 @@ export class RcApplicationsComponent implements OnInit {
           this.applications = response
           this.applications.forEach((applicationResponse) => {
             const application = applicationResponse.application;
-            if(application.application_trials) {
+            if (application.application_trials) {
               application.application_trials.forEach((sat) => {
                 this.studentATs.push({
                   sat: sat,
@@ -115,11 +109,11 @@ export class RcApplicationsComponent implements OnInit {
       size: 'md', centered: true, backdrop: 'static', keyboard: true
     });
     const saveApplicationComponent: SaveApplicationComponent = modalRef.componentInstance;
-    if (studentAT){
+    if (studentAT) {
       saveApplicationComponent.editing = true;
       saveApplicationComponent.studentAT = studentAT;
       saveApplicationComponent.setupApplicationForm();
-    } else{
+    } else {
       saveApplicationComponent.editing = false;
       saveApplicationComponent.resetApplication();
     }
