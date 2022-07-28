@@ -8,31 +8,41 @@ import {StyleClassModule} from 'primeng/styleclass';
 import {CardModule} from 'primeng/card';
 import {PasswordModule} from 'primeng/password';
 import {AvatarModule} from 'primeng/avatar';
-import {HomeComponent} from './components/home/home.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {ImageModule} from 'primeng/image'
+import {ImageModule} from 'primeng/image';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component'
+import {CheckboxModule} from "primeng/checkbox";
+import {RippleModule} from "primeng/ripple";
+import { AuthComponent } from './components/auth/auth.component';
+import {ToastModule} from "primeng/toast";
 
 
 @NgModule({
   declarations: [
-    HomeComponent,
+    LoginComponent,
+    RegisterComponent,
+    AuthComponent,
   ],
-  imports: [
-    CommonModule,
-    SplitterModule,
-    DividerModule,
-    ButtonModule,
-    InputTextModule,
-    StyleClassModule,
-    CardModule,
-    PasswordModule,
-    AvatarModule,
-    ReactiveFormsModule,
-    FormsModule,
-    ImageModule
-  ],
+    imports: [
+        CommonModule,
+        SplitterModule,
+        DividerModule,
+        ButtonModule,
+        InputTextModule,
+        StyleClassModule,
+        CardModule,
+        PasswordModule,
+        AvatarModule,
+        ReactiveFormsModule,
+        FormsModule,
+        ImageModule,
+        CheckboxModule,
+        RippleModule,
+        ToastModule
+    ],
   exports: [
-    HomeComponent
+    AuthComponent
   ]
 })
 export class RcAuthModule {
