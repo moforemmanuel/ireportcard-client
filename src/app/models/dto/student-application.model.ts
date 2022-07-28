@@ -1,15 +1,23 @@
 import {Student} from "./student.model";
-import {SubjectRegistration} from "./subject-registration.model";
+
+export interface StudentApplicationKey {
+  student_id: number;
+  class_sub_id: number;
+}
 
 export interface StudentApplication {
+  application_key: StudentApplicationKey;
+  application_trials?: StudentApplicationTrial[]
+}
+
+export interface StudentApplicationTrial {
   id: number;
+  order: number;
+  repeating: boolean;
+  num_of_subjects?: number;
   created_at: string;
   updated_at?: string;
-  repeating?: boolean;
-  student_id: number;
-  cls_id: number;
-  year_id: number;
-  number_of_subjects?: number;
+  application_key: StudentApplicationKey;
 }
 
 export interface ApplicationRequest {
@@ -20,6 +28,6 @@ export interface ApplicationRequest {
 export interface ApplicationResponse {
   class_name: string;
   student: Student;
+  sat_id: number;
   application: StudentApplication;
-  subjects_regs: SubjectRegistration[]
 }
