@@ -1,5 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ApplicationRequest, ApplicationResponse} from "../../../../models/dto/student-application.model";
+import {
+  ApplicationRequest,
+  ApplicationResponse, StudentApplication,
+  StudentApplicationTrial
+} from "../../../../models/dto/student-application.model";
 import {AcademicYear} from "../../../../models/dto/academic-year.model";
 import {AcademicYearService} from "../../../../services/academic-year.service";
 import {MessageService} from "primeng/api";
@@ -10,6 +14,10 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {
   SaveApplicationComponent
 } from "../../../reusable/student-application/save-application/save-application.component";
+import {Student} from "../../../../models/dto/student.model";
+import {SAT} from "../../../../app.types";
+
+
 
 @Component({
   selector: 'app-rc-applications',
@@ -17,10 +25,10 @@ import {
   styleUrls: ['./rc-applications.component.scss']
 })
 export class RcApplicationsComponent implements OnInit {
+  studentATs: SAT[] = [];
 
   applicationRequest: ApplicationRequest;
   applications: ApplicationResponse[] = [];
-
   academicYears: AcademicYear[] = [];
 
   classes: { sub_id: number, name: string }[] = []
@@ -76,28 +84,44 @@ export class RcApplicationsComponent implements OnInit {
 
   loadApplications() {
     if (this.applicationRequest.year_id > 0) {
-      console.log(this.applicationRequest)
-      this.studentApplicationService.getAllByRequest(this.applicationRequest).subscribe({
-        next: (response) => this.applications = response
-      })
+      console.log(this.applicationRequest as ApplicationRequest)
+      this.studentApplicationService.getAllByRequest(this.applicationRequest).subscribe(
+        (response) => {
+
+          this.applications = response
+          this.applications.forEach((applicationResponse) => {
+            const application = applicationResponse.application;
+            if(application.application_trials) {
+              application.application_trials.forEach((sat) => {
+                this.studentATs.push({
+                  sat: sat,
+                  application: application,
+                  student: applicationResponse.student,
+                  applicationResponse: applicationResponse
+                });
+              })
+            }
+
+          })
+        }
+      );
     } else {
       this.applications = [];
     }
   }
 
-  saveApplicationAction(application?: ApplicationResponse) {
+  saveApplicationAction(studentAT?: SAT) {
     const modalRef = this.modalService.open(SaveApplicationComponent, {
       size: 'md', centered: true, backdrop: 'static', keyboard: true
     });
     const saveApplicationComponent: SaveApplicationComponent = modalRef.componentInstance;
-    if (!application) {
+    if (studentAT){
+      saveApplicationComponent.editing = true;
+      saveApplicationComponent.studentAT = studentAT;
+      saveApplicationComponent.setupApplicationForm();
+    } else{
       saveApplicationComponent.editing = false;
       saveApplicationComponent.resetApplication();
-      saveApplicationComponent.applicationForm.reset();
-    } else {
-      saveApplicationComponent.editing = true;
-      saveApplicationComponent.studentApplicationRes = application;
-      saveApplicationComponent.setupApplicationForm();
     }
     modalRef.result.then(() => {
       this.loadApplications();
