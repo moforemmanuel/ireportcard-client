@@ -1,5 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {environment} from "../../../../../environments/environment";
+import {AuthService} from "../../../../services/auth.service";
+import {MessageService} from "primeng/api";
+import {addToMessageService} from "../../../../utils/message-service.util";
+import {HttpErrorResponse} from "@angular/common/http";
+import {LocalStorageUtil} from "../../../../utils/local-storage.util";
+import {Router} from "@angular/router";
+import {DefaultService} from "../../../../services/default.service";
 
 @Component({
   selector: 'app-top-menu',
@@ -22,7 +29,7 @@ import {environment} from "../../../../../environments/environment";
               </ul>
             </div>
             <div class="flex-item">
-              <button pButton label="Logout" icon="pi pi-power-off"></button>
+              <button (click)="logoutAction()" pButton label="Logout" icon="pi pi-power-off"></button>
             </div>
           </div>
         </ng-template>
@@ -34,7 +41,7 @@ export class TopMenuComponent implements OnInit {
 
   online: boolean = false;
 
-  constructor() {
+  constructor(private router: Router, private authService: AuthService, private defaultService: DefaultService, private msgService: MessageService) {
   }
 
   ngOnInit(): void {
@@ -42,16 +49,28 @@ export class TopMenuComponent implements OnInit {
   }
 
   checkOnlineStatus(): void {
-    setTimeout(() => {
-      let req: XMLHttpRequest = new XMLHttpRequest();
-      req.open("GET", `${environment.serverUrl}/api/default/test`, false);
-      try {
-        req.send();
-        this.online = req.status == 200;
-      } catch (e) {
-        this.online = false;
-        //console.clear(); // TODO this is quite dangerous
-      }
-    }, 500);
+    this.defaultService.test().subscribe({
+      next: () => this.online = true,
+      error: () => this.online = false
+    });
+  }
+
+  logoutAction() {
+    console.log("logging out")
+    const confirmDelete = confirm("Are you sure you want to log out?");
+    const sessionId: string | null = LocalStorageUtil.readUserToken();
+    if (sessionId && confirmDelete) {
+      this.authService.logout({sessionId: sessionId}).subscribe({
+        next: (res) => {
+          this.router.navigate(['/auth']).then(() => {
+            addToMessageService(this.msgService, 'success', 'Log out', res.message);
+          });
+          LocalStorageUtil.deleteUserToken();
+        }, error: (e: HttpErrorResponse) => {
+          addToMessageService(this.msgService, 'warn', 'Log out', e.error.message)
+        }
+      });
+    }
+
   }
 }
