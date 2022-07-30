@@ -1,14 +1,6 @@
-export function deleteUserToken() {
-
-}
-
-export interface Settings {
-  schoolId: number
-}
-
 const LS_KEY = {
   sessionId: 'session_id',
-  settings: 'rc_settings',
+  schoolId: 'school_id',
   rememberMe: 'remember_me'
 };
 export module LocalStorageUtil {
@@ -24,16 +16,17 @@ export module LocalStorageUtil {
     localStorage.removeItem(LS_KEY.sessionId);
   }
 
-  export const writeSettings = (settings: Settings): void => {
-    localStorage.setItem(LS_KEY.settings, JSON.stringify(settings));
+  export const writeSchoolId = (schoolId: number): void => {
+    localStorage.setItem(LS_KEY.schoolId, String(schoolId));
   }
 
-  export const readSettings = (): Settings | null => {
-    const settings = localStorage.getItem(LS_KEY.settings);
-    if (settings) {
-      return JSON.parse(settings);
-    }
-    return null;
+  export const readSchoolId = (): number | null => {
+    const id = localStorage.getItem(LS_KEY.schoolId);
+    return id? parseInt(id): -1;
+  }
+
+  export const deleteSchoolId = (): void => {
+    localStorage.removeItem(LS_KEY.schoolId);
   }
 
   export const writeRememberMe = (value: boolean) => {
