@@ -15,6 +15,12 @@ import {HttpResponseInterceptor} from "./interceptors/http-response.interceptor"
 import {SelectSchoolComponent} from "./components/select-school/select-school.component";
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
 import {ToastModule} from "primeng/toast";
+import {ButtonModule} from "primeng/button";
+import {RippleModule} from "primeng/ripple";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {InputTextModule} from "primeng/inputtext";
+import {CheckboxModule} from "primeng/checkbox";
+import {RadioButtonModule} from "primeng/radiobutton";
 
 
 @NgModule({
@@ -32,6 +38,13 @@ import {ToastModule} from "primeng/toast";
     HttpClientModule,
     NgbModule,
     ToastModule,
+    ButtonModule,
+    RippleModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    CheckboxModule,
+    RadioButtonModule,
+    FormsModule,
   ],
   providers: [
     injectables,
