@@ -46,9 +46,7 @@ export class LoginComponent implements OnInit {
       next: (res) => {
         console.log(res);
         LocalStorageUtil.writeUserToken(res.sessionId);
-        this.router.navigate(['/dashboard/home']).then(r => {
-
-        });
+        this.router.navigate(['/dashboard/home']).then(() => {});
       },
       error: (e) => {
         console.log(e)
