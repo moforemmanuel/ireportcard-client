@@ -13,12 +13,9 @@ import {Router} from "@angular/router";
 export class LoginComponent implements OnInit {
   @Input() show: boolean = true;
   @Output() switchToRegister: EventEmitter<void> = new EventEmitter<void>();
-
   loginForm!: FormGroup;
 
-
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
-
   }
 
   ngOnInit() {
@@ -41,12 +38,11 @@ export class LoginComponent implements OnInit {
       username: this.loginForm.get('username')?.value,
       password: this.loginForm.get('password')?.value,
     }
-    console.log(userLogin);
     this.authService.login(userLogin).subscribe({
       next: (res) => {
-        console.log(res);
         LocalStorageUtil.writeUserToken(res.sessionId);
-        this.router.navigate(['/dashboard/home']).then(() => {});
+        const routerTarget = LocalStorageUtil.readSchoolId()? "/select-school" : "/dashboard/home";
+        this.router.navigate([routerTarget]).then((r) => console.log(r));
       },
       error: (e) => {
         console.log(e)

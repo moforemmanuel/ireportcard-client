@@ -26,8 +26,9 @@ export class AuthComponent implements OnInit {
       this.defaultService.test().subscribe(() => {
         addToMessageService(this.msgService, 'warn', 'Logout',
           `You have to logout before you ${this.login ? 'login' : 'register'}.`)
-        this.router.navigate(['/dashboard/home']).then(() => {
-        })
+        const routerTarget = LocalStorageUtil.readSchoolId()? "/select-school" : "/dashboard/home";
+        console.log(routerTarget)
+        this.router.navigate([routerTarget]).then((r) => console.log(r));
       });
     }
   }

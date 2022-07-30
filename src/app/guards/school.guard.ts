@@ -16,7 +16,7 @@ export class SchoolGuard implements CanActivate {
 
     const schoolId = LocalStorageUtil.readSchoolId();
     if (!schoolId) {
-      this._router.navigate(['/select-school']).then(() => {});
+      this._router.navigate(['/select-school']).then((r) => console.log(`School guard: ${r}`));
     }
     return schoolId ? schoolId > 0: false;
   }
