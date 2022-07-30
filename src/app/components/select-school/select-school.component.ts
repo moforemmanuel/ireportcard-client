@@ -48,7 +48,7 @@ export class SelectSchoolComponent implements OnInit {
   addSchoolAction() {
     const school: School = {
       id: -1, name: this.addSchoolForm.get('name')?.value, max_grade: this.addSchoolForm.get('maxGrade')?.value,
-      application_is_open: this.addSchoolForm.get('applicationOpen')?.value,
+      application_open: this.addSchoolForm.get('applicationOpen')?.value,
     }
     this.schoolService.save(school).subscribe(() => this.loadSchools());
   }

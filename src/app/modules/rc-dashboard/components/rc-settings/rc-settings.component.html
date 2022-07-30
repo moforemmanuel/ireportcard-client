@@ -8,7 +8,7 @@
   </div>
 
   <div class="py-4">
-    <div *ngIf="!schoolSettingsValid" class="text-danger fst-italic">
+    <div *ngIf="!school" class="text-danger fst-italic">
       School settings have not been added
     </div>
     <div class="container-fluid">
@@ -16,7 +16,7 @@
         <div class="row pb-3">
           <div class="col-12 py-2">
             <label class="form-label">School Name</label>
-            <input [formControlName]="'schoolName'" [value]="schoolSettings.school_name" class="form-control">
+            <input [formControlName]="'name'" [value]="school? school.name: ''" class="form-control">
           </div>
         </div>
         <div class="row pb-3">
@@ -30,9 +30,7 @@
           <div class="col-md-6 py-2">
             <label class="form-label" for="currYear">Current Academic Year</label>
             <select [formControlName]="'year'" class="form-select" id="currYear">
-              <option *ngFor="let year of academicYears"
-                      [selected]="year.id == (schoolSettings ? schoolSettings.curr_year_id : -1)"
-                      [value]="year.id">
+              <option *ngFor="let year of academicYears" [selected]="year.id == (school ? school.curr_year_id : -1)" [value]="year.id">
                 {{year.name}}
               </option>
             </select>
@@ -41,16 +39,12 @@
         <div class="row pb-3">
           <div class="col-md-6 py-2">
             <label class="form-label">Current Term</label>
-            <input [value]="schoolSettings ? (schoolSettings.curr_term ? schoolSettings.curr_term : 'None') : ''"
-                   class="form-control"
-                   disabled>
+            <input [value]="school ? (school.curr_term ? school.curr_term : 'None') : ''" class="form-control" disabled>
           </div>
           <div class="col-md-6 py-2">
             <label class="form-label" for="currSeq">Current Sequence</label>
             <select [formControlName]="'sequence'" class="form-select" id="currSeq">
-              <option *ngFor="let seq of sequences"
-                      [selected]="seq.id == ( schoolSettings ? schoolSettings.curr_seq_id : -1)"
-                      [value]="seq.id">
+              <option *ngFor="let seq of sequences" [selected]="seq.id == ( school ? school.curr_seq_id : -1)" [value]="seq.id">
                 {{seq.name}}
               </option>
             </select>
@@ -59,18 +53,16 @@
         <div class="row pb-3">
           <div class="col-md-6 py-2">
             <label class="form-label">Min Grade Score</label>
-            <input [formControlName]="'minGrade'" [value]="schoolSettings ? schoolSettings.min_grade: 0"
-                   class="form-control"
-                   type="number">
+            <input [value]="0" class="form-control" type="number" disabled>
           </div>
           <div class="col-md-6 py-2">
             <label class="form-label">Max Grade Score</label>
-            <input [formControlName]="'maxGrade'" [value]="schoolSettings ? schoolSettings.max_grade: 0"
+            <input [formControlName]="'maxGrade'" [value]="school ? school.max_grade: 0"
                    class="form-control"
                    type="number">
           </div>
         </div>
-        <button [disabled]="!settingsForm.valid" class="btn" pButton type="submit">Save</button>
+        <button [disabled]="false" class="btn" pButton type="submit">Save</button>
       </form>
     </div>
   </div>

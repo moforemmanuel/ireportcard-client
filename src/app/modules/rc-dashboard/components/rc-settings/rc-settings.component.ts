@@ -12,6 +12,9 @@ import {AcademicYear} from "../../../../models/dto/academic-year.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DefaultService} from "../../../../services/default.service";
 import {AcademicYearUtil} from "../../../../utils/academic-year.util";
+import {SchoolService} from "../../../../services/school.service";
+import {School} from "../../../../models/dto/school.model";
+import {LocalStorageUtil} from "../../../../utils/local-storage.util";
 
 type ATS = AcademicYear | Term | Sequence;
 
@@ -26,78 +29,70 @@ enum ATSName {
 })
 export class RcSettingsComponent implements OnInit {
 
-  schoolSettingsValid: boolean = false;
+  schoolId: number = -1;
   settingsForm: FormGroup = this.fb.group({});
-  schoolSettings: SchoolSettings;
+  school?: School;
   terms: Term[] = [];
   sequences: Sequence[] = [];
   academicYears: AcademicYear[] = [];
-  private readonly defaultSettings: SchoolSettings;
 
   constructor(
     private fb: FormBuilder,
     private msgService: MessageService,
     private defaultService: DefaultService,
-    private schoolSettingsService: SchoolSettingsService,
+    private schoolService: SchoolService,
     private sequenceService: SequenceService,
     private termService: TermService,
     private academicYearService: AcademicYearService
   ) {
-    this.defaultSettings = {
-      id: -1, school_name: '', school_id: -1,
-      curr_seq_id: -1, curr_year_id: -1, curr_term: '',
-      application_is_open: false, min_grade: 0, max_grade: 0,
-    };
-    this.schoolSettings = this.defaultSettings;
-    this.settingsForm = this.fb.group({
-      applicationsOpen: [this.schoolSettings.application_is_open, Validators.required],
-      schoolName: ['', Validators.required],
-      year: [0, Validators.required],
-      term: [0, Validators.required],
-      sequence: [0, Validators.required],
-      minGrade: [0, Validators.min(0)],
-      maxGrade: [0, Validators.compose([Validators.min(0), Validators.max(100)])]
-    });
-
   }
 
   ngOnInit(): void {
-    this.loadSettings();
-  }
-
-  patchSettingsForm(schoolSettings: SchoolSettings): void {
-    if (schoolSettings == null) {
-      schoolSettings = this.defaultSettings;
-      schoolSettings.curr_seq_id = this.sequences.length > 0 ? this.sequences[0].id : -1;
-      schoolSettings.curr_year_id = (this.academicYears.length > 0) ? this.academicYears[0].id : -1;
-    }
-    this.settingsForm.patchValue({
-      "applicationsOpen": schoolSettings.application_is_open,
-      "schoolName": schoolSettings.school_name,
-      "year": schoolSettings.curr_year_id,
-      "sequence": schoolSettings.curr_seq_id,
-      "minGrade": schoolSettings.min_grade,
-      "maxGrade": schoolSettings.max_grade,
+    this.loadSchoolId();
+    this.loadSchool();
+    this.loadSettingsInfo();
+    this.settingsForm = this.fb.group({
+      applicationsOpen: [false, Validators.required],
+      name: ["", Validators.required],
+      year: [0, Validators.required],
+      term: ["", Validators.required],
+      sequence: [0, Validators.required],
+      maxGrade: [0, Validators.compose([Validators.min(0), Validators.max(100)])]
     });
   }
 
-  loadSettings(): void {
-    this.schoolSettingsService.get().subscribe({
-      next: (schoolSettings) => {
-        this.schoolSettings = schoolSettings;
-        this.updateSchoolSettingsValid();
-        this.patchSettingsForm(this.schoolSettings);
-        console.log(schoolSettings)
-        this.loadSettingsInfo();
-      }, error: (err) => {
-        addToMessageService(this.msgService, 'error', 'Error', `${err.error.message}`)
-      }
+  initSchoolForm = () => {
+    if (this.school) {
+      this.settingsForm = this.fb.group({
+        applicationsOpen: [this.school.application_open, Validators.required],
+        name: [this.school.name, Validators.required],
+        year: [this.school.curr_year_id, Validators.required],
+        term: [this.school.curr_term],
+        sequence: [this.school.curr_seq_id, Validators.required],
+        maxGrade: [this.school.max_grade, Validators.compose([Validators.min(0), Validators.max(100)])]
+      });
+    }
+  }
+
+  loadSchoolId = () => {
+    const sid = LocalStorageUtil.readSchoolId();
+    this.schoolId = sid? sid: this.schoolId;
+  }
+
+  loadSchool(): void {
+    this.schoolService.getById(this.schoolId).subscribe((school) => {
+      localStorage.setItem("school", JSON.stringify(school))
+      this.school = school;
+      this.initSchoolForm();
     });
   }
 
   loadSettingsInfo(): void {
     this.sequenceService.getAll().subscribe({
-      next: (sequences) => this.sequences = sequences,
+      next: (sequences) => {
+        this.sequences = sequences
+        console.log(this.school)
+      },
     });
     this.termService.getAll().subscribe({
       next: (terms) => this.terms = terms,
@@ -108,43 +103,15 @@ export class RcSettingsComponent implements OnInit {
   }
 
   saveSettingsAction() {
-    const settings: SchoolSettings = {
-      id: this.schoolSettings ? this.schoolSettings.id : -1,
-      school_id: this.settingsForm.get('schoolId')?.value,
-      school_name: this.settingsForm.get('schoolName')?.value,
-      application_is_open: this.settingsForm.get('applicationsOpen')?.value,
-      min_grade: this.settingsForm.get('minGrade')?.value,
+    const school: School = {
+      id: this.schoolId,
+      name: this.settingsForm.get('name')?.value,
+      application_open: this.settingsForm.get('applicationsOpen')?.value,
       max_grade: this.settingsForm.get('maxGrade')?.value,
       curr_year_id: parseInt(this.settingsForm.get("year")?.value),
       curr_seq_id: parseInt(this.settingsForm.get("sequence")?.value),
     }
-
-    const settingsValidRes = this.isValidSettings(settings);
-    if (settingsValidRes.valid) {
-      if (settings.id <= 0) {
-        this.schoolSettingsService.save(settings).subscribe({
-          next: () => addToMessageService(this.msgService, 'success', 'Saved', 'Settings saved successfully'),
-          error: err => addToMessageService(this.msgService, 'error', 'Error', err.error.message),
-          complete: () => {
-            this.loadSettings();
-            document.location.reload();
-          }
-        });
-      } else {
-        this.schoolSettingsService.update(settings).subscribe({
-          next: () => addToMessageService(this.msgService, 'success', 'Saved', 'Settings saved successfully'),
-          error: err => addToMessageService(this.msgService, 'error', 'Error', err.error.message),
-          complete: () => {
-            this.loadSettings();
-            document.location.reload();
-          }
-        });
-      }
-    } else {
-      for (let i = 0; i < settingsValidRes.errors.length; i++) {
-        addToMessageService(this.msgService, 'warn', 'Invalid Settings', `Warning ${i + 1}: ${settingsValidRes.errors[i]}`)
-      }
-    }
+    this.schoolService.update(school).subscribe(() => document.location.reload());
   }
 
   loadDefaultDataAction() {
@@ -154,10 +121,6 @@ export class RcSettingsComponent implements OnInit {
         addToMessageService(this.msgService, 'error', 'Error', err.message);
       }
     })
-  }
-
-  deleteATSAction(entityName: ATSName, entity: ATS) {
-
   }
 
   editATSAction($event: MouseEvent, atsName: ATSName, entity: ATS, inputElement: HTMLInputElement) {
@@ -280,37 +243,8 @@ export class RcSettingsComponent implements OnInit {
     }
   }
 
-  private updateSchoolSettingsValid = (): void => {
-    if (this.schoolSettings == null) {
-      this.schoolSettingsValid = false;
-      return
-    }
-    this.schoolSettingsValid = this.schoolSettings != this.defaultSettings && (
-      this.schoolSettings.max_grade !== null && this.schoolSettings.min_grade !== null
-    );
-  }
+  deleteATSAction(number: number, year: AcademicYear) {
 
-  private isValidSettings = (settings: SchoolSettings): { valid: boolean, errors: string[] } => {
-    console.log(settings)
-    const errs: string[] = [];
-    const term: Term = this.getTermBySequenceId(settings.curr_seq_id);
-    const sequencesByTerm = this.sequences.filter(seq => seq.term_id == term.id);
-    const sequenceValid: boolean = sequencesByTerm.find(seq => seq.id == settings.curr_seq_id) != undefined;
-
-    {
-      /*
-      if (!sequenceValid) {
-        errs.push("This sequence is not compatible with this term");
-      }
-       */
-    }
-
-    const gradeValid = settings.min_grade < settings.max_grade;
-    if (!gradeValid) {
-      errs.push("Maximum grade score must be higher than the minimum grade score");
-    }
-
-    return {valid: sequenceValid && gradeValid, errors: errs};
   }
 }
 

@@ -5,6 +5,6 @@ export interface School {
   curr_term?: string,
   curr_seq_id?: number,
   max_grade: number,
-  application_is_open: boolean,
+  application_open: boolean,
   number_of_sections?: number
 }
