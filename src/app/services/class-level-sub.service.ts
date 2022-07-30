@@ -22,11 +22,11 @@ export class ClassLevelSubService {
   }
 
   update(classLevelSub: ClassLevelSub): Observable<EntityResponse> {
-    return this.http.put(`${this.apiUrl}/${classLevelSub.id}`, classLevelSub);
+    return this.http.put<EntityResponse>(`${this.apiUrl}/${classLevelSub.id}`, classLevelSub);
   }
 
   save(classLevelSub: ClassLevelSub): Observable<EntityResponse> {
-    return this.http.post(`${this.apiUrl}`, classLevelSub);
+    return this.http.post<EntityResponse>(`${this.apiUrl}`, classLevelSub);
   }
 
   delete(id: number) {
