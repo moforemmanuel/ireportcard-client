@@ -65,6 +65,7 @@ export class TopMenuComponent implements OnInit {
             addToMessageService(this.msgService, 'success', 'Log out', res.message);
           });
           LocalStorageUtil.deleteUserToken();
+          LocalStorageUtil.deleteSchoolId();
         }, error: (e: HttpErrorResponse) => {
           addToMessageService(this.msgService, 'warn', 'Log out', e.error.message)
         }
