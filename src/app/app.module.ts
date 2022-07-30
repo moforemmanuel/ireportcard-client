@@ -12,12 +12,22 @@ import {MessageService} from "primeng/api";
 import {NgbActiveModal, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {RcWelcomeComponent} from './components/rc-welcome/rc-welcome.component';
 import {HttpResponseInterceptor} from "./interceptors/http-response.interceptor";
+import {SelectSchoolComponent} from "./components/select-school/select-school.component";
+import {AuthInterceptor} from "./interceptors/auth.interceptor";
+import {ToastModule} from "primeng/toast";
+import {ButtonModule} from "primeng/button";
+import {RippleModule} from "primeng/ripple";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {InputTextModule} from "primeng/inputtext";
+import {CheckboxModule} from "primeng/checkbox";
+import {RadioButtonModule} from "primeng/radiobutton";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     RcWelcomeComponent,
+    SelectSchoolComponent
   ],
   imports: [
     RcDashboardModule,
@@ -27,9 +37,18 @@ import {HttpResponseInterceptor} from "./interceptors/http-response.interceptor"
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
+    ToastModule,
+    ButtonModule,
+    RippleModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    CheckboxModule,
+    RadioButtonModule,
+    FormsModule,
   ],
   providers: [
     injectables,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true},
     {provide: MessageService, useClass: MessageService},
     {provide: NgbActiveModal, useClass: NgbActiveModal}

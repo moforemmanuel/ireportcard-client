@@ -1,0 +1,7 @@
+<div class="auth-container">
+
+  <p-toast></p-toast>
+  <app-login [show]="login" (switchToRegister)="toggleLogin()"></app-login>
+  <app-register [show]="!login" (switchToLogin)="toggleLogin()"></app-register>
+
+</div>

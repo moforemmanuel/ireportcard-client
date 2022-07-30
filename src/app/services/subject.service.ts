@@ -22,11 +22,11 @@ export class SubjectService {
   }
 
   save(subject: Subject): Observable<EntityResponse> {
-    return this.http.post<Subject>(this.subjectApiUrl, subject);
+    return this.http.post<EntityResponse>(this.subjectApiUrl, subject);
   }
 
   update(subject: Subject): Observable<EntityResponse> {
-    return this.http.put<Subject>(`${this.subjectApiUrl}/${subject.id}`, subject);
+    return this.http.put<EntityResponse>(`${this.subjectApiUrl}/${subject.id}`, subject);
   }
 
   delete(id: number): Observable<any> {

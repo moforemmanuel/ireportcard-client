@@ -1,6 +1,5 @@
 export interface EntityResponse {
-  id?: number;
-  ids?: number[];
-  name?: string;
-  message?: string;
+  id: number;
+  message: string;
+  log: boolean;
 }

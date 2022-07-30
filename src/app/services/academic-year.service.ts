@@ -4,16 +4,13 @@ import {AcademicYear} from "../models/dto/academic-year.model";
 import {RC_ACADEMIC_YEAR_API_URL} from "../app.constants";
 import {HttpClient} from "@angular/common/http";
 import {EntityResponse} from "../models/dto/entity.response";
-import {MessageService} from "primeng/api";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AcademicYearService {
 
-  constructor(
-    @Inject(RC_ACADEMIC_YEAR_API_URL) private apiUrl: string,
-    private msgService: MessageService, private http: HttpClient) {
+  constructor(@Inject(RC_ACADEMIC_YEAR_API_URL) private apiUrl: string, private http: HttpClient) {
   }
 
   getAll(): Observable<AcademicYear[]> {

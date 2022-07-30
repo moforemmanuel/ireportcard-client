@@ -10,6 +10,7 @@ import {
 import {catchError, EMPTY, Observable, tap} from 'rxjs';
 import {MessageService} from "primeng/api";
 import {EntityResponse} from "../models/dto/entity.response";
+import {addToMessageService} from "../utils/message-service.util";
 
 @Injectable()
 export class HttpResponseInterceptor implements HttpInterceptor {
@@ -21,23 +22,33 @@ export class HttpResponseInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       tap((event) => {
         if (event instanceof HttpResponse) {
-          const entityResponse = event.body as EntityResponse;
-          if (event.status === 201) {
-            this.msgService.add({severity: 'success', summary: 'Success', detail: entityResponse.message});
-          }
+          this.successfulResponseHandler(event);
         }
       }),
-      catchError(this.errorHandler)
+      catchError(this.responseHandler)
     );
   }
 
-  private errorHandler = (err: HttpErrorResponse) => {
+  successfulResponseHandler = (event: HttpResponse<any>) => {
+    const entityResponse = event.body as EntityResponse;
+    if (event.status === 201) {
+      this.msgService.add({severity: 'success', summary: 'Success', detail: entityResponse.message});
+    }
+  }
 
-    if (err.error instanceof Error) {
-      this.msgService.add({severity: 'warn', summary: err.error.name, detail: err.error.message});
-    } else if (err.status == 0) {
+  private responseHandler = (response: HttpErrorResponse) => {
+    console.log(response)
+    if (response.status >= 200 && response.status <= 299) {
+      console.log("CREATED A RESOURCE")
+    }
+
+    if (response.error instanceof Error) {
+      this.msgService.add({severity: 'warn', summary: response.error.name, detail: response.error.message});
+    } else if (response.status == 0) {
       this.msgService.add({severity: 'error', summary: `Server error`, detail: `Server is not running!`});
-    } else if (err.error == undefined) {
+    } else if (response.status == 401) {
+      addToMessageService(this.msgService, 'warn', 'Logged Out', 'You need to be logged in to perform this action!')
+    } else if (response.error == undefined) {
       this.msgService.add({
         severity: 'error',
         summary: 'Unknown error',
@@ -46,8 +57,8 @@ export class HttpResponseInterceptor implements HttpInterceptor {
     } else {
       this.msgService.add({
         severity: 'error',
-        summary: err.name,
-        detail: `Backend returned code ${err.status} : ${err.error.message ? err.error.message : 'Unknown error'}`
+        summary: response.name,
+        detail: `Backend returned code ${response.status} : ${response.error.message ? response.error.message : 'Unknown error'}`
       });
     }
     return EMPTY;

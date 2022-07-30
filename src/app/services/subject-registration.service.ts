@@ -18,10 +18,10 @@ export class SubjectRegistrationService {
   }
 
   save(subjectRegistration: SubjectRegistration): Observable<EntityResponse> {
-    return this.http.post<SubjectRegistration>(`${this.apiUrl}`, subjectRegistration);
+    return this.http.post<EntityResponse>(`${this.apiUrl}`, subjectRegistration);
   }
 
-  saveMultiple(subjectRegistrations: SubjectRegistration[]): Observable<EntityResponse> {
-    return this.http.post<SubjectRegistration>(`${this.apiUrl}/multiple`, subjectRegistrations);
+  saveMultiple(subjectRegistrations: SubjectRegistration[]): Observable<EntityResponse[]> {
+    return this.http.post<EntityResponse[]>(`${this.apiUrl}/multiple`, subjectRegistrations);
   }
 }

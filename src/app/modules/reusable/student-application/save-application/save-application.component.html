@@ -9,33 +9,44 @@
       </span>
     </div>
     <div class="p-3">
-      <form [formGroup]="applicationForm" class="">
-        <div class="form-group">
-          <select [formControlName]="'studentId'" class="form-select">
-            <option *ngFor="let student of students" [selected]="student.id == (studentApplicationRes ? studentApplicationRes.student.id : -1)"
-                    [value]="student.id">
-              {{student.name}}
-            </option>
-          </select>
+      <form class="" ngForm>
+        <div *ngIf="editing">
+          {{studentApplicationRes ? studentApplicationRes.student.name : ''}}<br>
+          {{studentApplicationRes ? studentApplicationRes.application.application_key.class_sub_id : ''}}
         </div>
-        <div class="form-group row">
-          <div class="col-md-6">
-            <label for="academicYear">Academic Year</label>
-            <select [formControlName]="'yearId'" class="form-select" id="academicYear">
-              <option *ngFor="let academicYear of academicYears" [value]="academicYear.id">
-                {{academicYear.name}}
+        <div *ngIf="!editing">
+          <div class="form-group">
+            <select [(ngModel)]="apForm.studentId" [name]="'student'" class="form-select">
+              <option *ngFor="let student of students"
+                      [selected]="student.id == (studentApplicationRes ? studentApplicationRes.student.id : -1)"
+                      [value]="student.id">
+                {{student.name}}
               </option>
             </select>
           </div>
-          <div class="col-md-6">
-            <label for="classLevel">Class Level</label>
-            <select [formControlName]="'classId'" class="form-select" id="classLevel">
-              <option *ngFor="let classLevel of classLevels" [value]="classLevel.id">
-                {{classLevel.name}}
-              </option>
-            </select>
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label for="academicYear">Academic Year</label>
+              <select [(ngModel)]="apForm.yearId" [name]="'year'" class="form-select" id="academicYear">
+                <option *ngFor="let academicYear of academicYears" [value]="academicYear.id">
+                  {{academicYear.name}}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="classLevel">Class Level</label>
+              <select [(ngModel)]="apForm.classId" [name]="'class'" class="form-select" id="classLevel">
+                <option *ngFor="let classLevel of classLevels"
+                        [selected]="classLevel.id == (studentApplicationRes ? studentApplicationRes.application.application_key.class_sub_id : -1)"
+                        [value]="classLevel.id">
+                  {{classLevel.name}}
+                </option>
+              </select>
+            </div>
           </div>
         </div>
+
+        <!-- subject related -->
         <div class="form-group py-2">
           <!-- a styled list of subjects -->
           Subjects:
@@ -57,15 +68,20 @@
           </div>
           <div class="col-md-9">
             <select #subjectSelect [hidden]="true" class="form-select">
-              <option *ngFor="let s of subjects" [value]="s.id">{{s.name}}</option>
+              <option *ngFor="let s of getUnregisteredSubjects()" [value]="s.id">{{s.name}}</option>
             </select>
           </div>
         </div>
-        <div class="form-group">
-          <span class="py-2">
-            <button (click)="saveApplication()" [disabled]="!applicationForm.valid" class="btn full-width"
-                    icon="pi pi-check" label="Save" pButton type="button"></button>
-          </span>
+        <div class="row">
+          <div class="{{editing ? 'col-6': 'col-12'}}">
+            <button (click)="saveApplication()" [disabled]="!apFormValid" class="btn full-width" icon="pi pi-check"
+                    label="Save" pButton type="button"></button>
+          </div>
+          <div class="{{editing ? 'col-6': ''}}">
+            <button (click)="deleteApplication()" [hidden]="!editing" [disabled]="!editing"
+                    class="btn full-width p-button-danger" icon="pi pi-trash" label="Delete" pButton
+                    type="button"></button>
+          </div>
         </div>
       </form>
     </div>

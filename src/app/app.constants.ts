@@ -5,6 +5,8 @@ const RC_SERVER_URL = environment.serverUrl;
 
 export const RC_ACADEMIC_YEAR_API_URL = `${RC_SERVER_URL}/api/academic_year`;
 
+export const RC_AUTH_API_URL = `${RC_SERVER_URL}/api/auth`;
+
 export const RC_CLASS_LEVEL_API_URL = `${RC_SERVER_URL}/api/class_level`;
 
 export const RC_CLASS_LEVEL_SUB_API_URL = `${RC_SERVER_URL}/api/class_level_sub`;

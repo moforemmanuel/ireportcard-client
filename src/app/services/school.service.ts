@@ -13,7 +13,7 @@ export class SchoolService {
   constructor(private http: HttpClient, @Inject(RC_SCHOOL_API_URL) private schoolApiUrl: string) {
   }
 
-  get(): Observable<School[]> {
+  getAll(): Observable<School[]> {
     return this.http.get<School[]>(this.schoolApiUrl)
   }
 
@@ -22,14 +22,14 @@ export class SchoolService {
   }
 
   save(school: School): Observable<EntityResponse> {
-    return this.http.post<School>(this.schoolApiUrl, school)
+    return this.http.post<EntityResponse>(this.schoolApiUrl, school)
   }
 
   update(school: School): Observable<EntityResponse> {
-    return this.http.put<School>(`${this.schoolApiUrl}/${school.id}`, school)
+    return this.http.put<EntityResponse>(`${this.schoolApiUrl}/${school.id}`, school)
   }
 
   deleteSchool(id: number): Observable<EntityResponse> {
-    return this.http.delete<School>(`${this.schoolApiUrl}/${id}`)
+    return this.http.delete<EntityResponse>(`${this.schoolApiUrl}/${id}`)
   }
 }
