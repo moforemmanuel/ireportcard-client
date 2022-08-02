@@ -22,13 +22,13 @@
       <span class="text-500">Want to add a new school? Click to add on the side</span>
       <span class="spacer"></span>
 
-      <p-toggleButton [(ngModel)]="showSchoolForm" onLabel="Cancel" offLabel="Add" onIcon="pi pi-times" offIcon="pi pi-plus"></p-toggleButton>
+      <p-toggleButton [(ngModel)]="schoolFormDiv.hidden" onLabel="Add" offLabel="Cancel" offIcon="pi pi-times" onIcon="pi pi-plus" [styleClass]="'p-button-danger'"></p-toggleButton>
       &nbsp;
       <button (click)="setSchoolAction()" icon="pi pi-arrow-right" iconPos="right" pButton pRipple label="Continue"></button>
     </div>
 
 
-    <div *ngIf="showSchoolForm" class="m-auto my-2  surface-border border-round">
+    <div #schoolFormDiv [hidden]="true" class="m-auto my-2  surface-border border-round">
       <form [formGroup]="addSchoolForm">
 
         <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">

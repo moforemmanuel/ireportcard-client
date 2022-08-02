@@ -12,7 +12,6 @@ import {Router} from "@angular/router";
 })
 export class SelectSchoolComponent implements OnInit {
 
-  showSchoolForm: boolean = false;
   selectedSchoolId: number = -1;
   schools: School[] = [];
   addSchoolForm: FormGroup;
