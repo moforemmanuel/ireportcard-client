@@ -15,7 +15,7 @@
             </div>
             <div *ngFor="let school of schools; let i = index" class="m-3">
                 <input name="school" value="{{school.id}}" [(ngModel)]="selectedSchoolId" type="radio" class="p-radiobutton">&nbsp;
-                <label class="p-radiobutton-label">{{school.name}} {{i}}</label>
+                <label class="p-radiobutton-label">{{school.name}}</label>
             </div>
         </div>
         <div class="font-medium text-500 mb-3 d-flex">
