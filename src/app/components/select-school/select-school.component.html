@@ -13,7 +13,7 @@
             <div *ngIf="schools.length == 0" style="height: 150px" class="text-center p-8">
                 <span class="h3 text-500">No Schools Found</span>
             </div>
-            <div *ngFor="let school of schools; let i = index" class="m-3">
+            <div *ngFor="let school of schools" class="m-3">
                 <input name="school" value="{{school.id}}" [(ngModel)]="selectedSchoolId" type="radio" class="p-radiobutton">&nbsp;
                 <label class="p-radiobutton-label">{{school.name}}</label>
             </div>
