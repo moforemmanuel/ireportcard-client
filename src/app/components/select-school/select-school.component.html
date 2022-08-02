@@ -24,7 +24,7 @@
 
       <p-toggleButton [(ngModel)]="showSchoolForm" onLabel="Cancel" offLabel="Add" onIcon="pi pi-times" offIcon="pi pi-plus"></p-toggleButton>
       &nbsp;
-      <button (click)="setSchoolAction()" pButton pRipple label="Save" icon="pi pi-check"></button>
+      <button (click)="setSchoolAction()" icon="pi pi-arrow-right" iconPos="right" pButton pRipple label="Continue"></button>
     </div>
 
 
@@ -45,7 +45,7 @@
               <label for="open" class="text-900 font-medium">Applications Open</label>
             </div>
 
-            <button (click)="addSchoolAction()" pButton pRipple label="Sign In" icon="pi pi-user" class="w-full"></button>
+            <button (click)="addSchoolAction()" pButton pRipple label="Save School" icon="pi pi-check" class="w-full"></button>
           </div>
         </div>
       </form>
