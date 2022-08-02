@@ -1,54 +1,54 @@
 <div class="container select-school-container">
-  <div class="surface-card p-4 shadow-2 border-round">
-    <div class="text-3xl font-medium text-900 mb-3">Select School</div>
-    <div class="font-medium text-500 mb-3 d-flex">
-      <span>
+    <div class="surface-card p-4 shadow-2 border-round">
+        <div class="text-3xl font-medium text-900 mb-3">Select School</div>
+        <div class="font-medium text-500 mb-3 d-flex">
+            <span>
         Select a school from the list to continue or add a new school to manage
       </span>
-      <span class="spacer"></span>
-    </div>
-
-    <div class="my-2 border-2 surface-border border-round">
-      <!-- list the schools -->
-      <div *ngIf="schools.length == 0" style="height: 150px" class="text-center p-8">
-        <span class="h3 text-500">No Schools Found</span>
-      </div>
-      <div *ngFor="let school of schools; let i = index" class="m-3">
-        <input name="school" value="{{school.id}}" [(ngModel)]="selectedSchoolId" type="radio" class="p-radiobutton">&nbsp;
-        <label class="p-radiobutton-label">{{school.name}} {{i}}</label>
-      </div>
-    </div>
-    <div class="font-medium text-500 mb-3 d-flex">
-      <span class="text-500">Want to add a new school? Click to add on the side</span>
-      <span class="spacer"></span>
-
-      <p-toggleButton [(ngModel)]="showSchoolForm" onLabel="Cancel" offLabel="Add" onIcon="pi pi-times" offIcon="pi pi-plus"></p-toggleButton>
-      &nbsp;
-      <button (click)="setSchoolAction()" pButton pRipple label="Save" icon="pi pi-check"></button>
-    </div>
-
-
-    <div *ngIf="showSchoolForm" class="m-auto my-2  surface-border border-round">
-      <form [formGroup]="addSchoolForm">
-
-        <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
-
-          <div>
-            <label for="name" class="block text-900 font-medium mb-2">Name</label>
-            <input id="name" type="text" pInputText class="w-full mb-3" [formControlName]="'name'">
-
-            <label for="maxGrade" class="block text-900 font-medium mb-2">Max Grade</label>
-            <input id="maxGrade" type="number" min="0" max="20" pInputText class="w-full mb-3" [formControlName]="'maxGrade'">
-
-            <div class="mb-2 block">
-              <p-checkbox id="open" [binary]="true" [formControlName]="'applicationOpen'"></p-checkbox>&nbsp;
-              <label for="open" class="text-900 font-medium">Applications Open</label>
-            </div>
-
-            <button (click)="addSchoolAction()" pButton pRipple label="Sign In" icon="pi pi-user" class="w-full"></button>
-          </div>
+            <span class="spacer"></span>
         </div>
-      </form>
+
+        <div class="my-2 border-2 surface-border border-round">
+            <!-- list the schools -->
+            <div *ngIf="schools.length == 0" style="height: 150px" class="text-center p-8">
+                <span class="h3 text-500">No Schools Found</span>
+            </div>
+            <div *ngFor="let school of schools; let i = index" class="m-3">
+                <input name="school" value="{{school.id}}" [(ngModel)]="selectedSchoolId" type="radio" class="p-radiobutton">&nbsp;
+                <label class="p-radiobutton-label">{{school.name}}</label>
+            </div>
+        </div>
+        <div class="font-medium text-500 mb-3 d-flex">
+            <span class="text-500">Want to add a new school? Click to add on the side</span>
+            <span class="spacer"></span>
+
+            <p-toggleButton [(ngModel)]="showSchoolForm" onLabel="Cancel" offLabel="Add" onIcon="pi pi-times" offIcon="pi pi-plus"></p-toggleButton>
+            &nbsp;
+            <button (click)="setSchoolAction()" pButton pRipple label="Save" icon="pi pi-check"></button>
+        </div>
+
+
+        <div *ngIf="showSchoolForm" class="m-auto my-2  surface-border border-round">
+            <form [formGroup]="addSchoolForm">
+
+                <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
+
+                    <div>
+                        <label for="name" class="block text-900 font-medium mb-2">Name</label>
+                        <input id="name" type="text" pInputText class="w-full mb-3" [formControlName]="'name'">
+
+                        <label for="maxGrade" class="block text-900 font-medium mb-2">Max Grade</label>
+                        <input id="maxGrade" type="number" min="0" max="20" pInputText class="w-full mb-3" [formControlName]="'maxGrade'">
+
+                        <div class="mb-2 block">
+                            <p-checkbox id="open" [binary]="true" [formControlName]="'applicationOpen'"></p-checkbox>&nbsp;
+                            <label for="open" class="text-900 font-medium">Applications Open</label>
+                        </div>
+
+                        <button (click)="addSchoolAction()" pButton pRipple label="Sign In" icon="pi pi-user" class="w-full"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-  </div>
 </div>
