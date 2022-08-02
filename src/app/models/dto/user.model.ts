@@ -11,8 +11,8 @@ export interface UserAuth {
 export interface UserRegisterRequest {
   username: string;
   password: string;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface UserRegisterResponse {

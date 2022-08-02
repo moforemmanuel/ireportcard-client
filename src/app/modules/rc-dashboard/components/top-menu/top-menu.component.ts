@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../../services/auth.service";
-import {MessageService} from "primeng/api";
+import {MenuItem, MessageService} from "primeng/api";
 import {addToMessageService} from "../../../../utils/message-service.util";
 import {HttpErrorResponse} from "@angular/common/http";
 import {LocalStorageUtil} from "../../../../utils/local-storage.util";
@@ -12,20 +12,14 @@ import {DefaultService} from "../../../../services/default.service";
   styleUrls: ['./top-menu.component.scss'],
   template: `
     <div class="top-menu">
-      <p-menubar styleClass="top-menu-bar">
+      <p-menubar styleClass="top-menu-bar" [model]="menuItems" [class]="'menu-item'">
         <ng-template pTemplate="start">
-          <span class="h1 font-weight-bold p-menuitem-text rms-title">R . M . S</span>
+          <span class="h3 font-weight-bold p-menuitem-text rms-title mx-5 px-5">R . M . S</span>
         </ng-template>
         <ng-template pTemplate="end">
           <div class="d-flex">
             <div class="flex-item mx-2">
               <span class="fw-bold {{online ? 'online-text': 'offline-text' }}">{{online ? "ONLINE" : "OFFLINE"}}</span>
-            </div>
-            <div class="flex-item text-center">
-              <ul>
-                <li class="font-weight-bold">John Doe</li>
-                <li>Admin</li>
-              </ul>
             </div>
             <div class="flex-item">
               <button (click)="logoutAction()" pButton label="Logout" icon="pi pi-power-off"></button>
@@ -39,12 +33,53 @@ import {DefaultService} from "../../../../services/default.service";
 export class TopMenuComponent implements OnInit {
 
   online: boolean = false;
+  menuItems: MenuItem[] = [];
+
 
   constructor(private router: Router, private authService: AuthService, private defaultService: DefaultService, private msgService: MessageService) {
   }
 
   ngOnInit(): void {
     this.checkOnlineStatus();
+
+    this.menuItems = [
+      {
+        label: 'Home',
+        icon: 'pi pi-fw pi-home',
+        routerLink: ['/dashboard/home'],
+      },
+      {
+        label: 'Subjects',
+        icon: 'pi pi-fw pi-book',
+        routerLink: ['/dashboard/subject'],
+      },
+      {
+        label: 'Classes',
+        icon: 'pi pi-fw pi-list',
+        routerLink: ['/dashboard/class'],
+      },
+      {
+        label: 'Students',
+        icon: 'pi pi-fw pi-users',
+        routerLink: ['/dashboard/student'],
+      },
+      {
+        label: 'Applications',
+        icon: 'pi pi-fw pi-plus-circle',
+        routerLink: ['/dashboard/application'],
+      },
+      {
+        label: 'Class Lists',
+        icon: 'pi pi-fw pi-folder',
+        routerLink: ['/dashboard/class-list'],
+      },
+      {
+        label: 'Settings',
+        icon: 'pi pi-fw pi-cog',
+        routerLink: ['/dashboard/settings'],
+      }
+
+    ]
   }
 
   checkOnlineStatus(): void {

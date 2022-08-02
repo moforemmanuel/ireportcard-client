@@ -4,7 +4,7 @@ import {
   ApplicationRequest,
   ApplicationResponse,
   StudentApplication,
-  StudentApplicationKey
+  StudentApplicationKey, StudentApplicationTrial
 } from "../models/dto/student-application.model";
 import {RC_STUDENT_APPLICATION_API_URL} from "../app.constants";
 import {HttpClient} from "@angular/common/http";
@@ -19,14 +19,14 @@ export class StudentApplicationService {
   }
 
   get(applicationKey: StudentApplicationKey): Observable<StudentApplication> {
-    return this.http.get<StudentApplication>(`${this.apiUrl}`, {
-      params: {classId: applicationKey.class_sub_id, studentId: applicationKey.student_id}
+    return this.http.get<StudentApplication>(`${this.apiUrl}/one`, {
+      params: {classId: applicationKey.classSubId, studentId: applicationKey.studentId}
     });
   }
 
   getFull(applicationKey: StudentApplicationKey, yearId: number): Observable<ApplicationResponse> {
     return this.http.get<ApplicationResponse>(`${this.apiUrl}/one_full`, {
-      params: {yearId: yearId, classId: applicationKey.class_sub_id, studentId: applicationKey.student_id}
+      params: {yearId: yearId, classId: applicationKey.classSubId, studentId: applicationKey.studentId}
     })
   }
 
@@ -40,17 +40,24 @@ export class StudentApplicationService {
     });
   }
 
-  save(application: StudentApplication): Observable<EntityResponse> {
+  save(application: ApplicationRequest): Observable<EntityResponse> {
     return this.http.post<EntityResponse>(`${this.apiUrl}`, application);
   }
 
-  update(application: StudentApplication): Observable<EntityResponse> {
+  update(application: ApplicationRequest): Observable<EntityResponse> {
     return this.http.put<EntityResponse>(`${this.apiUrl}`, application);
   }
 
   delete(applicationKey: StudentApplicationKey): Observable<EntityResponse> {
     return this.http.delete<EntityResponse>(`${this.apiUrl}`, {
-      params: {studentId: applicationKey.student_id, classId: applicationKey.class_sub_id,}
+      params: {studentId: applicationKey.studentId, classId: applicationKey.classSubId,}
     })
+  }
+
+  // TRIAL
+  getTrialByClassAndYear(classId: number, yearId: number): Observable<StudentApplicationTrial[]> {
+    return this.http.get<StudentApplicationTrial[]>(`${this.apiUrl}/sat`, {
+      params: {yearId: yearId, classSubId: classId}
+    });
   }
 }

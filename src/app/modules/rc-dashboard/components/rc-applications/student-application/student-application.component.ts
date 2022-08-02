@@ -1,48 +1,48 @@
 import {Component, OnInit} from '@angular/core';
 import {
+  ApplicationRequest,
   ApplicationResponse,
   StudentApplication,
   StudentApplicationKey
-} from "../../../../models/dto/student-application.model";
-import {FormBuilder} from "@angular/forms";
-import {Subject} from "../../../../models/dto/subject.model";
+} from "../../../../../models/dto/student-application.model";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Subject} from "../../../../../models/dto/subject.model";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {SubjectService} from "../../../../services/subject.service";
-import {SubjectRegistration} from "../../../../models/dto/subject-registration.model";
-import {SubjectRegistrationService} from "../../../../services/subject-registration.service";
-import {StudentService} from "../../../../services/student.service";
-import {Student} from "../../../../models/dto/student.model";
-import {AcademicYear} from "../../../../models/dto/academic-year.model";
-import {AcademicYearService} from "../../../../services/academic-year.service";
-import {ClassLevel} from "../../../../models/dto/class-level.model";
-import {ClassLevelService} from "../../../../services/class-level.service";
-import {ClassLevelSubService} from "../../../../services/class-level-sub.service";
-import {ClassLevelSub} from "../../../../models/dto/class-level-sub.model";
-import {StudentApplicationService} from "../../../../services/student-application.service";
-import {addToMessageService} from "../../../../utils/message-service.util";
+import {SubjectService} from "../../../../../services/subject.service";
+import {SubjectRegistration} from "../../../../../models/dto/subject-registration.model";
+import {SubjectRegistrationService} from "../../../../../services/subject-registration.service";
+import {StudentService} from "../../../../../services/student.service";
+import {Student} from "../../../../../models/dto/student.model";
+import {AcademicYear} from "../../../../../models/dto/academic-year.model";
+import {AcademicYearService} from "../../../../../services/academic-year.service";
+import {ClassLevel} from "../../../../../models/dto/class-level.model";
+import {ClassLevelService} from "../../../../../services/class-level.service";
+import {ClassLevelSubService} from "../../../../../services/class-level-sub.service";
+import {ClassLevelSub} from "../../../../../models/dto/class-level-sub.model";
+import {StudentApplicationService} from "../../../../../services/student-application.service";
+import {addToMessageService} from "../../../../../utils/message-service.util";
 import {MessageService} from "primeng/api";
-import {SAT} from "../../../../app.types";
+import {SAT, StudentClassLevel} from "../../../../../app.types";
 
 type ApplicationSubject = { pending: boolean, subject: Subject };
 
 @Component({
-  selector: 'app-save-application',
-  templateUrl: './save-application.component.html',
-  styleUrls: ['./save-application.component.scss']
+  selector: 'app-application',
+  templateUrl: './student-application.component.html',
+  styleUrls: ['./student-application.component.scss']
 })
-export class SaveApplicationComponent implements OnInit {
-  readonly modal: NgbActiveModal;
+export class StudentApplicationComponent implements OnInit {
   editing: boolean = false;
   studentApplicationRes?: ApplicationResponse;
-  apForm: { studentId: number, classId: number, yearId: number, valid: () => boolean };
+  applicationForm: FormGroup = this.fb.group({});
   applicationSubjects: ApplicationSubject[] = [];
   subjects: Subject[] = [];
   students: Student[] = [];
   academicYears: AcademicYear[] = [];
-  classLevels: { id: number, name: string, cl: ClassLevel, cls: ClassLevelSub }[] = [];
+  studentClassLevels: StudentClassLevel[] = [];
   // TODO arrange this forced undefined removal
   studentAT!: SAT;
-  private readonly defaultSubject: Subject = {id: -1, name: '', section_id: -1, code: '', coefficient: -1};
+  private readonly defaultSubject: Subject = {id: -1, name: '', sectionId: -1, code: '', coefficient: -1};
 
   constructor(
     private fb: FormBuilder,
@@ -56,34 +56,21 @@ export class SaveApplicationComponent implements OnInit {
     private studentApplicationService: StudentApplicationService,
     private subjectRegistrationService: SubjectRegistrationService,
   ) {
-    this.modal = activeModal;
-    this.apForm = {
-      studentId: -1, classId: -1, yearId: -1, valid: () => {
-        return this.apForm.studentId > 0 && this.apForm.classId > 0 && this.apForm.yearId > 0
-      }
-    };
-  }
 
-  get apFormValid(): boolean {
-    return this.apForm.studentId > 0 && this.apForm.classId > 0 && this.apForm.yearId > 0;
+    this.applicationForm = this.fb.group({
+      student: [0, Validators.required],
+      year: [0, Validators.required],
+      classLevel: [0, Validators.required],
+      subjectRegs: this.fb.array([])
+    })
   }
 
   ngOnInit(): void {
-    this.loadSubjects();
-    this.loadStudents();
-    this.loadAcademicYears();
+    this.loadData();
     this.loadClassLevels();
     this.loadApplicationSubjects();
-    this.setupApplicationForm();
   }
 
-  setupApplicationForm() {
-    if (this.studentApplicationRes) {
-      this.apForm.yearId = -1;
-      this.apForm.classId = this.studentApplicationRes.application.application_key.student_id;
-      this.apForm.studentId = this.studentApplicationRes.student.id;
-    }
-  }
 
   resetApplication() {
     this.studentApplicationRes = undefined;
@@ -99,20 +86,10 @@ export class SaveApplicationComponent implements OnInit {
     return subjects;
   }
 
-  loadApplication = (applicationKey: StudentApplicationKey, yearId: number) => {
-    this.studentApplicationService.getFull(applicationKey, yearId).subscribe((res) => this.studentApplicationRes = res);
-  }
-
-  loadStudents = () => {
+  loadData = () => {
     this.studentService.getAll().subscribe((students) => this.students = students);
-  }
-
-  loadSubjects = () => {
     this.subjectService.getAll().subscribe((subjects) => this.subjects = subjects);
-  }
-
-  loadAcademicYears = () => {
-    this.academicYearService.getAll().subscribe((years) => this.academicYears = years)
+    this.academicYearService.getAll().subscribe((years) => this.academicYears = years);
   }
 
   loadClassLevels = () => {
@@ -120,7 +97,7 @@ export class SaveApplicationComponent implements OnInit {
       next: (classLevels) => classLevels.forEach((cl) => {
         this.classLevelSubService.getAllByClassLevelId(cl.id).subscribe({
           next: (classLevelSubs) => classLevelSubs.forEach((cls) => {
-            this.classLevels.push({id: cl.id, name: `${cl.name} ${cls.name}`, cl: cl, cls: cls});
+            this.studentClassLevels.push({id: cl.id, sub_id: cls.id, name: `${cl.name} ${cls.name}`, classLevel: cl, classLevelSub: cls});
           })
         });
       })
@@ -139,32 +116,28 @@ export class SaveApplicationComponent implements OnInit {
     this.applicationSubjects.forEach((aps) => {
       if (aps.pending) {
         if (this.studentApplicationRes) {
-          newSubjectRegs.push({
-            id: -1, sat_id: this.studentApplicationRes.sat_id, subject_id: aps.subject.id,
-          });
         }
       }
     });
 
-    const studentApplication: StudentApplication = {
-      application_key: {
-        student_id: this.apForm.studentId,
-        class_sub_id: this.apForm.classId,
-      },
+    const applicationRequest: ApplicationRequest = {
+      student_id: this.applicationForm.get('student')?.value,
+      class_id: this.applicationForm.get('classLevel')?.value,
+      year_id: this.applicationForm.get('year')?.value,
     }
 
-    console.log(studentApplication);
+    console.log(applicationRequest)
+
     if (this.editing) {
       console.log(newSubjectRegs)
     } else {
-      this.studentApplicationService.save(studentApplication).subscribe({
+      this.studentApplicationService.save(applicationRequest).subscribe({
         next: (res) => {
           console.log(res);
           const ak: StudentApplicationKey = {
-            class_sub_id: studentApplication.application_key.class_sub_id,
-            student_id: studentApplication.application_key.student_id
+            classSubId: applicationRequest.class_id,
+            studentId: applicationRequest.student_id
           };
-          this.loadApplication(ak, this.apForm.yearId);
           this.editing = true;
         },
       });
@@ -215,12 +188,27 @@ export class SaveApplicationComponent implements OnInit {
     const confirmDelete = confirm(`Are you sure you want to delete?`);
     if (this.editing && this.studentApplicationRes && confirmDelete) {
       this.studentApplicationService.delete({
-        student_id: this.studentApplicationRes?.student.id,
-        class_sub_id: this.studentApplicationRes?.application.application_key.class_sub_id
+        studentId: this.studentApplicationRes?.student.id,
+        classSubId: this.studentApplicationRes?.application.key.classSubId
       }).subscribe(() => {
         // close on delete as this does not exist anymore
         this.activeModal.close();
       });
+    }
+  }
+
+  closeModal() {
+    this.activeModal.close();
+  }
+
+  setupApplicationForm() {
+    if (this.studentAT) {
+      this.applicationForm = this.fb.group({
+        student: [this.studentAT.student.id, Validators.required],
+        year: [this.studentAT.sat.academicYearId, Validators.required],
+        classLevel: [this.studentAT.application.classLevelSub.id, Validators.required],
+        subjectRegs: this.fb.array([])
+      })
     }
   }
 }

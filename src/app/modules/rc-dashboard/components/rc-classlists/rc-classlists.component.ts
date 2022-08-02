@@ -42,8 +42,8 @@ export class RcClasslistsComponent implements OnInit {
   ) {
     this.classListRequest = {year_id: -1, class_id: -1, subject_id: -1, sequence_id: -1};
     this.classListResponse = {
-      class_level: {id: -1, class_level_id: -1, name: ''},
-      subject: {id: -1, name: '', code: '', coefficient: 0, section_id: -1},
+      class_level: {id: -1, classLevelId: -1, name: ''},
+      subject: {id: -1, name: '', code: '', coefficient: 0, sectionId: -1},
       class_name: '', sequence_name: '', student_grades: []
     };
   }
@@ -68,7 +68,7 @@ export class RcClasslistsComponent implements OnInit {
     this.classLevelSubService.getAll().subscribe({
       next: (classLevelSubs) => {
         classLevelSubs.forEach(classSub => {
-          this.classLevelService.getById(classSub.class_level_id).subscribe({
+          this.classLevelService.getById(classSub.classLevelId).subscribe({
             next: (classLevel) => {
               this.classes.push({id: classSub.id, name: `${classLevel.name} - ${classSub.name}`});
               this.classes.sort((a, b) => a.name < b.name ? -1 : 1);

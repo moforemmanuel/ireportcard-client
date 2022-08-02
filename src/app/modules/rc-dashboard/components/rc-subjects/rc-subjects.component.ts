@@ -3,7 +3,7 @@ import {Subject} from "../../../../models/dto/subject.model";
 import {SubjectService} from "../../../../services/subject.service";
 import {MessageService} from "primeng/api";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {SaveSubjectComponent} from "../../../reusable/subject/save-subject/save-subject.component";
+import {SubjectComponent} from "./subject/subject.component";
 import {addToMessageService} from "../../../../utils/message-service.util";
 
 @Component({
@@ -13,7 +13,7 @@ import {addToMessageService} from "../../../../utils/message-service.util";
 })
 export class RcSubjectsComponent implements OnInit {
   subjects: Subject[] = [];
-  currentSubject: Subject = {id: -1, name: '', coefficient: 1, code: '', section_id: -1};
+  currentSubject: Subject = {id: -1, name: '', coefficient: 1, code: '', sectionId: -1};
 
   constructor(
     private modalService: NgbModal,
@@ -35,10 +35,10 @@ export class RcSubjectsComponent implements OnInit {
   }
 
   saveSubjectAction(subject?: Subject) {
-    const modalRef = this.modalService.open(SaveSubjectComponent, {
+    const modalRef = this.modalService.open(SubjectComponent, {
       size: 'lg', centered: true, backdrop: 'static', keyboard: true
     });
-    const saveSubjectComponent: SaveSubjectComponent = modalRef.componentInstance;
+    const saveSubjectComponent: SubjectComponent = modalRef.componentInstance;
     if (!subject) {
       saveSubjectComponent.resetSubject();
       saveSubjectComponent.subjectForm.reset();

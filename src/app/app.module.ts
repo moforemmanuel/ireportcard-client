@@ -21,6 +21,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
 import {CheckboxModule} from "primeng/checkbox";
 import {RadioButtonModule} from "primeng/radiobutton";
+import {ToggleButtonModule} from "primeng/togglebutton";
 
 
 @NgModule({
@@ -29,23 +30,24 @@ import {RadioButtonModule} from "primeng/radiobutton";
     RcWelcomeComponent,
     SelectSchoolComponent
   ],
-  imports: [
-    RcDashboardModule,
-    RcAuthModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    NgbModule,
-    ToastModule,
-    ButtonModule,
-    RippleModule,
-    ReactiveFormsModule,
-    InputTextModule,
-    CheckboxModule,
-    RadioButtonModule,
-    FormsModule,
-  ],
+    imports: [
+        RcDashboardModule,
+        RcAuthModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        HttpClientModule,
+        NgbModule,
+        ToastModule,
+        ButtonModule,
+        RippleModule,
+        ReactiveFormsModule,
+        InputTextModule,
+        CheckboxModule,
+        RadioButtonModule,
+        FormsModule,
+        ToggleButtonModule,
+    ],
   providers: [
     injectables,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

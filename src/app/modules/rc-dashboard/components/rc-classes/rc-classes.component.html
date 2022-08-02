@@ -11,29 +11,11 @@
   </div>
 
   <div class="py-2">
-
-    <div class="container-fluid">
-      <span class="h5">Sections</span>
-
-      <div *ngFor="let section of sections">
-        {{section.name}}
-      </div>
-    </div>
-  </div>
-
-  <div class="py-2">
     <div class="container-fluid">
       <div class="row py-2">
-        <label class="h6" for="section">Select School Section</label>
         <div class="form-group row">
           <div class="col-8">
-            <select (ngModelChange)="loadClasses()" [(ngModel)]="sectionModelId" class="form-select my-auto"
-                    id="section">
-              <!-- this does not actually fire the event -->
-              <option [selected]="true" disabled>Select section</option> <!-- TODO make this disabled -->
-              <option *ngFor="let section of sections" [value]="section.id">{{section.name}}</option>
-            </select>
-            {{sectionModelId}}
+            <p-dropdown (onChange)="loadClasses()" [placeholder]="'Select School Section'" [options]="sections" [optionLabel]="'name'" [optionValue]="'id'" [styleClass]="'w-100'"></p-dropdown>
           </div>
           <div class="col-4">
             <button (click)="loadClasses()" class="" pButton>Load Classes</button>
@@ -43,36 +25,23 @@
       <div *ngIf="classes.length == 0" class="row py-2">
         <span class="text-center">No classes for this section</span>
       </div>
-      <div class="row py-2">
-        <div *ngFor="let c of classes" class="col-lg-6 col-sm-12">
-          <div class="card my-2">
-            <div class="card-header">
-              {{c.classLevel.name}}
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <div *ngFor="let cs of c.classLevelSubs" class="col-3">
-                  <div class="card">
-                    <div class="card-header">
-                      {{cs.name}}
-                    </div>
-                  </div>
-                </div>
+      <div *ngIf="classes.length != 0" class="">
+        <p-panel [header]="classLevel.classLevel.name" [toggleable]="true" *ngFor="let classLevel of classes">
+          <ng-template pTemplate="icons">
+            <button pButton class="p-panel-header-icon p-link" icon="pi pi-pencil" (click)="saveClassAction(classLevel.classLevel)"></button>
+            <button pButton class="p-panel-header-icon p-link" icon="pi pi-trash" (click)="saveClassAction(classLevel.classLevel)"></button>
+          </ng-template>
+          <ng-template pTemplate="body">
+            <div class="grid">
+              <div class="col-4" *ngFor="let classLevelSub of classLevel.classLevelSubs">
+                <p-card header="{{classLevelSub.name}}" styleClass="p-card-shadow">
+                  Number of student applied: 23
+                  <!-- TODO fetch this data from backend -->
+                </p-card>
               </div>
             </div>
-            <div class="card-footer">
-              <div class="d-flex justify-content-end">
-                <button (click)="saveClassAction(c.classLevel)" class="p-button-raised p-button-info"
-                        icon="pi pi-pencil"
-                        pButton></button>
-                &nbsp;
-                <button (click)="deleteClassAction(c.classLevel)" class="p-button-raised p-button-danger"
-                        icon="pi pi-trash"
-                        pButton></button>
-              </div>
-            </div>
-          </div>
-        </div>
+          </ng-template>
+        </p-panel>
       </div>
     </div>
   </div>

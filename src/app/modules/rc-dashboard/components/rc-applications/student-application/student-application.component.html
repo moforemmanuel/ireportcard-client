@@ -4,53 +4,44 @@
       <span class="h3">Save Student</span>
       <span class="spacer"></span>
       <span class="">
-        <button (click)="modal.close()" class="p-button-rounded p-button-danger p-button-text" icon="pi pi-times"
+        <button (click)="closeModal()" class="p-button-rounded p-button-danger p-button-text" icon="pi pi-times"
                 pButton></button>
       </span>
     </div>
     <div class="p-3">
-      <form class="" ngForm>
+      <form class="" [formGroup]="applicationForm">
         <div *ngIf="editing">
           {{studentApplicationRes ? studentApplicationRes.student.name : ''}}<br>
-          {{studentApplicationRes ? studentApplicationRes.application.application_key.class_sub_id : ''}}
+          {{studentApplicationRes ? studentApplicationRes.application.key.classSubId : ''}}
         </div>
         <div *ngIf="!editing">
-          <div class="form-group">
-            <select [(ngModel)]="apForm.studentId" [name]="'student'" class="form-select">
-              <option *ngFor="let student of students"
-                      [selected]="student.id == (studentApplicationRes ? studentApplicationRes.student.id : -1)"
-                      [value]="student.id">
-                {{student.name}}
-              </option>
-            </select>
-          </div>
+          <label class="block text-800 font-medium mb-2">Student Name</label>
+          <p-dropdown [styleClass]="'w-100'" [formControlName]="'student'" [options]="students" [optionLabel]="'name'" [optionValue]="'id'"></p-dropdown>
+
           <div class="form-group row">
             <div class="col-md-6">
-              <label for="academicYear">Academic Year</label>
-              <select [(ngModel)]="apForm.yearId" [name]="'year'" class="form-select" id="academicYear">
-                <option *ngFor="let academicYear of academicYears" [value]="academicYear.id">
-                  {{academicYear.name}}
-                </option>
-              </select>
+              <label class="block text-800 font-medium mb-2">Academic Year</label>
+              <p-dropdown [styleClass]="'w-100'" [formControlName]="'year'" [options]="academicYears" [optionLabel]="'name'" [optionValue]="'id'"></p-dropdown>
             </div>
             <div class="col-md-6">
-              <label for="classLevel">Class Level</label>
-              <select [(ngModel)]="apForm.classId" [name]="'class'" class="form-select" id="classLevel">
-                <option *ngFor="let classLevel of classLevels"
-                        [selected]="classLevel.id == (studentApplicationRes ? studentApplicationRes.application.application_key.class_sub_id : -1)"
-                        [value]="classLevel.id">
-                  {{classLevel.name}}
-                </option>
-              </select>
+              <label class="block text-800 font-medium mb-2">Class Level</label>
+              <p-dropdown [styleClass]="'w-100'" [formControlName]="'classLevel'" [options]="studentClassLevels" [optionLabel]="'name'" [optionValue]="'id'"></p-dropdown>
             </div>
           </div>
         </div>
 
         <!-- subject related -->
         <div class="form-group py-2">
+          <p-divider></p-divider>
           <!-- a styled list of subjects -->
-          Subjects:
-          <div class="d-flex rc-aps">
+          <label class="block text-800 font-medium mb-2">Subjects</label>
+          <div *ngFor="let aps of applicationSubjects" class=" my-2 d-flex">
+            <label class="full-width">{{aps.subject.name}} - {{aps.subject.coefficient }}</label>
+            <button pButton label="Delete" class="p-button-danger"></button>
+          </div>
+
+          <div class="d-flex">
+
             <table class="table">
               <tr *ngFor="let aps of applicationSubjects" class="table-row">
                 <td>{{aps.subject.name}}</td>
@@ -64,7 +55,7 @@
         </div>
         <div class="row py-2">
           <div class="col-md-3">
-            <button (click)="addSubject($event, subjectSelect)" class="btn btn-primary">Add</button>
+            <button pButton (click)="addSubject($event, subjectSelect)" [label]="'Add'"></button>
           </div>
           <div class="col-md-9">
             <select #subjectSelect [hidden]="true" class="form-select">
@@ -74,7 +65,7 @@
         </div>
         <div class="row">
           <div class="{{editing ? 'col-6': 'col-12'}}">
-            <button (click)="saveApplication()" [disabled]="!apFormValid" class="btn full-width" icon="pi pi-check"
+            <button (click)="saveApplication()" [disabled]="!applicationForm.valid" class="btn full-width" icon="pi pi-check"
                     label="Save" pButton type="button"></button>
           </div>
           <div class="{{editing ? 'col-6': ''}}">

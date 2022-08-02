@@ -22,11 +22,7 @@
       <span class="text-500">Want to add a new school? Click to add on the side</span>
       <span class="spacer"></span>
 
-      <button (click)="toggleSchoolForm()" pButton pRipple
-              [ngClass]="[showSchoolForm? 'p-button-danger':'']"
-              label="{{showSchoolForm? 'Cancel':'Add'}}"
-              icon="{{showSchoolForm? 'pi pi-times':'pi pi-plus'}}">
-      </button>
+      <p-toggleButton [(ngModel)]="showSchoolForm" onLabel="Cancel" offLabel="Add" onIcon="pi pi-times" offIcon="pi pi-plus"></p-toggleButton>
       &nbsp;
       <button (click)="setSchoolAction()" pButton pRipple label="Save" icon="pi pi-check"></button>
     </div>

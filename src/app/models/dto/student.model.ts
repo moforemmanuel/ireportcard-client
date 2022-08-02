@@ -4,5 +4,6 @@ export interface Student {
   gender: string;
   dob: string;
   pob: string;
-  regno: string;
+  regNum: string;
+  schoolId: number;
 }

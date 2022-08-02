@@ -10,12 +10,9 @@ import {MenuItem} from "primeng/api";
       <app-top-menu></app-top-menu>
     </header>
     <main>
-      <div class="dashboard-container row no-gutters">
-        <div class="col-xl-2 col-lg-2 d-none d-lg-block side-menu-container">
-          <app-side-menu></app-side-menu>
-        </div>
-        <div class="col-xl-10 col-lg-10 col-md-12 dashbody-container">
-          <app-dashbody></app-dashbody>
+      <div class="dashboard-container row no-gutters dashbody-container">
+        <div class="dash-body container-fluid dash-body-content">
+          <router-outlet ></router-outlet>
         </div>
       </div>
     </main>

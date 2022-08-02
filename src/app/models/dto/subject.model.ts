@@ -3,5 +3,5 @@ export interface Subject {
   name: string;
   code: string;
   coefficient: number;
-  section_id: number;
+  sectionId: number;
 }

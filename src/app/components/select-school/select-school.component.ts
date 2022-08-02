@@ -41,14 +41,10 @@ export class SelectSchoolComponent implements OnInit {
     this.schoolService.getAll().subscribe((schools) => this.schools = schools);
   }
 
-  toggleSchoolForm() {
-    this.showSchoolForm = !this.showSchoolForm;
-  }
-
   addSchoolAction() {
     const school: School = {
-      id: -1, name: this.addSchoolForm.get('name')?.value, max_grade: this.addSchoolForm.get('maxGrade')?.value,
-      application_open: this.addSchoolForm.get('applicationOpen')?.value,
+      id: -1, name: this.addSchoolForm.get('name')?.value, maxGrade: this.addSchoolForm.get('maxGrade')?.value,
+      applicationOpen: this.addSchoolForm.get('applicationOpen')?.value,
     }
     this.schoolService.save(school).subscribe(() => this.loadSchools());
   }
