@@ -1,0 +1,23 @@
+
+rc-template:
+  - src/app/**/*.html
+rc-test:
+  - src/app/**/*.spec.js
+rc-dashboard:
+  - src/app/modules/rc-dashboard/*
+rc-auth:
+  - src/app/modules/rc-auth/*
+rc-models:
+  - src/app/models/*
+rc-services:
+  - src/app/services/*
+rc-components:
+  - src/app/components/*
+rc-guards:
+  - src/app/guards/*
+rc-utils:
+  - src/app/utils/*
+rc-interceptors:
+  - src/app/interceptors/*
+config:
+  - ./*.json
