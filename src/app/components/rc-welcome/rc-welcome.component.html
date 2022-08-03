@@ -1,10 +1,28 @@
-<section>
-  <div class="p-5 surface-section block">
+<section class="fadeinup animation-duration-1000">
+  <div class="surface-section px-4 py-8 md:px-6 lg:px-8 text-center">
     <span class="block text-8xl font-bold mb-1">Transkript</span>
-    <div class="text-6xl text-primary font-bold mb-3">Manage your school from </div>
+    <div class="text-6xl text-primary font-bold mb-3">Transform the way you manage the school!</div>
     <p class="mt-0 mb-4 text-700 line-height-3">.</p>
 
-    <button pButton pRipple label="Register" type="button" class="mr-3 p-button-raised"></button>
-    <button pButton pRipple label="Login" type="button" class="p-button-outlined"></button>
+    <button [routerLink]="['/auth']" pButton pRipple label="Register" type="button" class="mr-3 p-button-raised border-noround"></button>
+    <button [routerLink]="['/auth']" pButton pRipple label="Login" type="button" class="p-button-outlined border-noround"></button>
+  </div>
+</section>
+<section class="fadeindown animation-duration-1000">
+  <div class="surface-section px-4 py-8 md:px-6 lg:px-8 text-center">
+    <div class="mb-3 font-bold text-2xl">
+      <span class="text-900">One Product, </span>
+      <span class="text-blue-600">Many Solutions</span>
+    </div>
+    <div class="text-700 text-sm mb-6">Ac turpis egestas maecenas pharetra convallis posuere morbi leo urna.</div>
+    <div class="grid">
+      <div *ngFor="let feature of features" class="col-12 md:col-4 mb-4 px-5">
+            <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+                <i class="{{feature.icon}} text-4xl text-blue-500"></i>
+            </span>
+        <div class="text-900 mb-3 font-medium">{{feature.title}}</div>
+        <span class="text-700 text-sm line-height-3">{{feature.description}}</span>
+      </div>
+    </div>
   </div>
 </section>
