@@ -7,7 +7,7 @@ import {LocalStorageUtil} from "../utils/local-storage.util";
   providedIn: 'root'
 })
 export class SchoolGuard implements CanActivate {
-  constructor(private _router: Router) {
+  constructor(private router: Router) {
   }
 
   canActivate(
@@ -16,7 +16,7 @@ export class SchoolGuard implements CanActivate {
 
     const schoolId = LocalStorageUtil.readSchoolId();
     if (!schoolId) {
-      this._router.navigate(['/select-school']).then((r) => console.log(`School guard: ${r}`));
+      this.router.navigate(['/select-school']).then((r) => console.log(`School guard: ${r}`));
     }
     return schoolId ? schoolId > 0: false;
   }
