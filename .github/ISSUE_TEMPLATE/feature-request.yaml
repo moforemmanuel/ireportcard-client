@@ -1,7 +1,7 @@
 name: 🆕 Feature Request
 description: Suggest an idea for this project
 title: "[Feature Request] <title>"
-labels: [feature, enhancement]
+labels: [feature, enhancement, 'rc: to be reviewed']
 body:
   - type: dropdown
     attributes:
