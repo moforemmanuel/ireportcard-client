@@ -67,14 +67,13 @@ export class RcSettingsComponent implements OnInit {
 
   initSchoolForm = () => {
     if (this.school) {
-      console.log(this.school)
       this.settingsForm = this.fb.group({
         applicationsOpen: [this.school.applicationOpen, Validators.required],
-        name: [this.school.name, Validators.required],
-        year: [this.school.currentYearId, Validators.required],
-        term: [this.school.currentTerm],
-        sequence: [this.school.currentSequenceId, Validators.required],
-        maxGrade: [this.school.maxGrade, Validators.compose([Validators.min(0), Validators.max(100)])]
+        name: [this.school.name ? this.school.name: '', Validators.required],
+        year: [this.school.currentYearId? this.school.currentYearId: -1, Validators.required],
+        term: [this.school.currentTerm? this.school.currentTerm: 'None'],
+        sequence: [this.school.currentSequenceId? this.school: -1, Validators.required],
+        maxGrade: [this.school.maxGrade? this.school.maxGrade: -1, Validators.compose([Validators.min(0), Validators.max(100)])]
       });
     }
   }
@@ -88,7 +87,6 @@ export class RcSettingsComponent implements OnInit {
     this.schoolService.getById(this.schoolId).subscribe((school) => {
       localStorage.setItem("school", JSON.stringify(school))
       this.school = school;
-      console.log(school)
       this.initSchoolForm();
     });
   }
