@@ -22,7 +22,8 @@ import {DefaultService} from "../../../../services/default.service";
               <span class="fw-bold {{online ? 'online-text': 'offline-text' }}">{{online ? "ONLINE" : "OFFLINE"}}</span>
             </div>
             <div class="flex-item">
-              <button (click)="logoutAction()" pButton label="Logout" icon="pi pi-power-off"></button>
+              <button (click)="changeSchoolAction()" pButton label="Change School" icon="pi pi-arrows-h" class="p-button-raised p-button-plain hover:text-white" ></button>
+             <button (click)="logoutAction()" pButton label="Logout" icon="pi pi-power-off" data-in-line="true" class="p-button-danger"></button>
             </div>
           </div>
         </ng-template>
@@ -107,5 +108,10 @@ export class TopMenuComponent implements OnInit {
       });
     }
 
+  }
+
+  changeSchoolAction() {
+    LocalStorageUtil.deleteSchoolId();
+    location.reload();
   }
 }
