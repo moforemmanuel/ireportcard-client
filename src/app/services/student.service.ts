@@ -26,7 +26,7 @@ export class StudentService {
   }
 
   update(student: Student): Observable<EntityResponse> {
-    return this.http.put<EntityResponse>(`${this.studentApiUrl}/${student.id}`, student);
+    return this.http.put<EntityResponse>(`${this.studentApiUrl}`, student);
   }
 
   delete(id: number): Observable<EntityResponse> {
