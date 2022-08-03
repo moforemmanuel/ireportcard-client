@@ -25,6 +25,7 @@ body {
   overflow: hidden;
 }
 
+/*NAVIGATION BAR*/
 ul, nav{
   list-style: none;
   padding-left: 15px;
@@ -52,6 +53,7 @@ i {
   font-size: 1.3rem;
 }
 
+/*HEADER*/
 header {
   position: fixed;
   top: 0;
@@ -97,6 +99,7 @@ a.btn:hover {
   color: #fff;
 }
 
+/*BACKGROUND COVER*/
 .cover  {
   height: 100vh;
   width: 100%;
@@ -144,6 +147,7 @@ a.btn:hover {
     display: none;
   }
   
+  /*BUTTON*/
   .btn1{
     color: #88a3c2;
     -webkit-transition: all 0.2s linear !important;
