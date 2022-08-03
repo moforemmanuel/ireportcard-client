@@ -19,6 +19,10 @@ export class AuthInterceptor implements HttpInterceptor {
             if (xAuthToken && xAuthToken !== "") {
               console.log(xAuthToken)
               LocalStorageUtil.writeUserToken(xAuthToken);
+            } else {
+              if (event.status == 401) {
+                LocalStorageUtil.deleteUserToken();
+              }
             }
           }
         })

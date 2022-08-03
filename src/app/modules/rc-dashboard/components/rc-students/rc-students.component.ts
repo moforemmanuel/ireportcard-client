@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Student} from "../../../../models/dto/student.model";
 import {StudentService} from "../../../../services/student.service";
-import {SaveStudentComponent} from "../../../reusable/student/save-student/save-student.component";
+import {StudentComponent} from "./student/student.component";
 import {MessageService} from "primeng/api";
 import {addToMessageService} from "../../../../utils/message-service.util";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -32,10 +32,10 @@ export class RcStudentsComponent implements OnInit {
   }
 
   saveStudentAction(student?: Student) {
-    const modalRef = this.modalService.open(SaveStudentComponent, {
+    const modalRef = this.modalService.open(StudentComponent, {
       size: 'lg', centered: true, backdrop: 'static', keyboard: true
     });
-    const saveStudentComponent: SaveStudentComponent = modalRef.componentInstance;
+    const saveStudentComponent: StudentComponent = modalRef.componentInstance;
     if (!student) {
       saveStudentComponent.resetStudent();
       saveStudentComponent.studentForm.reset();

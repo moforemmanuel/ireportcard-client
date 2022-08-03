@@ -15,6 +15,8 @@ import {AcademicYearUtil} from "../../../../utils/academic-year.util";
 import {SchoolService} from "../../../../services/school.service";
 import {School} from "../../../../models/dto/school.model";
 import {LocalStorageUtil} from "../../../../utils/local-storage.util";
+import {Section} from "../../../../models/dto/section.model";
+import {SectionService} from "../../../../services/section.service";
 
 type ATS = AcademicYear | Term | Sequence;
 
@@ -32,6 +34,7 @@ export class RcSettingsComponent implements OnInit {
   schoolId: number = -1;
   settingsForm: FormGroup = this.fb.group({});
   school?: School;
+  sections: Section[] = [];
   terms: Term[] = [];
   sequences: Sequence[] = [];
   academicYears: AcademicYear[] = [];
@@ -41,6 +44,7 @@ export class RcSettingsComponent implements OnInit {
     private msgService: MessageService,
     private defaultService: DefaultService,
     private schoolService: SchoolService,
+    private sectionService: SectionService,
     private sequenceService: SequenceService,
     private termService: TermService,
     private academicYearService: AcademicYearService
@@ -64,12 +68,12 @@ export class RcSettingsComponent implements OnInit {
   initSchoolForm = () => {
     if (this.school) {
       this.settingsForm = this.fb.group({
-        applicationsOpen: [this.school.application_open, Validators.required],
-        name: [this.school.name, Validators.required],
-        year: [this.school.curr_year_id, Validators.required],
-        term: [this.school.curr_term],
-        sequence: [this.school.curr_seq_id, Validators.required],
-        maxGrade: [this.school.max_grade, Validators.compose([Validators.min(0), Validators.max(100)])]
+        applicationsOpen: [this.school.applicationOpen, Validators.required],
+        name: [this.school.name ? this.school.name: '', Validators.required],
+        year: [this.school.currentYearId? this.school.currentYearId: -1, Validators.required],
+        term: [this.school.currentTerm? this.school.currentTerm: 'None'],
+        sequence: [this.school.currentSequenceId? this.school: -1, Validators.required],
+        maxGrade: [this.school.maxGrade? this.school.maxGrade: -1, Validators.compose([Validators.min(0), Validators.max(100)])]
       });
     }
   }
@@ -88,28 +92,20 @@ export class RcSettingsComponent implements OnInit {
   }
 
   loadSettingsInfo(): void {
-    this.sequenceService.getAll().subscribe({
-      next: (sequences) => {
-        this.sequences = sequences
-        console.log(this.school)
-      },
-    });
-    this.termService.getAll().subscribe({
-      next: (terms) => this.terms = terms,
-    });
-    this.academicYearService.getAll().subscribe({
-      next: (years) => this.academicYears = years,
-    });
+    this.sectionService.getBySchoolId(this.schoolId).subscribe((sections) => this.sections = sections)
+    this.sequenceService.getAll().subscribe((sequences) => this.sequences = sequences);
+    this.termService.getAll().subscribe((terms) => this.terms = terms);
+    this.academicYearService.getAll().subscribe((years) => this.academicYears = years);
   }
 
   saveSettingsAction() {
     const school: School = {
       id: this.schoolId,
       name: this.settingsForm.get('name')?.value,
-      application_open: this.settingsForm.get('applicationsOpen')?.value,
-      max_grade: this.settingsForm.get('maxGrade')?.value,
-      curr_year_id: parseInt(this.settingsForm.get("year")?.value),
-      curr_seq_id: parseInt(this.settingsForm.get("sequence")?.value),
+      applicationOpen: this.settingsForm.get('applicationsOpen')?.value,
+      maxGrade: this.settingsForm.get('maxGrade')?.value,
+      currentYearId: parseInt(this.settingsForm.get("year")?.value),
+      currentSequenceId: parseInt(this.settingsForm.get("sequence")?.value),
     }
     this.schoolService.update(school).subscribe(() => document.location.reload());
   }
@@ -183,8 +179,8 @@ export class RcSettingsComponent implements OnInit {
       switch (atsName) {
         case ATSName.SEQUENCE: {
           const termId = seqTermAddInput ? parseInt(seqTermAddInput.value) : -1;
-          const seq: Sequence = {id: -1, name: entityValue, term_id: termId};
-          if (seq.term_id > 0) {
+          const seq: Sequence = {id: -1, name: entityValue, termId: termId};
+          if (seq.termId > 0) {
             this.sequenceService.save(seq).subscribe({
               next: (res) => addToMessageService(this.msgService, 'success', 'Success', res.message),
               error: (err) => addToMessageService(this.msgService, 'error', 'Error', err.error.message),
@@ -229,22 +225,36 @@ export class RcSettingsComponent implements OnInit {
     let res: Term[] = [];
     if (sequence) {
       res = this.terms.filter((term) => {
-        return sequence.term_id == term.id
+        return sequence.termId == term.id
       });
     }
-
-    switch (res.length) {
-      case 0:
-        return {id: -1, name: 'None'};
-      case 1:
-        return res[0];
-      default:
-        return {id: -1, name: 'None'};
-    }
+    return res.length == 1? res[0]: {id: -1, name: 'None'}
   }
 
   deleteATSAction(number: number, year: AcademicYear) {
 
+  }
+
+  saveSection(sectionInput: HTMLInputElement | Section, blocked: boolean) {
+    if (blocked) {
+      if (sectionInput instanceof HTMLInputElement) {
+        if (sectionInput.hidden && sectionInput.value !== "") {
+          const section: Section = {
+            id: -1, name: sectionInput.value, schoolId: this.schoolId, category: ""
+          }
+          this.sectionService.save(section).subscribe(() => {
+            sectionInput.value = "";
+            this.loadSettingsInfo();
+          });
+        }
+      } else {
+        this.sectionService.update(sectionInput).subscribe(() => this.loadSettingsInfo());
+      }
+    }
+  }
+
+  deleteSection(section: Section) {
+    this.sectionService.delete(section.id).subscribe(() => this.loadSettingsInfo());
   }
 }
 

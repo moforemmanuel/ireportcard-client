@@ -15,6 +15,7 @@ import {LoginComponent} from "./modules/rc-auth/components/login/login.component
 import {RegisterComponent} from "./modules/rc-auth/components/register/register.component";
 import {AuthComponent} from "./modules/rc-auth/components/auth/auth.component";
 import {AuthGuard} from "./guards/auth.guard";
+import {ClassLevelComponent} from "./modules/rc-dashboard/components/rc-classes/class-level/class-level.component";
 
 const routes: Routes = [
   {
@@ -27,11 +28,12 @@ const routes: Routes = [
     path: 'dashboard',
     children: [
       {component: RcHomeComponent, path: 'home'},
-      {component: RcSubjectsComponent, path: 'subjects'},
-      {component: RcClassesComponent, path: 'classes'},
-      {component: RcStudentsComponent, path: 'students'},
-      {component: RcApplicationsComponent, path: 'applications'},
-      {component: RcClasslistsComponent, path: 'class-lists'},
+      {component: RcSubjectsComponent, path: 'subject'},
+      {component: RcClassesComponent, path: 'class'},
+      {component: ClassLevelComponent, path: 'class/:id'},
+      {component: RcStudentsComponent, path: 'student'},
+      {component: RcApplicationsComponent, path: 'application'},
+      {component: RcClasslistsComponent, path: 'class-list'},
       {component: RcSettingsComponent, path: 'settings'}
     ],
     canActivate: [AuthGuard, SchoolGuard]

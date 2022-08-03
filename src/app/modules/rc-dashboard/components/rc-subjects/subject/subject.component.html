@@ -27,7 +27,7 @@
           <select class="form-select" formControlName="sectionId">
             <option *ngFor="let section of sections" [ngValue]="section"
                     class=""
-                    selected="{{subject.section_id == section.id}}">
+                    selected="{{subject.sectionId == section.id}}">
               {{section.name}}
             </option>
           </select>

@@ -33,8 +33,8 @@ export class RegisterComponent implements OnInit {
 
   registerAction() {
     const userReg: UserRegisterRequest = {
-      first_name: this.registerForm.get("firstName")?.value,
-      last_name: this.registerForm.get("lastName")?.value,
+      firstName: this.registerForm.get("firstName")?.value,
+      lastName: this.registerForm.get("lastName")?.value,
       username: this.registerForm.get("username")?.value,
       password: this.registerForm.get("password")?.value,
     }

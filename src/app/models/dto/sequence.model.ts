@@ -1,5 +1,1 @@
-export interface Sequence {
-  id: number;
-  name: string;
-  term_id: number;
-}
+export interface Sequence {id: number; name: string; termId: number;}

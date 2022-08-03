@@ -13,26 +13,22 @@
       <div *ngIf="schools.length == 0" style="height: 150px" class="text-center p-8">
         <span class="h3 text-500">No Schools Found</span>
       </div>
-      <div *ngFor="let school of schools; let i = index" class="m-3">
+      <div *ngFor="let school of schools" class="m-3">
         <input name="school" value="{{school.id}}" [(ngModel)]="selectedSchoolId" type="radio" class="p-radiobutton">&nbsp;
-        <label class="p-radiobutton-label">{{school.name}} {{i}}</label>
+        <label class="p-radiobutton-label">{{school.name}}</label>
       </div>
     </div>
     <div class="font-medium text-500 mb-3 d-flex">
       <span class="text-500">Want to add a new school? Click to add on the side</span>
       <span class="spacer"></span>
 
-      <button (click)="toggleSchoolForm()" pButton pRipple
-              [ngClass]="[showSchoolForm? 'p-button-danger':'']"
-              label="{{showSchoolForm? 'Cancel':'Add'}}"
-              icon="{{showSchoolForm? 'pi pi-times':'pi pi-plus'}}">
-      </button>
+      <p-toggleButton [(ngModel)]="schoolFormDiv.hidden" onLabel="Add" offLabel="Cancel" offIcon="pi pi-times" onIcon="pi pi-plus" [styleClass]="'p-button-danger'"></p-toggleButton>
       &nbsp;
-      <button (click)="setSchoolAction()" pButton pRipple label="Save" icon="pi pi-check"></button>
+      <button (click)="setSchoolAction()" icon="pi pi-arrow-right" iconPos="right" pButton pRipple label="Continue"></button>
     </div>
 
 
-    <div *ngIf="showSchoolForm" class="m-auto my-2  surface-border border-round">
+    <div #schoolFormDiv [hidden]="true" class="m-auto my-2  surface-border border-round">
       <form [formGroup]="addSchoolForm">
 
         <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
@@ -49,7 +45,7 @@
               <label for="open" class="text-900 font-medium">Applications Open</label>
             </div>
 
-            <button (click)="addSchoolAction()" pButton pRipple label="Sign In" icon="pi pi-user" class="w-full"></button>
+            <button (click)="addSchoolAction()" pButton pRipple label="Save School" icon="pi pi-check" class="w-full"></button>
           </div>
         </div>
       </form>

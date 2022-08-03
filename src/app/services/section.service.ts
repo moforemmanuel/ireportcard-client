@@ -20,11 +20,19 @@ export class SectionService {
     return this.http.get<Section>(`${this.sectionApiUrl}/${id}`);
   }
 
+  getBySchoolId(schoolId: number): Observable<Section[]> {
+    return this.http.get<Section[]>(`${this.sectionApiUrl}/school/${schoolId}`);
+  }
+
   save(section: Section): Observable<Section> {
     return this.http.post<Section>(this.sectionApiUrl, section);
   }
 
   update(section: Section): Observable<Section> {
-    return this.http.put<Section>(`${this.sectionApiUrl}/${section.id}`, section);
+    return this.http.put<Section>(`${this.sectionApiUrl}`, section);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.sectionApiUrl}/${id}`);
   }
 }

@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="py-5">
+
+    <div class="p-3">
+      <form [formGroup]="classForm" class="">
+        <div class="form-group">
+          <label class="form-label">Name</label>
+          <input [formControlName]="'name'" [value]="classLevel.name" class="form-control" pInputText>
+        </div>
+        <div class="my-2">
+          <form *ngFor="let classLevelSub of classLevelSubs" class="my-2">
+            <div class="d-flex">
+              <input #classSubInput [value]="classLevelSub.name" class="w-100 mr-2" pInputText>
+              <button (click)="saveClassLevelSub(classSubInput, classLevelSub)"
+                      [disabled]="classSubInput.value.length <= 0" class="btn" label="Save" pButton
+                      type="button"></button>
+              &nbsp;
+              <button  class="p-button-danger" label="Delete" pButton type="button"></button>
+            </div>
+
+          </form>
+          <button icon="pi pi-plus-circle" pButton></button>
+        </div>
+        <div class="form-group">
+          <span class="py-2">
+            <button  [disabled]="!classForm.valid" class="btn" icon="pi pi-check"
+                    label="Save Class"
+                    pButton type="button"></button>
+          </span>
+        </div>
+        <div class="form-text text-center">
+          <span class="font-bold text-primary">This class will be saved to the <u>{{section.name}}</u> section</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

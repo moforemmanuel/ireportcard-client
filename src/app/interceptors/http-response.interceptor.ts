@@ -11,6 +11,7 @@ import {catchError, EMPTY, Observable, tap} from 'rxjs';
 import {MessageService} from "primeng/api";
 import {EntityResponse} from "../models/dto/entity.response";
 import {addToMessageService} from "../utils/message-service.util";
+import {LocalStorageUtil} from "../utils/local-storage.util";
 
 @Injectable()
 export class HttpResponseInterceptor implements HttpInterceptor {
@@ -47,7 +48,9 @@ export class HttpResponseInterceptor implements HttpInterceptor {
     } else if (response.status == 0) {
       this.msgService.add({severity: 'error', summary: `Server error`, detail: `Server is not running!`});
     } else if (response.status == 401) {
+      LocalStorageUtil.deleteUserToken();
       addToMessageService(this.msgService, 'warn', 'Logged Out', 'You need to be logged in to perform this action!')
+      location.reload();
     } else if (response.error == undefined) {
       this.msgService.add({
         severity: 'error',
