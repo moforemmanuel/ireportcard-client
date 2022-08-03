@@ -1,5 +1,7 @@
 # Reportcard
 
+[![Gitter](https://badges.gitter.im/transkript/community.svg)](https://gitter.im/transkript/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.6.
 
 ## Development server
