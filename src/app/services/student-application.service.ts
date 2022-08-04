@@ -36,7 +36,7 @@ export class StudentApplicationService {
 
   getAllByRequest(request: ApplicationRequest): Observable<ApplicationResponse[]> {
     return this.http.get<ApplicationResponse[]>(`${this.apiUrl}/all_full`, {
-      params: {yearId: request.year_id, classId: request.class_id}
+      params: {yearId: request.yearId, classId: request.classId}
     });
   }
 

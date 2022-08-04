@@ -121,9 +121,9 @@ export class StudentApplicationComponent implements OnInit {
     });
 
     const applicationRequest: ApplicationRequest = {
-      student_id: this.applicationForm.get('student')?.value,
-      class_id: this.applicationForm.get('classLevel')?.value,
-      year_id: this.applicationForm.get('year')?.value,
+      studentId: this.applicationForm.get('student')?.value,
+      classId: this.applicationForm.get('classLevel')?.value,
+      yearId: this.applicationForm.get('year')?.value,
     }
 
     console.log(applicationRequest)
@@ -135,8 +135,8 @@ export class StudentApplicationComponent implements OnInit {
         next: (res) => {
           console.log(res);
           const ak: StudentApplicationKey = {
-            classSubId: applicationRequest.class_id,
-            studentId: applicationRequest.student_id
+            classSubId: applicationRequest.classId,
+            studentId: applicationRequest.studentId
           };
           this.editing = true;
         },

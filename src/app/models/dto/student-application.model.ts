@@ -25,9 +25,9 @@ export interface StudentApplicationTrial {
 }
 
 export interface ApplicationRequest {
-  class_id: number;
-  year_id: number;
-  student_id: number;
+  classId: number;
+  yearId: number;
+  studentId: number;
 }
 
 export interface ApplicationResponse {
