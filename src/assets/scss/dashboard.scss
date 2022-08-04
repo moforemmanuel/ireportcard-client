@@ -6,11 +6,6 @@
  */
 app-dashboard {
   color: $rc-dark-color;
-
-  header {
-
-  }
-
   main {
     height: 100%;
     background-color: $rc-tertiary-color;
@@ -28,6 +23,7 @@ app-dashboard {
  * Navigation menus
  */
 // Top menu bar
+/*
 .top-menu-bar {
   @include rc-box-shadow(0px, 2px, 24px, 0px, rgba(0, 0, 0, 0.32));
 
@@ -54,6 +50,8 @@ app-dashboard {
   }
 }
 
+
+ */
 // Side menu bar
 .side-menu-bar {
   .p-panelmenu-panel {

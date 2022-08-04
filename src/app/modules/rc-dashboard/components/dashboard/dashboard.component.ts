@@ -16,9 +16,7 @@ import {MenuItem} from "primeng/api";
         </div>
       </div>
     </main>
-    <footer class="full-width">
-      <app-footer></app-footer>
-    </footer>
+    <app-footer></app-footer>
   `
 })
 export class DashboardComponent implements OnInit {

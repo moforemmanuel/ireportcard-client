@@ -4,22 +4,28 @@ import {Component, OnInit} from '@angular/core';
   selector: 'app-footer',
   styleUrls: ['./footer.component.scss'],
   template: `
-    <div class="d-flex">
-      <div class="mr-auto d-flex align-items-center">
-        <span>Copyright &copy; {{ currentYear }}</span>
-      </div>
+    <footer>
+      <div class="flex justify-content-between align-items-center w-full fixed bottom-0 bg-indigo-600 text-white">
+        <div class="p-3">
+          <span class="text-center vertical-align-middle">Copyright &copy; {{ currentYear }}</span>
+        </div>
 
-      <div class="ml-auto">
-        <button pButton pRipple type="button" icon="pi pi-facebook" class="p-button-rounded"></button>&nbsp;
-        <button pButton pRipple type="button" icon="pi pi-twitter" class="p-button-rounded"></button>&nbsp;
-        <button pButton pRipple type="button" icon="pi pi-instagram" class="p-button-rounded"></button>&nbsp;
-        <button pButton pRipple type="button" icon="pi pi-github" class="p-button-rounded"></button>&nbsp;
+        <div class="p-3">
+          <button *ngFor="let button of buttons" pButton pRipple type="button" [icon]="button.icon" class="p-button-rounded mx-1"></button>&nbsp;
+        </div>
       </div>
-    </div>
+    </footer>
+
   `
 })
 export class FooterComponent implements OnInit {
   currentYear: number = new Date().getFullYear();
+  buttons: { label: string, icon: string }[] = [
+    {label: 'Facebook', icon: 'pi pi-fw pi-facebook'},
+    {label: 'Twitter', icon: 'pi pi-fw pi-twitter'},
+    {label: 'Instagram', icon: 'pi pi-fw pi-instagram'},
+    {label: 'Github', icon: 'pi pi-fw pi-github'}
+  ];
 
   constructor() {
   }

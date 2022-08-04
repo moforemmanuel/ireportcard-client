@@ -12,19 +12,15 @@ import {DefaultService} from "../../../../services/default.service";
   styleUrls: ['./top-menu.component.scss'],
   template: `
     <div class="top-menu">
-      <p-menubar styleClass="top-menu-bar" [model]="menuItems" [class]="'menu-item'">
+      <p-menubar [styleClass]="'p-3 text-color border-noround'" [model]="menuItems" [class]="'menu-item'">
         <ng-template pTemplate="start">
-          <span class="h3 font-weight-bold p-menuitem-text rms-title mx-5 px-5">R . M . S</span>
+          <span class="text-5xl">RMS</span>
         </ng-template>
         <ng-template pTemplate="end">
-          <div class="d-flex">
-            <div class="flex-item mx-2">
-              <span class="fw-bold {{online ? 'online-text': 'offline-text' }}">{{online ? "ONLINE" : "OFFLINE"}}</span>
-            </div>
-            <div class="flex-item">
-              <button (click)="changeSchoolAction()" pButton label="Change School" icon="pi pi-arrows-h" class="p-button-raised p-button-plain hover:text-white" ></button>
-             <button (click)="logoutAction()" pButton label="Logout" icon="pi pi-power-off" data-in-line="true" class="p-button-danger"></button>
-            </div>
+          <div class="flex justify-content-center align-items-center">
+            <span class="block border-circle w-3rem h-3rem {{online ? 'bg-green-200': 'bg-red-200' }}" pTooltip="{{online ? 'Online' : 'Offline'}}" tooltipPosition="top"></span>
+            <button (click)="changeSchoolAction()" pButton label="Change School" icon="pi pi-arrows-h" class="p-button-raised border-noround m-1" ></button>
+            <button (click)="logoutAction()" pButton pTooltip="Logout" tooltipPosition="top" icon="pi pi-power-off" data-in-line="true" class="p-button-danger border-noround m-1"></button>
           </div>
         </ng-template>
       </p-menubar>
@@ -48,36 +44,43 @@ export class TopMenuComponent implements OnInit {
         label: 'Home',
         icon: 'pi pi-fw pi-home',
         routerLink: ['/dashboard/home'],
+        routerLinkActiveOptions: {exact: true},
       },
       {
         label: 'Subjects',
         icon: 'pi pi-fw pi-book',
         routerLink: ['/dashboard/subject'],
+        routerLinkActiveOptions: {exact: true},
       },
       {
         label: 'Classes',
         icon: 'pi pi-fw pi-list',
         routerLink: ['/dashboard/class'],
+        routerLinkActiveOptions: {exact: true},
       },
       {
         label: 'Students',
         icon: 'pi pi-fw pi-users',
         routerLink: ['/dashboard/student'],
+        routerLinkActiveOptions: {exact: true},
       },
       {
         label: 'Applications',
         icon: 'pi pi-fw pi-plus-circle',
         routerLink: ['/dashboard/application'],
+        routerLinkActiveOptions: {exact: true},
       },
       {
         label: 'Class Lists',
         icon: 'pi pi-fw pi-folder',
         routerLink: ['/dashboard/class-list'],
+        routerLinkActiveOptions: {exact: true},
       },
       {
         label: 'Settings',
         icon: 'pi pi-fw pi-cog',
         routerLink: ['/dashboard/settings'],
+        routerLinkActiveOptions: {exact: true},
       }
 
     ]
