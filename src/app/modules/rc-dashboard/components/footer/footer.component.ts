@@ -4,18 +4,15 @@ import {Component, OnInit} from '@angular/core';
   selector: 'app-footer',
   styleUrls: ['./footer.component.scss'],
   template: `
-    <footer>
-      <div class="flex justify-content-between align-items-center w-full fixed bottom-0 bg-indigo-600 text-white">
-        <div class="p-3">
-          <span class="text-center vertical-align-middle">Copyright &copy; {{ currentYear }}</span>
-        </div>
-
-        <div class="p-3">
-          <button *ngFor="let button of buttons" pButton pRipple type="button" [icon]="button.icon" class="p-button-rounded mx-1"></button>&nbsp;
-        </div>
+    <div class="flex justify-content-between align-items-center w-full fixed bottom-0 bg-indigo-600 text-white">
+      <div class="p-3">
+        <span class="text-center vertical-align-middle">Copyright &copy; {{ currentYear }}</span>
       </div>
-    </footer>
 
+      <div class="p-3">
+        <button *ngFor="let button of buttons" pButton pRipple type="button" [icon]="button.icon" class="p-button-rounded mx-1"></button>&nbsp;
+      </div>
+    </div>
   `
 })
 export class FooterComponent implements OnInit {
