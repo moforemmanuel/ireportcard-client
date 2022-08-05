@@ -28,7 +28,8 @@
       <div *ngIf="classes.length != 0" class="">
         <p-panel [header]="classLevel.classLevel.name" [toggleable]="true" *ngFor="let classLevel of classes">
           <ng-template pTemplate="icons">
-            <button pButton class="p-panel-header-icon p-link" icon="pi pi-pencil" (click)="saveClassAction(classLevel.classLevel)"></button>
+            <button pButton class="p-panel-header-icon p-link" icon="pi pi-plus"></button>
+            <button pButton class="p-panel-header-icon p-link" icon="pi pi-pencil" [routerLink]="['/class/view', 1]"></button>
             <button pButton class="p-panel-header-icon p-link" icon="pi pi-trash" (click)="saveClassAction(classLevel.classLevel)"></button>
           </ng-template>
           <ng-template pTemplate="body">
