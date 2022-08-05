@@ -1,6 +1,6 @@
 export interface Grade {
   score: number;
   description: string;
-  subjectRegistrationId: number;
+  registrationId: number;
   sequenceId: number;
 }
