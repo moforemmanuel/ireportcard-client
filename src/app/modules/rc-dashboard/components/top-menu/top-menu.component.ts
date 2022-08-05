@@ -43,7 +43,7 @@ export class TopMenuComponent implements OnInit {
       {
         label: 'Home',
         icon: 'pi pi-fw pi-home',
-        routerLink: ['/dashboard/home'],
+        routerLink: ['/dashboard'],
         routerLinkActiveOptions: {exact: true},
       },
       {
@@ -63,6 +63,14 @@ export class TopMenuComponent implements OnInit {
         icon: 'pi pi-fw pi-users',
         routerLink: ['/dashboard/student'],
         routerLinkActiveOptions: {exact: true},
+        items: [
+          {
+            label: 'Add',
+            icon: 'pi pi-fw pi-plus',
+            routerLink: ['/dashboard/student/add'],
+            routerLinkActiveOptions: {exact: true},
+          },
+        ]
       },
       {
         label: 'Applications',

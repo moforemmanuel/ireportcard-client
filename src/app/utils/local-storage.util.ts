@@ -25,6 +25,12 @@ export module LocalStorageUtil {
     return id? parseInt(id): null;
   }
 
+  export const getSchoolId = (): number => {
+    const id = readSchoolId();
+    if (id) return id;
+    else throw new Error('School id not found');
+  }
+
   export const deleteSchoolId = (): void => {
     localStorage.removeItem(LS_KEY.schoolId);
   }
