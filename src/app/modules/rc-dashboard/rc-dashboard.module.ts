@@ -41,6 +41,11 @@ import {
 } from "./components/rc-applications/student-application/student-application.component";
 import {PanelModule} from "primeng/panel";
 import {MenuModule} from "primeng/menu";
+import { AddStudentComponent } from './components/rc-students/add-student/add-student.component';
+import { AddApplicationComponent } from './components/rc-applications/add-application/add-application.component';
+import {RcDashboardRoutingModule} from "./rc-dashboard-routing.module";
+import {MessageModule} from "primeng/message";
+import {CalendarModule} from "primeng/calendar";
 
 
 @NgModule({
@@ -62,32 +67,37 @@ import {MenuModule} from "primeng/menu";
     ClassLevelComponent,
     SectionComponent,
     StudentApplicationComponent,
+    AddStudentComponent,
+    AddApplicationComponent,
   ],
-    imports: [
-        CommonModule,
-        MenubarModule,
-        SharedModule,
-        ButtonModule,
-        InputTextModule,
-        PanelMenuModule,
-        RippleModule,
-        CardModule,
-        DividerModule,
-        DataViewModule,
-        ToastModule,
-        FormsModule,
-        TableModule,
-        InputSwitchModule,
-        ReactiveFormsModule,
-        RadioButtonModule,
-        CheckboxModule,
-        SplitButtonModule,
-        ToggleButtonModule,
-        DropdownModule,
-        InputNumberModule,
-        PanelModule,
-        MenuModule
-    ],
+  imports: [
+    RcDashboardRoutingModule,
+    CommonModule,
+    MenubarModule,
+    SharedModule,
+    ButtonModule,
+    InputTextModule,
+    PanelMenuModule,
+    RippleModule,
+    CardModule,
+    DividerModule,
+    DataViewModule,
+    ToastModule,
+    FormsModule,
+    TableModule,
+    InputSwitchModule,
+    ReactiveFormsModule,
+    RadioButtonModule,
+    CheckboxModule,
+    SplitButtonModule,
+    ToggleButtonModule,
+    DropdownModule,
+    InputNumberModule,
+    PanelModule,
+    MenuModule,
+    MessageModule,
+    CalendarModule
+  ],
   exports: [
     DashboardComponent
   ]
