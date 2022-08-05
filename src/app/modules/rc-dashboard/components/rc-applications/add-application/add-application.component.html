@@ -1,0 +1,43 @@
+<div class="surface-section border-round bg">
+  <form class="form p-3" [formGroup]="applicationForm">
+    <div>
+      <span class="text-3xl">Student Information</span>
+      <div class="field col">
+        <label>Name</label>
+        <p-dropdown [styleClass]="'w-100'" [formControlName]="'student'" [options]="students" [optionLabel]="'name'" [optionValue]="'id'"></p-dropdown>
+      </div>
+      <div class="formgrid grid">
+        <div class="field col">
+          <label>Academic Year</label>
+          <!-- TODO this should not be selected -->
+          <p-dropdown [styleClass]="'w-100'" [formControlName]="'year'" [options]="academicYears" [optionLabel]="'name'" [optionValue]="'id'"></p-dropdown>
+        </div>
+        <div class="field col">
+          <label>Class Level</label>
+          <p-dropdown [styleClass]="'w-100'" [options]="classLevels" [formControlName]="'classLevel'" [optionLabel]="'name'" [optionValue]="'sub_id'"></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="m-3 p-5 shadow-2">
+      <span class="text-3xl">Subjects</span>
+      <div class="formgrid grid my-1">
+        <div class="col-10">
+          <p-dropdown #subjectDropDown [styleClass]="'w-100'" [options]="subjects" [optionLabel]="'name'" [optionValue]="'id'" class="mr-3"></p-dropdown>
+          <p-message *ngIf="alreadyAddedSubject" [styleClass]="'my-2'" severity="error" text="Message Content"></p-message>
+        </div>
+        <div class="col-2">
+          <button (click)="addSubjectAction(subjectDropDown)" pButton class="w-100 p-button-raised" label="Add" icon="pi pi-plus"></button>
+        </div>
+      </div>
+      <div class="p-2">
+        <div *ngFor="let subject of addedSubjects" class="fadeinup animation-duration-400 block bg-indigo-100 font-bold text-center p-4 border-round mb-3">
+          {{subject.name}}
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <p-divider></p-divider>
+      <button (click)="submitApplicationAction()" pButton label="Submit Application" icon="pi pi-check"></button>
+    </div>
+  </form>
+</div>

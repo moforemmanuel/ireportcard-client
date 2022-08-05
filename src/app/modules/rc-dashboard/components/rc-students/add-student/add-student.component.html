@@ -1,0 +1,35 @@
+<div class="surface-section border-round bg">
+  <form class="form p-3" [formGroup]="studentForm">
+    <span class="text-3xl">Add Student</span>
+    <div class="p-fluid grid py-5">
+      <div class="field col-8">
+        <span class="p-float-label">
+          <input pInputText id="name" [formControlName]="'name'">
+          <label for="name">Name</label>
+        </span>
+      </div>
+      <div class="field col-4 flex align-content-center">
+        <span class="mr-2 flex align-self-center" *ngFor="let gender of genders">
+          <p-radioButton id="gender" [value]="gender" [formControlName]="'gender'"></p-radioButton>&nbsp;
+          <label for="gender">{{gender | titlecase}}</label>
+        </span>
+      </div>
+      <div class="field md:col-6">
+        <span class="p-float-label">
+          <p-calendar id="dob" [formControlName]="'dob'"></p-calendar>
+          <label for="dob">Date of Birth</label>
+        </span>
+      </div>
+      <div class="field md:col-6">
+        <span class="p-float-label">
+          <input pInputText id="pob" [formControlName]="'pob'">
+          <label for="pob">Place of Birth</label>
+        </span>
+      </div>
+    </div>
+    <p-divider></p-divider>
+    <div class="col flex justify-content-end">
+      <button (click)="saveStudentAction()" pButton class="" label="Save Student" icon="pi pi-check"></button>
+    </div>
+  </form>
+</div>
