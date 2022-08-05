@@ -14,6 +14,7 @@ import {
   StudentApplicationComponent
 } from "./student-application/student-application.component";
 import {SAT, StudentClassLevel} from "../../../../app.types";
+import {LocalStorageUtil} from "../../../../utils/local-storage.util";
 
 
 @Component({
@@ -22,6 +23,7 @@ import {SAT, StudentClassLevel} from "../../../../app.types";
   styleUrls: ['./rc-applications.component.scss']
 })
 export class RcApplicationsComponent implements OnInit {
+  schoolId: number = -1;
   applicationsQueried: boolean = false;
 
   studentApplicationTrials: StudentApplicationTrial[] = [];
@@ -39,6 +41,7 @@ export class RcApplicationsComponent implements OnInit {
     private academicYearService: AcademicYearService,
     private studentApplicationService: StudentApplicationService
   ) {
+    this.schoolId = LocalStorageUtil.getSchoolId();
     this.applicationRequest = {year_id: -1, class_id: -1}
   }
 
@@ -59,19 +62,22 @@ export class RcApplicationsComponent implements OnInit {
   }
 
   loadClasses() {
-    this.classService.getAll().subscribe({
-      next: (classes) => classes.forEach(c => this.classSubService.getAll()
-        .subscribe( (classSubs) => {
-          classSubs.forEach((cs) => {
-            this.classes.push({id:c.id, sub_id: cs.id, name: `${c.name} ${cs.name}`, classLevel: c, classLevelSub: cs});
-          });
-          if (this.classes.length > 0) this.applicationRequest.class_id = this.classes[0].sub_id
-        }))
+    this.classService.getBySchool(this.schoolId).subscribe({
+      next: (classes) => {
+        classes.forEach(c => this.classSubService.getAllByClassLevelId(c.id)
+          .subscribe( (classSubs) => {
+            classSubs.forEach((cs) => {
+              this.classes.push({id:c.id, sub_id: cs.id, name: `${c.name} ${cs.name}`, classLevel: c, classLevelSub: cs});
+            });
+            if (this.classes.length > 0) this.applicationRequest.class_id = this.classes[0].sub_id
+          }))
+      }
     });
   }
 
   loadApplications() {
     this.studentATs = [];
+    console.log(this.applicationRequest);
     if (this.applicationRequest.year_id > 0 ) {
       const classId: number = this.applicationRequest.class_id;
       const yearId: number = this.applicationRequest.year_id;
@@ -89,21 +95,7 @@ export class RcApplicationsComponent implements OnInit {
     } else this.studentATs = [];
   }
 
-  saveApplicationAction(studentAT?: SAT) {
-    const modalRef = this.modalService.open(StudentApplicationComponent, {
-      size: 'md', centered: true, backdrop: 'static', keyboard: true
-    });
-    const saveApplicationComponent: StudentApplicationComponent = modalRef.componentInstance;
-    if (studentAT) {
-      saveApplicationComponent.editing = true;
-      saveApplicationComponent.studentAT = studentAT;
-      saveApplicationComponent.setupApplicationForm();
-    } else {
-      saveApplicationComponent.editing = false;
-      saveApplicationComponent.resetApplication();
-    }
-    modalRef.result.then(() => {
-      this.loadApplications();
-    })
+  deleteSatAction(id: number) {
+    this.studentApplicationService.deleteTrial(id).subscribe(() => this.loadApplications());
   }
 }
