@@ -17,11 +17,19 @@ export class SubjectRegistrationService {
     return this.http.get<SubjectRegistration>(`${this.apiUrl}/${id}`);
   }
 
+  getBySatId(satId: number): Observable<SubjectRegistration[]> {
+    return this.http.get<SubjectRegistration[]>(`${this.apiUrl}/sat/${satId}`);
+  }
+
   save(subjectRegistration: SubjectRegistration): Observable<EntityResponse> {
     return this.http.post<EntityResponse>(`${this.apiUrl}`, subjectRegistration);
   }
 
   saveMultiple(subjectRegistrations: SubjectRegistration[]): Observable<EntityResponse[]> {
     return this.http.post<EntityResponse[]>(`${this.apiUrl}/multiple`, subjectRegistrations);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
