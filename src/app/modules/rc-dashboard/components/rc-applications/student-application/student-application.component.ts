@@ -3,7 +3,7 @@ import {
   ApplicationRequest,
   ApplicationResponse,
   StudentApplication,
-  StudentApplicationKey
+  StudentApplicationKey, StudentApplicationTrial
 } from "../../../../../models/dto/student-application.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Subject} from "../../../../../models/dto/subject.model";
@@ -23,6 +23,8 @@ import {StudentApplicationService} from "../../../../../services/student-applica
 import {addToMessageService} from "../../../../../utils/message-service.util";
 import {MessageService} from "primeng/api";
 import {SAT, StudentClassLevel} from "../../../../../app.types";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Dropdown} from "primeng/dropdown";
 
 type ApplicationSubject = { pending: boolean, subject: Subject };
 
@@ -32,183 +34,95 @@ type ApplicationSubject = { pending: boolean, subject: Subject };
   styleUrls: ['./student-application.component.scss']
 })
 export class StudentApplicationComponent implements OnInit {
-  editing: boolean = false;
-  studentApplicationRes?: ApplicationResponse;
-  applicationForm: FormGroup = this.fb.group({});
-  applicationSubjects: ApplicationSubject[] = [];
+  studentApplication!: StudentApplication;
+  studentApplicationTrial!: StudentApplicationTrial;
+  registeredSubjects: { reg: SubjectRegistration, subject: Subject }[] = [];
   subjects: Subject[] = [];
   students: Student[] = [];
   academicYears: AcademicYear[] = [];
-  studentClassLevels: StudentClassLevel[] = [];
-  // TODO arrange this forced undefined removal
-  studentAT!: SAT;
-  private readonly defaultSubject: Subject = {id: -1, name: '', sectionId: -1, code: '', coefficient: -1};
+
+  alreadyAddedSubject: boolean = false;
+  subjectsToRegister: Subject[] = [];
 
   constructor(
     private fb: FormBuilder,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     private msgService: MessageService,
-    private activeModal: NgbActiveModal,
     private subjectService: SubjectService,
     private studentService: StudentService,
-    private classLevelService: ClassLevelService,
-    private classLevelSubService: ClassLevelSubService,
-    private academicYearService: AcademicYearService,
     private studentApplicationService: StudentApplicationService,
     private subjectRegistrationService: SubjectRegistrationService,
   ) {
-
-    this.applicationForm = this.fb.group({
-      student: [0, Validators.required],
-      year: [0, Validators.required],
-      classLevel: [0, Validators.required],
-      subjectRegs: this.fb.array([])
-    })
+    const satId = this.activatedRoute.snapshot.params['id'];
+    if (satId) {
+      this.loadSAT(satId);
+    } else {
+      this.router.navigate(['/dashboard/application']).then();
+    }
   }
 
   ngOnInit(): void {
     this.loadData();
-    this.loadClassLevels();
-    this.loadApplicationSubjects();
-  }
-
-
-  resetApplication() {
-    this.studentApplicationRes = undefined;
-  }
-
-  getUnregisteredSubjects(): Subject[] {
-    const subjects: Subject[] = [];
-    this.subjects.forEach((s) => {
-      if (!this.applicationSubjects.find((as) => as.subject.id == s.id)) {
-        subjects.push(s);
-      }
-    });
-    return subjects;
   }
 
   loadData = () => {
     this.studentService.getAll().subscribe((students) => this.students = students);
     this.subjectService.getAll().subscribe((subjects) => this.subjects = subjects);
-    this.academicYearService.getAll().subscribe((years) => this.academicYears = years);
   }
 
-  loadClassLevels = () => {
-    this.classLevelService.getAll().subscribe({
-      next: (classLevels) => classLevels.forEach((cl) => {
-        this.classLevelSubService.getAllByClassLevelId(cl.id).subscribe({
-          next: (classLevelSubs) => classLevelSubs.forEach((cls) => {
-            this.studentClassLevels.push({id: cl.id, sub_id: cls.id, name: `${cl.name} ${cls.name}`, classLevel: cl, classLevelSub: cls});
-          })
+  loadSAT = (satId: number) => {
+    this.studentApplicationService.getTrial(satId).subscribe((sat) => {
+      this.studentApplicationTrial = sat;
+      this.studentApplicationService.get(sat.applicationKey).subscribe((application) => {
+        this.studentApplication = application;
+      });
+      this.loadRegisteredSubjects(satId);
+    });
+  }
+
+  loadRegisteredSubjects = (satId: number) => {
+    this.registeredSubjects = [];
+    this.subjectRegistrationService.getBySatId(satId).subscribe((subjectRegs) => {
+      subjectRegs.forEach(subjectReg => {
+        this.subjectService.getById(subjectReg.subjectId).subscribe((subject) => {
+          this.registeredSubjects.push({reg: subjectReg, subject: subject});
         });
-      })
+      });
     });
   }
 
-
-  loadApplicationSubjects() {
-    if (this.studentApplicationRes) {
-
-    }
+  unregisterSubjectAction(subject: { reg: SubjectRegistration; subject: Subject }) {
+    this.subjectRegistrationService.delete(subject.reg.id).subscribe(() => this.loadRegisteredSubjects(subject.reg.satId));
   }
 
-  saveApplication() {
-    const newSubjectRegs: SubjectRegistration[] = [];
-    this.applicationSubjects.forEach((aps) => {
-      if (aps.pending) {
-        if (this.studentApplicationRes) {
-        }
+  addSubjectToRegisterAction(subjectDropDown: Dropdown) {
+    const subjectId = subjectDropDown.value;
+    if (subjectId) {
+      const selectedSubject = this.subjects.find(s => s.id == subjectId)
+      const subjectRegistered = this.registeredSubjects.find(s => s.subject.id == subjectId);
+      const subjectSelected = this.subjectsToRegister.find(s => s.id == subjectId);
+      if (!(subjectSelected || subjectRegistered) && selectedSubject) {
+        this.subjectsToRegister.push(selectedSubject);
       }
-    });
-
-    const applicationRequest: ApplicationRequest = {
-      studentId: this.applicationForm.get('student')?.value,
-      classId: this.applicationForm.get('classLevel')?.value,
-      yearId: this.applicationForm.get('year')?.value,
     }
+  }
 
-    console.log(applicationRequest)
+  removeSubjectToRegister(subjectId: number) {
+    this.subjectsToRegister = this.subjectsToRegister.filter(s => s.id != subjectId)
+  }
 
-    if (this.editing) {
-      console.log(newSubjectRegs)
-    } else {
-      this.studentApplicationService.save(applicationRequest).subscribe({
-        next: (res) => {
-          console.log(res);
-          const ak: StudentApplicationKey = {
-            classSubId: applicationRequest.classId,
-            studentId: applicationRequest.studentId
-          };
-          this.editing = true;
-        },
+  registerSubjectsAction() {
+    if (this.studentApplicationTrial && this.subjectsToRegister.length != 0) {
+      const subjectRegs: SubjectRegistration[] = [];
+      const satId = this.studentApplicationTrial.id;
+      this.subjectsToRegister.forEach(s => subjectRegs.push({
+        subjectId: s.id, satId: satId, id: 0
+      }));
+      this.subjectRegistrationService.saveMultiple(subjectRegs).subscribe(() => {
+        this.loadRegisteredSubjects(satId);
+        this.subjectsToRegister = [];
       });
-
-      this.subjectRegistrationService.saveMultiple(newSubjectRegs).subscribe({
-        next: (res) => {
-          console.log(res)
-          this.loadApplicationSubjects();
-        }
-      });
-    }
-  }
-
-  addSubject($event: MouseEvent, subjectSelect: HTMLSelectElement) {
-    const addSubjectButton: HTMLButtonElement = $event.target as HTMLButtonElement;
-    if (subjectSelect.hidden) {
-      subjectSelect.hidden = false;
-      addSubjectButton.textContent = "Register";
-    } else {
-      const s: Subject = this.findSubjectById(parseInt(subjectSelect.value), this.subjects);
-
-      if (s.id > 0) {
-        this.addToApplicationSubjects({pending: true, subject: s})
-      }
-
-      subjectSelect.hidden = true;
-      addSubjectButton.textContent = "Add";
-    }
-  }
-
-  findSubjectById = (id: number, subjects: Subject[]): Subject => {
-    const s: Subject | undefined = subjects.find(s => s.id == id);
-    return s ? s : this.defaultSubject;
-  }
-
-  addToApplicationSubjects = (asp: { pending: boolean, subject: Subject }) => {
-    if (!(this.applicationSubjects.find(asb => asb.subject.id == asp.subject.id))) {
-      this.applicationSubjects.push(asp);
-    } else {
-      const msgDetail: string = asp.pending ?
-        'This subject has already been added for registration, select another.' :
-        'This subject has already been registered.'
-      addToMessageService(this.msgService, 'warn', 'Duplicate Subject', msgDetail)
-    }
-  }
-
-  deleteApplication() {
-    const confirmDelete = confirm(`Are you sure you want to delete?`);
-    if (this.editing && this.studentApplicationRes && confirmDelete) {
-      this.studentApplicationService.delete({
-        studentId: this.studentApplicationRes?.student.id,
-        classSubId: this.studentApplicationRes?.application.key.classSubId
-      }).subscribe(() => {
-        // close on delete as this does not exist anymore
-        this.activeModal.close();
-      });
-    }
-  }
-
-  closeModal() {
-    this.activeModal.close();
-  }
-
-  setupApplicationForm() {
-    if (this.studentAT) {
-      this.applicationForm = this.fb.group({
-        student: [this.studentAT.student.id, Validators.required],
-        year: [this.studentAT.sat.academicYearId, Validators.required],
-        classLevel: [this.studentAT.application.classLevelSub.id, Validators.required],
-        subjectRegs: this.fb.array([])
-      })
     }
   }
 }

@@ -1,80 +1,64 @@
-<div class="container">
-  <div class="py-5">
-    <div class="d-flex">
-      <span class="h3">Save Student</span>
-      <span class="spacer"></span>
-      <span class="">
-        <button (click)="closeModal()" class="p-button-rounded p-button-danger p-button-text" icon="pi pi-times"
-                pButton></button>
-      </span>
+<div class="surface-section border-round bg">
+  <div class="surface-hover p-3 border-round-top">
+    <span class="text-3xl md:mx-2">Student Application</span>
+    <div class="grid md:mx-2 my-3">
+      <!-- student -->
+      <div class="md:col-6">
+        <div class="mx-2 p-2 bg-black-alpha-10 border-round-left-md">
+          <div class="field grid py-2">
+            <span class="col-3">Name</span>
+            <span class="col-9">{{studentApplication ? studentApplication.student.name : ''}}</span>
+          </div>
+          <div class="field grid py-2">
+            <span class="col-3">Reg Number</span>
+            <span class="col-9">{{studentApplication ? studentApplication.student.regNum : ''}}</span>
+          </div>
+          <div class="field grid py-2">
+            <span class="col-3">Gender</span>
+            <span class="col-9">{{studentApplication ? studentApplication.student.gender : ''}}</span>
+          </div>
+          <div class="field grid py-2">
+            <span class="col-3">Date of Birth</span>
+            <span class="col-9">{{studentApplication ? studentApplication.student.dob : ''}}</span>
+          </div>
+          <div class="field grid py-2">
+            <span class="col-3">Place of Birth</span>
+            <span class="col-9">{{studentApplication ? studentApplication.student.pob : ''}}</span>
+          </div>
+        </div>
+      </div>
+      <!-- end of student -->
+      <!-- subjects -->
+      <div class="md:col-6">
+        <div class="mx-2 bg-white-alpha-10 border-round-right-md">
+          <div class="field flex py-2" *ngFor="let subject of registeredSubjects">
+            <span class="w-25 mx-3 bg-indigo-400 text-white text-center p-2">{{subject.subject.name}}</span>
+            <span class="w-2 mx-3 bg-indigo-400 text-white text-center p-2">{{subject.subject.code}}</span>
+            <span class="w-2 mx-3 bg-indigo-400 text-white text-center p-2 md:border-round-right">{{subject.subject.coefficient}}</span>
+            <button (click)="unregisterSubjectAction(subject)" pButton class="p-button-icon p-button-danger p-button-rounded" icon="pi pi-trash" pTooltip="Unregister"></button>
+          </div>
+          <p-divider *ngIf="registeredSubjects.length != 0"></p-divider>
+          <div class="field flex py-2" *ngFor="let subject of subjectsToRegister">
+            <span class="w-25 mx-3 bg-black-alpha-10 text-center p-2">{{subject.name}}</span>
+            <span class="w-2 mx-3 bg-black-alpha-10 text-center p-2">{{subject.code}}</span>
+            <span class="w-2 mx-3 bg-black-alpha-10 text-center p-2 md:border-round-right">{{subject.coefficient}}</span>
+            <button (click)="removeSubjectToRegister(subject.id)" pButton class="p-button-icon p-button-danger p-button-rounded" icon="pi pi-trash" pTooltip="Remove"></button>
+          </div>
+        </div>
+      </div>
+      <!-- end subjects -->
     </div>
-    <div class="p-3">
-      <form class="" [formGroup]="applicationForm">
-        <div *ngIf="editing">
-          {{studentApplicationRes ? studentApplicationRes.student.name : ''}}<br>
-          {{studentApplicationRes ? studentApplicationRes.application.key.classSubId : ''}}
+    <div class="mx-3">
+      <div class="formgrid grid my-1">
+        <div class="col-6">
+          <p-dropdown #subjectDropDown [styleClass]="'w-100'" [options]="subjects" [optionLabel]="'name'" [optionValue]="'id'" class="mr-3"></p-dropdown>
+          <p-message *ngIf="alreadyAddedSubject" [styleClass]="'my-2'" severity="error" text="Message Content"></p-message>
         </div>
-        <div *ngIf="!editing">
-          <label class="block text-800 font-medium mb-2">Student Name</label>
-          <p-dropdown [styleClass]="'w-100'" [formControlName]="'student'" [options]="students" [optionLabel]="'name'" [optionValue]="'id'"></p-dropdown>
-
-          <div class="form-group row">
-            <div class="col-md-6">
-              <label class="block text-800 font-medium mb-2">Academic Year</label>
-              <p-dropdown [styleClass]="'w-100'" [formControlName]="'year'" [options]="academicYears" [optionLabel]="'name'" [optionValue]="'id'"></p-dropdown>
-            </div>
-            <div class="col-md-6">
-              <label class="block text-800 font-medium mb-2">Class Level</label>
-              <p-dropdown [styleClass]="'w-100'" [formControlName]="'classLevel'" [options]="studentClassLevels" [optionLabel]="'name'" [optionValue]="'id'"></p-dropdown>
-            </div>
-          </div>
+        <div class="col-4 flex">
+          <button (click)="addSubjectToRegisterAction(subjectDropDown)" pButton class="mx-2 p-button-raised" label="Add" icon="pi pi-plus"></button>
+          <button (click)="registerSubjectsAction()" pButton class="mx-2 p-button-plain bg-green-400 border-green-500" label="Save" icon="pi pi-check"></button>
         </div>
-
-        <!-- subject related -->
-        <div class="form-group py-2">
-          <p-divider></p-divider>
-          <!-- a styled list of subjects -->
-          <label class="block text-800 font-medium mb-2">Subjects</label>
-          <div *ngFor="let aps of applicationSubjects" class=" my-2 d-flex">
-            <label class="full-width">{{aps.subject.name}} - {{aps.subject.coefficient }}</label>
-            <button pButton label="Delete" class="p-button-danger"></button>
-          </div>
-
-          <div class="d-flex">
-
-            <table class="table">
-              <tr *ngFor="let aps of applicationSubjects" class="table-row">
-                <td>{{aps.subject.name}}</td>
-                <td>{{aps.subject.coefficient}}</td>
-                <td>
-                  <button class="p-button-rounded p-button-danger p-button-text" icon="pi pi-times" pButton></button>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <div class="row py-2">
-          <div class="col-md-3">
-            <button pButton (click)="addSubject($event, subjectSelect)" [label]="'Add'"></button>
-          </div>
-          <div class="col-md-9">
-            <select #subjectSelect [hidden]="true" class="form-select">
-              <option *ngFor="let s of getUnregisteredSubjects()" [value]="s.id">{{s.name}}</option>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="{{editing ? 'col-6': 'col-12'}}">
-            <button (click)="saveApplication()" [disabled]="!applicationForm.valid" class="btn full-width" icon="pi pi-check"
-                    label="Save" pButton type="button"></button>
-          </div>
-          <div class="{{editing ? 'col-6': ''}}">
-            <button (click)="deleteApplication()" [hidden]="!editing" [disabled]="!editing"
-                    class="btn full-width p-button-danger" icon="pi pi-trash" label="Delete" pButton
-                    type="button"></button>
-          </div>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
 </div>

@@ -10,14 +10,14 @@ export interface StudentApplication {
   key: StudentApplicationKey;
   student: Student;
   classLevelSub: ClassLevelSub;
-  application_trials?: StudentApplicationTrial[];
+  applicationTrials?: StudentApplicationTrial[];
 }
 
 export interface StudentApplicationTrial {
   id: number;
   order: number;
   repeating: boolean;
-  numOfSubjects?: number;
+  numberOfSubjects?: number;
   createdAt: string;
   updatedAt?: string;
   applicationKey: StudentApplicationKey;
@@ -25,7 +25,7 @@ export interface StudentApplicationTrial {
 }
 
 export interface ApplicationRequest {
-  classId: number;
+  classSubId: number;
   yearId: number;
   studentId: number;
 }
