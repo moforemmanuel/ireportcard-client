@@ -32,7 +32,7 @@ export class SelectSchoolComponent implements OnInit {
   redirectToDashboard = () => {
     if (LocalStorageUtil.readSchoolId()) {
       console.log("Already selected school: " + LocalStorageUtil.readSchoolId());
-      this.router.navigate(['/dashboard/home']).then();
+      this.router.navigate(['/dashboard']).then();
     }
   }
 
