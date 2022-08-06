@@ -16,6 +16,7 @@ import {CheckboxModule} from "primeng/checkbox";
 import {RippleModule} from "primeng/ripple";
 import {AuthComponent} from './components/auth/auth.component';
 import {ToastModule} from "primeng/toast";
+import {RcAuthRoutingModule} from "./rc-auth-routing.module";
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import {ToastModule} from "primeng/toast";
     AuthComponent,
   ],
   imports: [
+    RcAuthRoutingModule,
     CommonModule,
     SplitterModule,
     DividerModule,

@@ -46,6 +46,8 @@ import { AddApplicationComponent } from './components/rc-applications/add-applic
 import {RcDashboardRoutingModule} from "./rc-dashboard-routing.module";
 import {MessageModule} from "primeng/message";
 import {CalendarModule} from "primeng/calendar";
+import { AddClassLevelComponent } from './components/rc-classes/add-class-level/add-class-level.component';
+import { AddSubjectComponent } from './components/rc-subjects/add-subject/add-subject.component';
 
 
 @NgModule({
@@ -69,6 +71,8 @@ import {CalendarModule} from "primeng/calendar";
     StudentApplicationComponent,
     AddStudentComponent,
     AddApplicationComponent,
+    AddClassLevelComponent,
+    AddSubjectComponent,
   ],
   imports: [
     RcDashboardRoutingModule,

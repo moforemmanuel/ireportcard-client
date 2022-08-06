@@ -17,6 +17,9 @@ import {
 } from "./components/rc-applications/student-application/student-application.component";
 import {AddStudentComponent} from "./components/rc-students/add-student/add-student.component";
 import {StudentComponent} from "./components/rc-students/student/student.component";
+import {AddClassLevelComponent} from "./components/rc-classes/add-class-level/add-class-level.component";
+import {SubjectComponent} from "./components/rc-subjects/subject/subject.component";
+import {AddSubjectComponent} from "./components/rc-subjects/add-subject/add-subject.component";
 
 const routes: Routes = [
   {
@@ -24,8 +27,10 @@ const routes: Routes = [
     children: [
       {component: RcHomeComponent, path: ''},
       {component: RcSubjectsComponent, path: 'subject'},
+      {component: AddSubjectComponent, path: 'subject/add'},
+      {component: SubjectComponent, path: 'subject/view/:id'},
       {component: RcClassesComponent, path: 'class'},
-      {component: ClassLevelComponent, path: 'class/add'},
+      {component: AddClassLevelComponent, path: 'class/add'},
       {component: ClassLevelComponent, path: 'class/view/:id'},
       {component: RcStudentsComponent, path: 'student'},
       {component: AddStudentComponent, path: 'student/add'},

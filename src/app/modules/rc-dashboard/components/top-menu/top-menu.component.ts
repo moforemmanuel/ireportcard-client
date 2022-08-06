@@ -18,8 +18,11 @@ import {DefaultService} from "../../../../services/default.service";
         </ng-template>
         <ng-template pTemplate="end">
           <div class="flex justify-content-center align-items-center">
-            <span class="block border-circle w-3rem h-3rem {{online ? 'bg-green-200': 'bg-red-200' }}" pTooltip="{{online ? 'Online' : 'Offline'}}" tooltipPosition="top"></span>
-            <button (click)="changeSchoolAction()" pButton label="Change School" icon="pi pi-arrows-h" class="p-button-raised border-noround m-1" ></button>
+            <span class="block p-button border-noround {{online ? 'bg-green-300 hover:bg-green-300': 'bg-red-300 hover:bg-red-600' }}"
+                  pTooltip="{{online ? 'Online' : 'Offline'}}" tooltipPosition="top">
+              <i class="{{online? 'pi pi-bolt': 'pi pi-ban'}}"></i>
+            </span>
+            <button (click)="changeSchoolAction()" pButton pTooltip="Change School" tooltipPosition="top" icon="pi pi-arrows-h" class="p-button-raised border-noround m-1" ></button>
             <button (click)="logoutAction()" pButton pTooltip="Logout" tooltipPosition="top" icon="pi pi-power-off" data-in-line="true" class="p-button-danger border-noround m-1"></button>
           </div>
         </ng-template>

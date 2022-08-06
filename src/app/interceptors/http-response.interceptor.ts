@@ -9,7 +9,7 @@ import {
 } from '@angular/common/http';
 import {catchError, EMPTY, Observable, tap} from 'rxjs';
 import {MessageService} from "primeng/api";
-import {EntityResponse} from "../models/dto/entity.response";
+import {EntityResponse, isEntityResponse} from "../models/dto/entity.response";
 import {addToMessageService} from "../utils/message-service.util";
 import {LocalStorageUtil} from "../utils/local-storage.util";
 
@@ -31,9 +31,14 @@ export class HttpResponseInterceptor implements HttpInterceptor {
   }
 
   successfulResponseHandler = (event: HttpResponse<any>) => {
-    const entityResponse = event.body as EntityResponse;
-    if (event.status === 201) {
-      this.msgService.add({severity: 'success', summary: 'Success', detail: entityResponse.message});
+    const responseBody = event.body;
+    if (isEntityResponse(responseBody)) {
+      this.msgService.add({severity: 'success', summary: 'Success', detail: responseBody.message});
+    }
+
+    if (event.status >= 400 && event.status <= 499) {
+      console.log(event.body)
+      this.msgService.add({severity: 'error', summary: 'Error', detail: responseBody.error.error});
     }
   }
 
