@@ -34,23 +34,6 @@ export class RcSubjectsComponent implements OnInit {
     })
   }
 
-  saveSubjectAction(subject?: Subject) {
-    const modalRef = this.modalService.open(SubjectComponent, {
-      size: 'lg', centered: true, backdrop: 'static', keyboard: true
-    });
-    const saveSubjectComponent: SubjectComponent = modalRef.componentInstance;
-    if (!subject) {
-      saveSubjectComponent.resetSubject();
-      saveSubjectComponent.subjectForm.reset();
-    } else {
-      saveSubjectComponent.subject = subject;
-      saveSubjectComponent.setupSubjectForm();
-    }
-    modalRef.result.then(() => {
-      this.loadSubjects();
-    });
-  }
-
   deleteSubjectAction(subject: Subject) {
     const confirmDelete: boolean = confirm("Are you sure want to delete " + subject.name);
     if (confirmDelete) {
