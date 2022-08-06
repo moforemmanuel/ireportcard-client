@@ -1,46 +1,37 @@
-<div class="container">
-  <div class="py-2">
-    <div class="d-flex">
-      <span class="h3">Save Subject</span>
-      <span class="spacer"></span>
-      <span class="">
-        <button (click)="closeModal()" class="p-button-rounded p-button-danger p-button-text" icon="pi pi-times"
-                pButton></button>
-      </span>
+<div class="surface-section border-round bg">
+  <form class="form p-3" [formGroup]="subjectForm" (submit)="saveSubjectAction()">
+    <span class="text-3xl">Add Student</span>
+    <div class="p-fluid formgrid grid py-5">
+      <div class="field md:col-6">
+        <span class="p-float-label">
+          <input pInputText id="name" [formControlName]="'name'">
+          <label for="name">Title</label>
+        </span>
+      </div>
+      <div class="field md:col-6">
+        <span class="p-float-label">
+          <input pInputText id="code" [formControlName]="'code'">
+          <label for="name">Code</label>
+        </span>
+      </div>
     </div>
-    <div class="p-3">
-      <form [formGroup]="subjectForm" class="">
-        <div class="form-group">
-          <label>Name</label>
-          <input [value]="subject.name" class="form-control" formControlName="name" pInputText type="text">
-        </div>
-        <div class="form-group">
-          <label>Code</label>
-          <input [value]="subject.code" class="form-control" formControlName="code" pInputText type="text">
-        </div>
-        <div class="form-group">
-          <label>Coefficient</label>
-          <input [value]="subject.coefficient" class="form-control" formControlName="coeff" pInputText type="number">
-        </div>
-        <div class="form-group">
-          <label>Section</label>
-          <select class="form-select" formControlName="sectionId">
-            <option *ngFor="let section of sections" [ngValue]="section"
-                    class=""
-                    selected="{{subject.sectionId == section.id}}">
-              {{section.name}}
-            </option>
-          </select>
-        </div>
-        <div class="form-group">
-          <span class="p-2">
-            <button
-              (click)="saveSubject()" [disabled]="!subjectForm.valid" class="btn" icon="pi pi-check"
-              label="Save" pButton
-              type="button"></button>
-          </span>
-        </div>
-      </form>
+    <div class="p-fluid grid py-5">
+      <div class="field md:col-6">
+        <span class="p-float-label">
+          <input pInputText id="coeff" [formControlName]="'coeff'">
+          <label for="name">Coefficient</label>
+        </span>
+      </div>
+      <div class="field md:col-6">
+        <span class="p-float-label">
+          <p-dropdown id="section" [options]="sections" [optionLabel]="'name'" [optionValue]="'id'" [formControlName]="'section'"></p-dropdown>
+          <label for="section">Section</label>
+        </span>
+      </div>
     </div>
-  </div>
+    <p-divider></p-divider>
+    <div class="col flex justify-content-end">
+      <button pButton class="" label="Save Subject" icon="pi pi-check"></button>
+    </div>
+  </form>
 </div>

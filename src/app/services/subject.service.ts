@@ -26,7 +26,7 @@ export class SubjectService {
   }
 
   update(subject: Subject): Observable<EntityResponse> {
-    return this.http.put<EntityResponse>(`${this.subjectApiUrl}/${subject.id}`, subject);
+    return this.http.put<EntityResponse>(this.subjectApiUrl, subject);
   }
 
   delete(id: number): Observable<any> {
