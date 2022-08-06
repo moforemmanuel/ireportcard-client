@@ -15,7 +15,8 @@
       <div class="row py-2">
         <div class="form-group row">
           <div class="col-8">
-            <p-dropdown (onChange)="loadClasses()" [placeholder]="'Select School Section'" [options]="sections" [optionLabel]="'name'" [optionValue]="'id'" [styleClass]="'w-100'"></p-dropdown>
+            <p-dropdown [options]="sections"  [optionLabel]="'name'" [optionValue]="'id'" (onChange)="loadClasses()"
+                        [placeholder]="'Select School Section'" [(ngModel)]="sectionId" [styleClass]="'w-100'"></p-dropdown>
           </div>
           <div class="col-4">
             <button (click)="loadClasses()" class="" pButton>Load Classes</button>
@@ -26,20 +27,30 @@
         <span class="text-center">No classes for this section</span>
       </div>
       <div *ngIf="classes.length != 0" class="">
-        <p-panel [header]="classLevel.classLevel.name" [toggleable]="true" *ngFor="let classLevel of classes">
+        <p-panel [header]="c.classLevel.name" [toggleable]="true" *ngFor="let c of classes">
           <ng-template pTemplate="icons">
             <button pButton class="p-panel-header-icon p-link" icon="pi pi-plus"></button>
-            <button pButton class="p-panel-header-icon p-link" icon="pi pi-pencil" [routerLink]="['/class/view', 1]"></button>
-            <button pButton class="p-panel-header-icon p-link" icon="pi pi-trash" (click)="saveClassAction(classLevel.classLevel)"></button>
+            <button pButton class="p-panel-header-icon p-link" icon="pi pi-pencil" [routerLink]="['/dashboard/class/view', 1]"></button>
+            <button pButton class="p-panel-header-icon p-link" icon="pi pi-trash" (click)="deleteClassAction(c.classLevel)"></button>
           </ng-template>
           <ng-template pTemplate="body">
             <div class="grid">
-              <div class="col-4" *ngFor="let classLevelSub of classLevel.classLevelSubs">
-                <p-card header="{{classLevelSub.name}}" styleClass="p-card-shadow">
-                  Number of student applied: 23
+              <div class="col-3 py-3" *ngFor="let classLevelSub of c.classLevelSubs">
+                <p-card header="{{classLevelSub.name}}" styleClass="p-card-shadow p-1 block">
+                  <span class="block">Full Name: {{c.classLevel.name}} {{classLevelSub.name}}</span>
+                  <span class="block">
+                    Number of students applied: {{classLevelSub.numberOfStudents ? classLevelSub.numberOfStudents : 0}}
+                  </span>
+                  <div class="py-2">
+                    <button (click)="deleteClassSubAction(classLevelSub.id, c.classLevel)" pButton icon="pi pi-trash" class="p-button-danger"></button>
+                  </div>
                   <!-- TODO fetch this data from backend -->
                 </p-card>
               </div>
+            </div>
+            <div class="flex px-3">
+              <input pInputText class="" #classSubNameInput>&nbsp;
+              <button (click)="addClassLevelSubAction(c.classLevel.id, classSubNameInput.value)" pButton [disabled]="classSubNameInput.value == ''" class="p-button-plain" label="Add" icon="pi pi-plus"></button>
             </div>
           </ng-template>
         </p-panel>
