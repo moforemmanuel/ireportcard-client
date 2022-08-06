@@ -1,0 +1,37 @@
+<div class="surface-section border-round bg">
+  <form class="form p-3" [formGroup]="subjectForm" (submit)="saveSubjectAction()">
+    <span class="text-3xl">Add Student</span>
+    <div class="p-fluid formgrid grid py-5">
+      <div class="field md:col-6">
+        <span class="p-float-label">
+          <input pInputText id="name" [formControlName]="'name'">
+          <label for="name">Title</label>
+        </span>
+      </div>
+      <div class="field md:col-6">
+        <span class="p-float-label">
+          <input pInputText id="code" [formControlName]="'code'">
+          <label for="name">Code</label>
+        </span>
+      </div>
+    </div>
+    <div class="p-fluid grid py-5">
+      <div class="field md:col-6">
+        <span class="p-float-label">
+          <input pInputText id="coeff" [formControlName]="'coeff'">
+          <label for="name">Coefficient</label>
+        </span>
+      </div>
+      <div class="field md:col-6">
+        <span class="p-float-label">
+          <p-dropdown id="section" [options]="sections" [optionLabel]="'name'" [optionValue]="'id'" [formControlName]="'section'"></p-dropdown>
+          <label for="section">Section</label>
+        </span>
+      </div>
+    </div>
+    <p-divider></p-divider>
+    <div class="col flex justify-content-end">
+      <button pButton class="" label="Save Subject" icon="pi pi-check"></button>
+    </div>
+  </form>
+</div>
