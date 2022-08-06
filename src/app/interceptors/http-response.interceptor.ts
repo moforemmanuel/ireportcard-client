@@ -30,15 +30,22 @@ export class HttpResponseInterceptor implements HttpInterceptor {
     );
   }
 
-  successfulResponseHandler = (event: HttpResponse<any>) => {
-    const responseBody = event.body;
-    if (isEntityResponse(responseBody)) {
-      this.msgService.add({severity: 'success', summary: 'Success', detail: responseBody.message});
+  successfulResponseHandler = (event: HttpResponse<any>): void => {
+    if (isEntityResponse(event.body) && (event.status === 200 || event.status === 201)) {
+      const entityResponse: EntityResponse = event.body;
+      this.msgService.add({severity: 'success', summary: 'Success', detail: entityResponse.message});
+      return;
+    }
+
+    if (event.status === 204) {
+      // something was deleted
+      this.msgService.add({severity: 'warn', summary: 'Deleted', detail: 'Deleted successfully'});
+      return;
     }
 
     if (event.status >= 400 && event.status <= 499) {
       console.log(event.body)
-      this.msgService.add({severity: 'error', summary: 'Error', detail: responseBody.error.error});
+      this.msgService.add({severity: 'error', summary: 'Error', detail: event.body.error.error});
     }
   }
 

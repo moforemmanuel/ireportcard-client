@@ -5,5 +5,8 @@ export interface EntityResponse {
 }
 
 export const isEntityResponse = (obj: any): obj is EntityResponse => {
-  return 'id' in obj && 'message' in obj && 'log' in obj;
+  if (obj) {
+    return 'id' in obj && 'message' in obj && 'log' in obj;
+  }
+  return false;
 }
