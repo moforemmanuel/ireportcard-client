@@ -1,1 +1,28 @@
-<p>add-class-level works!</p>
+<div class="surface-section border-round bg">
+  <div class="p-3 grid">
+    <div class="md:col-6">
+      <span class="text-3xl">Add Class Level</span>
+      <div class="p-fluid grid py-5">
+        <form [formGroup]="classForm" (submit)="saveClassAction()">
+          <div class="field md:col-12">
+            <span class="p-float-label">
+              <input pInputText id="name" [formControlName]="'name'">
+              <label for="name">Name</label>
+            </span>
+          </div>
+          <div class="field md:col-12">
+            <span class="p-float-label">
+              <p-dropdown id="section" [options]="sections" [optionLabel]="'name'" [optionValue]="'id'" [formControlName]="'section'"></p-dropdown>
+              <label for="name">Sections</label>
+            </span>
+          </div>
+          <p-divider></p-divider>
+          <div class="col flex justify-content-end">
+            <button [disabled]="!classForm.valid" pButton class="" label="Save Class" icon="pi pi-check"></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
