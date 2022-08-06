@@ -4,6 +4,7 @@ import {AuthService} from "../../../../services/auth.service";
 import {UserLoginRequest} from "../../../../models/dto/user.model";
 import {LocalStorageUtil} from "../../../../utils/local-storage.util";
 import {Router} from "@angular/router";
+import {DefaultService} from "../../../../services/default.service";
 
 @Component({
   selector: 'app-login',
@@ -15,11 +16,23 @@ export class LoginComponent implements OnInit {
   @Output() switchToRegister: EventEmitter<void> = new EventEmitter<void>();
   loginForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
-  }
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private defaultService: DefaultService,
+  ) {}
 
   ngOnInit() {
+    this.checkIfLoggedIn();
     this.initLogForm();
+  }
+
+  private checkIfLoggedIn() {
+    const token = LocalStorageUtil.readUserToken();
+    if (token) {
+      this.defaultService.test().subscribe(() => this.router.navigate(['/dashboard']).then());
+    }
   }
 
   initLogForm() {
@@ -41,7 +54,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(userLogin).subscribe({
       next: (res) => {
         LocalStorageUtil.writeUserToken(res.sessionId);
-        const routerTarget = LocalStorageUtil.readSchoolId()? "/select-school" : "/dashboard/home";
+        const routerTarget = LocalStorageUtil.readSchoolId()? "/select-school" : "/dashboard";
         this.router.navigate([routerTarget]).then((r) => console.log(r));
       },
       error: (e) => {
@@ -49,4 +62,5 @@ export class LoginComponent implements OnInit {
       }
     });
   }
+
 }

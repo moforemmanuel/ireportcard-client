@@ -17,6 +17,10 @@ export class SelectSchoolComponent implements OnInit {
   addSchoolForm: FormGroup;
 
   constructor(private fb: FormBuilder, private router: Router, private schoolService: SchoolService,) {
+    const sid = LocalStorageUtil.readSchoolId();
+    if (sid) {
+      this.selectedSchoolId = sid;
+    }
     this.addSchoolForm = this.fb.group({
       name: ["", Validators.required],
       maxGrade: [20, Validators.required],
