@@ -3,7 +3,6 @@ import {Subject} from "../../../../models/dto/subject.model";
 import {SubjectService} from "../../../../services/subject.service";
 import {MessageService} from "primeng/api";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {SubjectComponent} from "./subject/subject.component";
 import {addToMessageService} from "../../../../utils/message-service.util";
 
 @Component({

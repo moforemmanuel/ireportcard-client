@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Section} from "../../../../../models/dto/section.model";
 import {SectionService} from "../../../../../services/section.service";

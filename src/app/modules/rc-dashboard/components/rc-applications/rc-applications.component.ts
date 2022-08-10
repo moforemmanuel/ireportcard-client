@@ -1,18 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {
-  ApplicationRequest,
-  ApplicationResponse, ApplicationsRequest,
-  StudentApplicationTrial
-} from "../../../../models/dto/student-application.model";
+import {ApplicationsRequest, StudentApplicationTrial} from "../../../../models/dto/student-application.model";
 import {AcademicYear} from "../../../../models/dto/academic-year.model";
 import {AcademicYearService} from "../../../../services/academic-year.service";
 import {ClassLevelService} from "../../../../services/class-level.service";
 import {ClassLevelSubService} from "../../../../services/class-level-sub.service";
 import {StudentApplicationService} from "../../../../services/student-application.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {
-  StudentApplicationComponent
-} from "./student-application/student-application.component";
 import {SAT, StudentClassLevel} from "../../../../app.types";
 import {LocalStorageUtil} from "../../../../utils/local-storage.util";
 

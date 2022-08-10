@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ClassLevel} from "../../../../../models/dto/class-level.model";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ClassLevelSubService} from "../../../../../services/class-level-sub.service";
 import {ClassLevelSub} from "../../../../../models/dto/class-level-sub.model";
 import {addToMessageService} from "../../../../../utils/message-service.util";

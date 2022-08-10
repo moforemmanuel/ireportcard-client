@@ -1,28 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {
-  ApplicationRequest,
-  ApplicationResponse,
-  StudentApplication,
-  StudentApplicationKey, StudentApplicationTrial
-} from "../../../../../models/dto/student-application.model";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {StudentApplication, StudentApplicationTrial} from "../../../../../models/dto/student-application.model";
+import {FormBuilder} from "@angular/forms";
 import {Subject} from "../../../../../models/dto/subject.model";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {SubjectService} from "../../../../../services/subject.service";
 import {SubjectRegistration} from "../../../../../models/dto/subject-registration.model";
 import {SubjectRegistrationService} from "../../../../../services/subject-registration.service";
 import {StudentService} from "../../../../../services/student.service";
 import {Student} from "../../../../../models/dto/student.model";
 import {AcademicYear} from "../../../../../models/dto/academic-year.model";
-import {AcademicYearService} from "../../../../../services/academic-year.service";
-import {ClassLevel} from "../../../../../models/dto/class-level.model";
-import {ClassLevelService} from "../../../../../services/class-level.service";
-import {ClassLevelSubService} from "../../../../../services/class-level-sub.service";
-import {ClassLevelSub} from "../../../../../models/dto/class-level-sub.model";
 import {StudentApplicationService} from "../../../../../services/student-application.service";
-import {addToMessageService} from "../../../../../utils/message-service.util";
 import {MessageService} from "primeng/api";
-import {SAT, StudentClassLevel} from "../../../../../app.types";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Dropdown} from "primeng/dropdown";
 

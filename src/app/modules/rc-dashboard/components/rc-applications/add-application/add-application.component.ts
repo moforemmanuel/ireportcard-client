@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Subject} from "../../../../../models/dto/subject.model";
 import {Student} from "../../../../../models/dto/student.model";
 import {AcademicYear} from "../../../../../models/dto/academic-year.model";
 import {StudentClassLevel} from "../../../../../app.types";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MessageService} from "primeng/api";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {SubjectService} from "../../../../../services/subject.service";
 import {StudentService} from "../../../../../services/student.service";
 import {ClassLevelService} from "../../../../../services/class-level.service";
@@ -16,7 +14,6 @@ import {SubjectRegistrationService} from "../../../../../services/subject-regist
 import {SectionService} from "../../../../../services/section.service";
 import {Section} from "../../../../../models/dto/section.model";
 import {Dropdown} from "primeng/dropdown";
-import {UIMessage} from "primeng/message";
 import {ApplicationRequest} from "../../../../../models/dto/student-application.model";
 import {SubjectRegistration} from "../../../../../models/dto/subject-registration.model";
 

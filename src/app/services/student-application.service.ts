@@ -4,7 +4,8 @@ import {
   ApplicationRequest,
   ApplicationResponse,
   StudentApplication,
-  StudentApplicationKey, StudentApplicationTrial
+  StudentApplicationKey,
+  StudentApplicationTrial
 } from "../models/dto/student-application.model";
 import {RC_STUDENT_APPLICATION_API_URL} from "../app.constants";
 import {HttpClient} from "@angular/common/http";

@@ -7,8 +7,6 @@ import {ClassLevelSubService} from "../../../../services/class-level-sub.service
 import {ClassLevelSub} from "../../../../models/dto/class-level-sub.model";
 import {SectionService} from "../../../../services/section.service";
 import {Section} from "../../../../models/dto/section.model";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {ClassLevelComponent} from "./class-level/class-level.component";
 import {Router} from "@angular/router";
 
 @Component({

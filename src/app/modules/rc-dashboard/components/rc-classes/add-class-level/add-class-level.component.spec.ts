@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AddClassLevelComponent } from './add-class-level.component';
+import {AddClassLevelComponent} from './add-class-level.component';
 
 describe('AddClassLevelComponent', () => {
   let component: AddClassLevelComponent;

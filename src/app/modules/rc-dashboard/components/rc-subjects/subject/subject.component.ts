@@ -1,12 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Subject} from "../../../../../models/dto/subject.model";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {SubjectService} from "../../../../../services/subject.service";
 import {Section} from "../../../../../models/dto/section.model";
 import {SectionService} from "../../../../../services/section.service";
-import {MessageService} from "primeng/api";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {addToMessageService} from "../../../../../utils/message-service.util";
 import {LocalStorageUtil} from "../../../../../utils/local-storage.util";
 import {ActivatedRoute, Router} from "@angular/router";
 

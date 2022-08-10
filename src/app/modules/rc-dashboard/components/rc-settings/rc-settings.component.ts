@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {SchoolSettings} from "../../../../models/dto/school-settings.model";
-import {SchoolSettingsService} from "../../../../services/school-settings.service";
 import {addToMessageService} from "../../../../utils/message-service.util";
 import {MessageService} from "primeng/api";
 import {Sequence} from "../../../../models/dto/sequence.model";

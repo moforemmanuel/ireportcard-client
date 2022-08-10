@@ -41,13 +41,13 @@ import {
 } from "./components/rc-applications/student-application/student-application.component";
 import {PanelModule} from "primeng/panel";
 import {MenuModule} from "primeng/menu";
-import { AddStudentComponent } from './components/rc-students/add-student/add-student.component';
-import { AddApplicationComponent } from './components/rc-applications/add-application/add-application.component';
+import {AddStudentComponent} from './components/rc-students/add-student/add-student.component';
+import {AddApplicationComponent} from './components/rc-applications/add-application/add-application.component';
 import {RcDashboardRoutingModule} from "./rc-dashboard-routing.module";
 import {MessageModule} from "primeng/message";
 import {CalendarModule} from "primeng/calendar";
-import { AddClassLevelComponent } from './components/rc-classes/add-class-level/add-class-level.component';
-import { AddSubjectComponent } from './components/rc-subjects/add-subject/add-subject.component';
+import {AddClassLevelComponent} from './components/rc-classes/add-class-level/add-class-level.component';
+import {AddSubjectComponent} from './components/rc-subjects/add-subject/add-subject.component';
 
 
 @NgModule({
