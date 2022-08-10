@@ -30,6 +30,11 @@ export interface ApplicationRequest {
   studentId: number;
 }
 
+export interface ApplicationsRequest {
+  classSubId: number;
+  yearId: number;
+}
+
 export interface ApplicationResponse {
   class_name: string;
   student: Student;
