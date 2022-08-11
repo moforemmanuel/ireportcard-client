@@ -13,8 +13,6 @@ import {MessageService} from "primeng/api";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Dropdown} from "primeng/dropdown";
 
-type ApplicationSubject = { pending: boolean, subject: Subject };
-
 @Component({
   selector: 'app-application',
   templateUrl: './student-application.component.html',
