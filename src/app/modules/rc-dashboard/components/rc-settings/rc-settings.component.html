@@ -8,163 +8,126 @@
   </div>
 
   <div class="py-4">
-    <div *ngIf="!school" class="text-danger fst-italic">
-      School settings have not been added
+    <span *ngIf="!school" class="text-danger fst-italic">School settings have not been added</span>
+    <form (submit)="saveSettingsAction()" [formGroup]="settingsForm">
+      <label class="block text-800 font-medium mb-2">School Name</label>
+      <input pInputText [formControlName]="'name'" [value]="school? school.name: ''" class="w-100 mb-2">
+
+      <div class="grid formgrid pb-3">
+        <div class="md:col-4 py-2">
+          <label class="block text-800 font-medium mb-2">Applications {{settingsForm.get('applicationsOpen')?.value ? 'Open' : 'Closed'}}</label>
+          <p-inputSwitch [formControlName]="'applicationsOpen'" ></p-inputSwitch>
+        </div>
+        <div class="md:col-4">
+          <label class="block text-800 font-medium mb-2">Min Grade Score</label>
+          <input pInputText type="number" [value]="0"  [class]="'w-100'" [disabled]="true">
+        </div>
+        <div class="md:col-4">
+          <label class="block text-800 font-medium mb-2">Max Grade Score</label>
+          <input pInputText [formControlName]="'maxGrade'" class="w-100">
+        </div>
+
+      </div>
+
+      <div class="grid formgrid pb-3">
+        <div class="md:col-4">
+          <label class="block text-800 font-medium mb-2">Current Academic Year</label>
+          <p-dropdown [formControlName]="'year'" [options]="academicYears" [optionLabel]="'name'" [optionValue]="'id'" [styleClass]="'w-100'"></p-dropdown>
+        </div>
+        <div class="md:col-4">
+          <label class="block text-800 font-medium mb-2">Current Term</label>
+          <input class="w-100" pInputText [value]="school ? (school.currentTerm ? school.currentTerm : 'None') : ''" disabled>
+        </div>
+        <div class="md:col-4">
+          <label class="block text-800 font-medium mb-2">Current Sequence</label>
+          <p-dropdown [formControlName]="'sequence'" [options]="sequences" [optionLabel]="'name'" [optionValue]="'id'" [styleClass]="'w-100'"></p-dropdown>
+        </div>
+      </div>
+      <button [disabled]="!settingsForm.valid" class="" pButton type="submit" label="Save"></button>
+    </form>
+  </div>
+
+  <p-panel [header]="'School Sections'" [toggleable]="true" [styleClass]="'py-4'">
+    <div class="">
+      <div *ngFor="let section of sections" class=" my-2 d-flex">
+        <input pInputText #sectionUpdateInput [disabled]="true" [(ngModel)]="section.name" class="w-full">&nbsp;
+        <p-toggleButton [(ngModel)]="sectionUpdateInput.disabled" [onLabel]="'Edit'"
+                        [offLabel]="'Save'" (click)="saveSection(section, sectionUpdateInput.disabled)">
+        </p-toggleButton>&nbsp;
+        <button pButton label="Delete" class="p-button-danger" (click)="deleteSection(section)"></button>
+      </div>
     </div>
-    <div class="container-fluid">
-      <form (submit)="saveSettingsAction()" [formGroup]="settingsForm">
-        <div class="row pb-3">
-          <div class="col-12 py-2">
-            <label class="block text-800 font-medium mb-2">School Name</label>
-            <input pInputText [formControlName]="'name'" [value]="school? school.name: ''" [class]="'w-100'">
-          </div>
+    <p-divider></p-divider>
+    <div class="">
+      <div class="d-flex">
+        <div class="mr-auto">
+          <input pInputText #sectionInput [hidden]="true">&nbsp;
         </div>
-        <div class="row pb-3">
-          <div class="col-md-6 py-2">
-            <label class="block text-800 font-medium mb-2">Applications {{settingsForm.get('applicationsOpen')?.value ? 'Open' : 'Closed'}}</label>
-            <p-inputSwitch [formControlName]="'applicationsOpen'" ></p-inputSwitch>
-          </div>
-          <div class="col-md-6 py-2">
-            <label class="block text-800 font-medium mb-2">Current Academic Year</label>
-            <p-dropdown [formControlName]="'year'" [options]="academicYears" [optionLabel]="'name'" [optionValue]="'id'" [styleClass]="'w-100'"></p-dropdown>
-          </div>
+        <div class="ml-auto">
+          <p-toggleButton [(ngModel)]="sectionInput.hidden" [onLabel]="'Add'"
+                          [offLabel]="sectionInput.value.length == 0? 'Cancel': 'Save'" (click)="saveSection(sectionInput, sectionInput.hidden)">
+          </p-toggleButton>
         </div>
-        <div class="row pb-3">
-          <div class="col-md-6 py-2">
-            <label class="block text-800 font-medium mb-2">Current Term</label>
-            <input class="w-100" pInputText [value]="school ? (school.currentTerm ? school.currentTerm : 'None') : ''" disabled>
-          </div>
-          <div class="col-md-6 py-2">
-            <label class="block text-800 font-medium mb-2">Current Sequence</label>
-            <p-dropdown [formControlName]="'sequence'" [options]="sequences" [optionLabel]="'name'" [optionValue]="'id'" [styleClass]="'w-100'"></p-dropdown>
-          </div>
+      </div>
+    </div>
+  </p-panel>
+
+  <p-panel  [header]="'Academic Years'" [toggleable]="true" [styleClass]="'py-4'">
+    <div *ngFor="let year of academicYears" class="my-2">
+      <div class="d-flex align-middle form-group">
+        <input pInputText #yearInput [disabled]="true" [value]="year.name" class="w-full">&nbsp;
+        <p-toggleButton [(ngModel)]="yearInput.disabled" [onLabel]="'Edit'" [offLabel]="'Save'" (click)="editYTSAction(0, year, yearInput)">
+        </p-toggleButton>&nbsp;
+        <button pButton (click)="deleteATSAction(0, year)" class="p-button-danger">Delete</button>
+      </div>
+    </div>
+    <p-divider></p-divider>
+    <div class="d-flex justify-content-between">
+      <input pInputText #yearAddInput [hidden]="true" placeholder="20XX/20XY">&nbsp;
+      <p-toggleButton [(ngModel)]="yearAddInput.hidden" [onLabel]="'Add'" [offLabel]="'Save'" (click)="addYTSAction(0, yearAddInput)"></p-toggleButton>
+    </div>
+  </p-panel>
+
+  <!-- Terms -->
+  <p-panel [header]="'Terms'" [toggleable]="true" [styleClass]="'py-4'">
+    <div *ngFor="let term of terms" class="my-2 d-flex">
+      <input pInputText #termUpdateInput [disabled]="true" [value]="term.name" class="w-full">&nbsp;
+      <p-toggleButton [(ngModel)]="termUpdateInput.disabled"  [onLabel]="'Edit'" [offLabel]="'Save'"
+                      (click)="editYTSAction(1, term, termUpdateInput)"></p-toggleButton>&nbsp;
+      <button pButton (click)="deleteATSAction(1, term)" icon="pi pi-trash" pTooltip="Delete"
+              class="p-button-danger p-button-rounded"></button>
+    </div>
+    <p-divider></p-divider>
+    <div class="d-flex justify-content-end">
+      <input pInputText #termAddInput [hidden]="true" class="w-full">&nbsp;
+      <p-toggleButton [(ngModel)]="termAddInput.hidden"  [onLabel]="'Add'" [offLabel]="'Save'" (click)="addYTSAction(1, termAddInput)"></p-toggleButton>&nbsp;
+    </div>
+  </p-panel>
+
+  <!-- Seqs -->
+  <p-panel [header]="'Sequences'" [toggleable]="true" [styleClass]="'py-4'">
+    <div *ngFor="let seq of sequencesByTerms" class="my-2">
+      <label class="form-label">{{seq.term.name}}</label>
+      <div *ngFor="let sequence of seq.sequences">
+        <div class="d-flex align-middle mb-2">
+          <input pInputText #seqUpdateInput [disabled]="true" [value]="sequence.name" class="w-full">&nbsp;
+          <p-toggleButton [(ngModel)]="seqUpdateInput.disabled" [onLabel]="'Edit'" [offLabel]="'Save'" (click)="editYTSAction(2, sequence, seqUpdateInput)"></p-toggleButton>&nbsp;
+          <button pButton (click)="deleteATSAction(2, sequence)" icon="pi pi-trash" class="p-button-danger"></button>
         </div>
-        <div class="row pb-3">
-          <div class="col-md-6 py-2">
-            <label class="block text-800 font-medium mb-2">Min Grade Score</label>
-            <input pInputText type="number" [value]="0"  [class]="'w-100'" [disabled]="true">
-          </div>
-          <div class="col-md-6 py-2">
-            <label class="block text-800 font-medium mb-2">Max Grade Score</label>
-            <input pInputText [formControlName]="'maxGrade'" class="w-100">
-          </div>
+      </div>
+    </div>
+    <p-divider></p-divider>
+    <div class="d-flex">
+      <form class="mr-auto" [formGroup]="sequenceForm">
+        <input pInputText #seqAddInput [hidden]="true" class="w-full mb-2" [formControlName]="'name'">&nbsp;
+        <p-dropdown [hidden]="seqAddInput.hidden" [options]="terms" [optionLabel]="'name'" [optionValue]="'id'"
+                    [styleClass]="'w-full mb-2'" [formControlName]="'term'"></p-dropdown>
+        <div *ngFor="let type of sequenceTypes" [hidden]="seqAddInput.hidden" class="inline-flex mx-2">
+          <input name="seq-type" [value]="type" type="radio" class="p-radiobutton" [formControlName]="'type'">&nbsp;
+          <label>{{type | titlecase}}</label>
         </div>
-        <button [disabled]="!settingsForm.valid" class="btn" pButton type="submit">Save</button>
       </form>
+      <p-toggleButton (click)="addYTSAction(2, seqAddInput)" [(ngModel)]="seqAddInput.hidden" [onLabel]="'Add'" [offLabel]="'Save'"></p-toggleButton>&nbsp;
     </div>
-  </div>
-
-  <div class="py-4 container-fluid">
-    <div class="card">
-      <div class="card-header">School Sections</div>
-      <div class="card-body">
-        <div *ngFor="let section of sections" class=" my-2 d-flex">
-          <input pInputText #sectionUpdateInput [disabled]="true" [(ngModel)]="section.name" class="full-width">&nbsp;
-          <p-toggleButton [(ngModel)]="sectionUpdateInput.disabled" [onLabel]="'Edit'"
-                          [offLabel]="'Save'" (click)="saveSection(section, sectionUpdateInput.disabled)">
-          </p-toggleButton>&nbsp;
-          <button pButton label="Delete" class="p-button-danger" (click)="deleteSection(section)"></button>
-        </div>
-      </div>
-      <div class="card-footer">
-        <div class="d-flex">
-          <div class="mr-auto">
-            <input pInputText #sectionInput [hidden]="true">&nbsp;
-          </div>
-          <div class="ml-auto">
-            <p-toggleButton [(ngModel)]="sectionInput.hidden" [onLabel]="'Add'"
-                            [offLabel]="sectionInput.value.length == 0? 'Cancel': 'Save'" (click)="saveSection(sectionInput, sectionInput.hidden)">
-            </p-toggleButton>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="py-4 container-fluid">
-    <div class="row">
-      <div class="col-md-12 my-2">
-        <div class="card">
-          <div class="card-header">Academic Years</div>
-          <div class="card-body">
-            <div *ngFor="let year of academicYears" class="my-2">
-              <div class="d-flex align-middle form-group">
-                <input #academicYearUpdateInput [disabled]="true" [value]="year.name" class="form-control">&nbsp;
-                <button (click)="editATSAction($event, 0, year, academicYearUpdateInput)" class="btn btn-primary">
-                  Edit
-                </button>&nbsp;
-                <button (click)="deleteATSAction(0, year)" class="btn btn-danger">Delete</button>
-              </div>
-            </div>
-          </div>
-          <div class="card-footer">
-            <div class="d-flex">
-              <div class="mr-auto">
-                <input #yearAddInput [hidden]="true" class="form-control" placeholder="20XX/20XY">&nbsp;
-              </div>
-              <div class="ml-auto">
-                <button (click)="addATSAction($event,0,yearAddInput,seqTermAddInput)" class="btn btn-primary">Add
-                </button>&nbsp;
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 my-2">
-        <div class="card h-100">
-          <div class="card-header">Terms</div>
-          <div class="card-body">
-            <div *ngFor="let term of terms" class="my-2">
-              <div class="d-flex align-middle form-group my-3">
-                <input #termUpdateInput [disabled]="true" [value]="term.name" class="form-control">&nbsp;
-                <button (click)="editATSAction($event, 1, term, termUpdateInput)" class="btn btn-primary">Edit
-                </button>&nbsp;
-                <button (click)="deleteATSAction(1, term)" class="btn btn-danger">Delete</button>
-              </div>
-            </div>
-          </div>
-          <div class="card-footer">
-            <div class="d-flex">
-              <div class="mr-auto">
-                <input #termAddInput [hidden]="true" class="form-control">&nbsp;
-              </div>
-              <div class="ml-auto">
-                <button (click)="addATSAction($event,1,termAddInput,seqTermAddInput)" class="btn btn-primary">Add
-                </button>&nbsp;
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 my-2">
-        <div class="card h-100">
-          <div class="card-header">Sequences</div>
-          <div class="card-body">
-            <div *ngFor="let seq of sequences" class="my-2">
-              <label class="form-label">{{getTermBySequenceId(seq.id).name}}</label>
-              <div class="d-flex align-middle form-group">
-                <input #seqUpdateInput [disabled]="true" [value]="seq.name" class="form-control">&nbsp;
-                <button (click)="editATSAction($event, 2, seq, seqUpdateInput)" class="btn btn-primary">Edit</button>&nbsp;
-                <button (click)="deleteATSAction(2, seq)" class="btn btn-danger">Delete</button>
-              </div>
-            </div>
-          </div>
-          <div class="card-footer">
-            <div class="d-flex">
-              <div class="mr-auto">
-                <input #seqAddInput [hidden]="true" class="form-control">&nbsp;
-                <select #seqTermAddInput [hidden]="seqAddInput.hidden" class="form-select">
-                  <option *ngFor="let t of terms" [value]="t.id">{{t.name}}</option>
-                </select>
-              </div>
-              <div class="ml-auto">
-                <button (click)="addATSAction($event, 2, seqAddInput, seqTermAddInput)" class="btn btn-primary">Add
-                </button>&nbsp;
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  </p-panel>
 </div>
