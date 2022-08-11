@@ -19,6 +19,7 @@ export class RcClassesComponent implements OnInit {
   classes: RcClass[] = [];
   sections: Section[] = [];
   sectionId: number = 0;
+
   constructor(
     private router: Router,
     private classLevelService: ClassLevelService,
@@ -87,17 +88,6 @@ export class RcClassesComponent implements OnInit {
     }
   }
 
-  private loadClassSubs(classLevel: ClassLevel): void {
-    this.classLevelSubService.getAllByClassLevelId(classLevel.id).subscribe({
-      next: (classLevelSubs) => {
-        this.classes.push({classLevel: classLevel, classLevelSubs: classLevelSubs})
-      },
-      error: (error) => {
-        addToMessageService(this.messageService, 'error', 'Error loading class subs', error.message);
-      }
-    });
-  }
-
   addClassLevelSubAction(classLevelId: number, value: string) {
     const classLevelSub: ClassLevelSub = {
       id: 0, name: value, classLevelId: classLevelId
@@ -109,6 +99,17 @@ export class RcClassesComponent implements OnInit {
 
   deleteClassSubAction(classLevelSubId: number, classLevel: ClassLevel) {
     this.classLevelSubService.delete(classLevelSubId).subscribe(() => this.loadClasses());
+  }
+
+  private loadClassSubs(classLevel: ClassLevel): void {
+    this.classLevelSubService.getAllByClassLevelId(classLevel.id).subscribe({
+      next: (classLevelSubs) => {
+        this.classes.push({classLevel: classLevel, classLevelSubs: classLevelSubs})
+      },
+      error: (error) => {
+        addToMessageService(this.messageService, 'error', 'Error loading class subs', error.message);
+      }
+    });
   }
 }
 

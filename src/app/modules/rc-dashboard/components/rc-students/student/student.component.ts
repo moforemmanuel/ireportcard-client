@@ -15,6 +15,7 @@ export class StudentComponent implements OnInit {
   student!: Student;
   genders: Gender[] = [Gender.FEMALE, Gender.MALE, Gender.OTHER];
   studentForm: FormGroup = new FormGroup({});
+
   constructor(
     private fb: FormBuilder,
     private router: Router,

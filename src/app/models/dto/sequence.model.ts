@@ -1,5 +1,9 @@
 export interface Sequence {
-  id: number; name: string; type: SequenceType, termId: number;}
+  id: number;
+  name: string;
+  type: SequenceType,
+  termId: number;
+}
 
 export enum SequenceType {
   OPENING = "OPENING",

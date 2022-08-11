@@ -18,7 +18,7 @@ export class SchoolGuard implements CanActivate {
     if (!schoolId) {
       this.router.navigate(['/select-school']).then((r) => console.log(`School guard: ${r}`));
     }
-    return schoolId ? schoolId > 0: false;
+    return schoolId ? schoolId > 0 : false;
   }
 
 }

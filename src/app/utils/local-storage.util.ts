@@ -22,7 +22,7 @@ export module LocalStorageUtil {
 
   export const readSchoolId = (): number | null => {
     const id = localStorage.getItem(LS_KEY.schoolId);
-    return id? parseInt(id): null;
+    return id ? parseInt(id) : null;
   }
 
   export const getSchoolId = (): number => {

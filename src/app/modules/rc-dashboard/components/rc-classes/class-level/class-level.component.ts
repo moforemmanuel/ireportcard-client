@@ -40,11 +40,7 @@ export class ClassLevelComponent implements OnInit {
         this.classLevel = classLevel;
         this.loadData(classLevel);
       },
-      error: (err) => {
-        console.log(err)
-        console.log( "------------------------------")
-        this.router.navigate(['/class']).then()
-      }
+      error: () => this.router.navigate(['/class']).then()
     });
   }
 

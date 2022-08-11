@@ -10,7 +10,10 @@ const routes: Routes = [
     path: '',
     children: []
   },
-  {path: 'dashboard', loadChildren: () => import('./modules/rc-dashboard/rc-dashboard.module').then(m => m.RcDashboardModule)},
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./modules/rc-dashboard/rc-dashboard.module').then(m => m.RcDashboardModule)
+  },
   {path: 'auth', loadChildren: () => import('./modules/rc-auth/rc-auth.module').then(m => m.RcAuthModule)},
   {component: SelectSchoolComponent, path: 'select-school', children: [], canActivate: [AuthGuard]}
 ];

@@ -40,11 +40,13 @@ const routes: Routes = [
       {component: StudentApplicationComponent, path: 'application/view/:id'},
       {component: RcClasslistsComponent, path: 'class-list'},
       {component: RcSettingsComponent, path: 'settings'},
-  ]},
+    ]
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class RcDashboardRoutingModule { }
+export class RcDashboardRoutingModule {
+}

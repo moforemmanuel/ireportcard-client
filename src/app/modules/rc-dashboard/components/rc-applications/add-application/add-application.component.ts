@@ -69,7 +69,13 @@ export class AddApplicationComponent implements OnInit {
           this.classLevelSubService.getAllByClassLevelId(cl.id).subscribe({
             next: (classLevelSubs) => {
               classLevelSubs.forEach((cls) => {
-                this.classLevels.push({id: cl.id, sub_id: cls.id, name: `${cl.name} ${cls.name}`, classLevel: cl, classLevelSub: cls});
+                this.classLevels.push({
+                  id: cl.id,
+                  sub_id: cls.id,
+                  name: `${cl.name} ${cls.name}`,
+                  classLevel: cl,
+                  classLevelSub: cls
+                });
               })
             }
           });
@@ -83,7 +89,7 @@ export class AddApplicationComponent implements OnInit {
     const subjectId = subjectDropDown.value;
     const subject = this.subjects.find(s => s.id === subjectId);
     if (subject) {
-      if(this.addedSubjects.find(s => s.id === subject.id)) {
+      if (this.addedSubjects.find(s => s.id === subject.id)) {
         this.alreadyAddedSubject = true;
       } else {
         this.addedSubjects.push(subject);

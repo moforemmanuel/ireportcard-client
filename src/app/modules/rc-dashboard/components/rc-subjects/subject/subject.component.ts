@@ -13,10 +13,10 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./subject.component.scss']
 })
 export class SubjectComponent implements OnInit {
-  private readonly schoolId = LocalStorageUtil.getSchoolId();
   subject!: Subject;
   subjectForm: FormGroup = this.fb.group({});
   sections: Section[] = [];
+  private readonly schoolId = LocalStorageUtil.getSchoolId();
 
   constructor(
     private fb: FormBuilder,
@@ -30,7 +30,7 @@ export class SubjectComponent implements OnInit {
       coeff: ['', Validators.required], section: [0, Validators.required]
     });
     const subjectId: number = this.activatedRoute.snapshot.params['id'];
-    if(subjectId) {
+    if (subjectId) {
       this.subjectService.getById(subjectId).subscribe((subject) => {
         this.subject = subject;
         this.setupSubjectForm(subject);

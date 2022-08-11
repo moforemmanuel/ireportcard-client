@@ -13,9 +13,9 @@ import {Router} from "@angular/router";
   styleUrls: ['./add-subject.component.scss']
 })
 export class AddSubjectComponent implements OnInit {
-  private readonly schoolId = LocalStorageUtil.getSchoolId();
   subjectForm: FormGroup = this.fb.group({});
   sections: Section[] = [];
+  private readonly schoolId = LocalStorageUtil.getSchoolId();
 
   constructor(
     private router: Router,

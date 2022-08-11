@@ -8,9 +8,9 @@ describe('AddClassLevelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddClassLevelComponent ]
+      declarations: [AddClassLevelComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

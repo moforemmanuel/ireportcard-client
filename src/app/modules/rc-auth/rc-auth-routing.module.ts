@@ -6,7 +6,8 @@ import {AuthComponent} from "./components/auth/auth.component";
 
 const routes: Routes = [
 
-  {path: 'auth', component: AuthComponent, children: [
+  {
+    path: 'auth', component: AuthComponent, children: [
       {path: 'login', component: LoginComponent},
       {path: 'register', component: RegisterComponent},
     ]
@@ -17,4 +18,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class RcAuthRoutingModule { }
+export class RcAuthRoutingModule {
+}

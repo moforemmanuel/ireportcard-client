@@ -16,6 +16,7 @@ export class AddClassLevelComponent implements OnInit {
   classForm: FormGroup = this.fb.group({})
 
   sections: Section[] = [];
+
   constructor(
     private fb: FormBuilder,
     private router: Router,

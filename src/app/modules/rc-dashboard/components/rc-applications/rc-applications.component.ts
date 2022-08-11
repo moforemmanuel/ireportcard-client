@@ -58,9 +58,15 @@ export class RcApplicationsComponent implements OnInit {
     this.classService.getBySchool(this.schoolId).subscribe({
       next: (classes) => {
         classes.forEach(c => this.classSubService.getAllByClassLevelId(c.id)
-          .subscribe( (classSubs) => {
+          .subscribe((classSubs) => {
             classSubs.forEach((cs) => {
-              this.classes.push({id:c.id, sub_id: cs.id, name: `${c.name} ${cs.name}`, classLevel: c, classLevelSub: cs});
+              this.classes.push({
+                id: c.id,
+                sub_id: cs.id,
+                name: `${c.name} ${cs.name}`,
+                classLevel: c,
+                classLevelSub: cs
+              });
             });
             if (this.classes.length > 0) this.applicationsRequest.classSubId = this.classes[0].sub_id
           }))
@@ -71,7 +77,7 @@ export class RcApplicationsComponent implements OnInit {
   loadApplications() {
     this.studentATs = [];
     console.log(this.applicationsRequest);
-    if (this.applicationsRequest.yearId > 0 ) {
+    if (this.applicationsRequest.yearId > 0) {
       const classId: number = this.applicationsRequest.classSubId;
       const yearId: number = this.applicationsRequest.yearId;
       this.studentApplicationService.getTrialByClassAndYear(classId, yearId).subscribe({
