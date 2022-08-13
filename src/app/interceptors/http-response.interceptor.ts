@@ -7,16 +7,16 @@ import {
   HttpRequest,
   HttpResponse
 } from '@angular/common/http';
-import {catchError, EMPTY, Observable, tap} from 'rxjs';
-import {MessageService} from "primeng/api";
+import {catchError, Observable, of, tap} from 'rxjs';
+import {Message, MessageService} from "primeng/api";
 import {EntityResponse, isEntityResponse} from "../models/dto/entity.response";
-import {addToMessageService} from "../utils/message-service.util";
 import {LocalStorageUtil} from "../utils/local-storage.util";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class HttpResponseInterceptor implements HttpInterceptor {
 
-  constructor(private msgService: MessageService) {
+  constructor(private router: Router, private msgService: MessageService) {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -26,56 +26,45 @@ export class HttpResponseInterceptor implements HttpInterceptor {
           this.successfulResponseHandler(event);
         }
       }),
-      catchError(this.responseHandler)
+      catchError((err) => this.errorResponseHandler(err))
     );
   }
 
   successfulResponseHandler = (event: HttpResponse<any>): void => {
-    if (isEntityResponse(event.body) && (event.status === 200 || event.status === 201)) {
-      const entityResponse: EntityResponse = event.body;
-      this.msgService.add({severity: 'success', summary: 'Success', detail: entityResponse.message});
-      return;
+    const message: Message = {severity: 'success', summary: 'Success', detail: ''};
+    if (event.status === 200 || event.status === 201) {
+      message.detail = event.body.message? event.body.message : '';
     }
-
     if (event.status === 204) {
-      // something was deleted
-      this.msgService.add({severity: 'warn', summary: 'Deleted', detail: 'Deleted successfully'});
-      return;
+      message.severity = 'warn';
+      message.summary = 'Deleted';
+      message.detail = 'Deleted successfully'
     }
-
-    if (event.status >= 400 && event.status <= 499) {
-      console.log(event.body)
-      this.msgService.add({severity: 'error', summary: 'Error', detail: event.body.error.error});
+    if (isEntityResponse(event.body)) {
+      const entityResponse: EntityResponse = event.body;
+      if (entityResponse && entityResponse.log ) {
+        this.msgService.add(message);
+      }
     }
   }
 
-  private responseHandler = (response: HttpErrorResponse) => {
-    console.log(response)
-    if (response.status >= 200 && response.status <= 299) {
-      console.log("CREATED A RESOURCE")
-    }
-
-    if (response.error instanceof Error) {
-      this.msgService.add({severity: 'warn', summary: response.error.name, detail: response.error.message});
-    } else if (response.status == 0) {
-      this.msgService.add({severity: 'error', summary: `Server error`, detail: `Server is not running!`});
-    } else if (response.status == 401) {
-      LocalStorageUtil.deleteUserToken();
-      addToMessageService(this.msgService, 'warn', 'Logged Out', 'You need to be logged in to perform this action!')
-      location.reload();
-    } else if (response.error == undefined) {
-      this.msgService.add({
-        severity: 'error',
-        summary: 'Unknown error',
-        detail: 'Report this to the admin or developers!'
-      });
+  private errorResponseHandler = (response: HttpErrorResponse) => {
+    const error = response.error;
+    const message: Message = {
+      severity : 'error',
+      summary : 'Error',
+      detail: 'Something unexpected happened. Please file a report to the developers!'
+    };
+    if (error) {
+      message.detail = error.message ? error.message : message.detail;
     } else {
-      this.msgService.add({
-        severity: 'error',
-        summary: response.name,
-        detail: `Backend returned code ${response.status} : ${response.error.message ? response.error.message : 'Unknown error'}`
-      });
+      message.detail = 'Something unexpected happened. Please file a report to the developers!'
     }
-    return EMPTY;
+    this.msgService.add(message);
+
+    if(response.status == 401 || response.status == 403) {
+      this.router.navigate(['/login']).then(() => LocalStorageUtil.deleteUserToken());
+    }
+    return of(error);
   }
 }
