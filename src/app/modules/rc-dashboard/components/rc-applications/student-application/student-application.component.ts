@@ -12,6 +12,9 @@ import {StudentApplicationService} from "../../../../../services/student-applica
 import {MessageService} from "primeng/api";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Dropdown} from "primeng/dropdown";
+import {Term} from "../../../../../models/dto/term.model";
+import {TermService} from "../../../../../services/term.service";
+import {ReportCardService} from "../../../../../services/report-card.service";
 
 @Component({
   selector: 'app-application',
@@ -19,11 +22,13 @@ import {Dropdown} from "primeng/dropdown";
   styleUrls: ['./student-application.component.scss']
 })
 export class StudentApplicationComponent implements OnInit {
+  satId: number = -1;
   studentApplication!: StudentApplication;
   studentApplicationTrial!: StudentApplicationTrial;
   registeredSubjects: { reg: SubjectRegistration, subject: Subject }[] = [];
   subjects: Subject[] = [];
   students: Student[] = [];
+  terms: Term[] = [];
   academicYears: AcademicYear[] = [];
 
   alreadyAddedSubject: boolean = false;
@@ -34,14 +39,16 @@ export class StudentApplicationComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private msgService: MessageService,
+    private reportCardService: ReportCardService,
     private subjectService: SubjectService,
     private studentService: StudentService,
+    private termService: TermService,
     private studentApplicationService: StudentApplicationService,
     private subjectRegistrationService: SubjectRegistrationService,
   ) {
-    const satId = this.activatedRoute.snapshot.params['id'];
-    if (satId) {
-      this.loadSAT(satId);
+    this.satId = this.activatedRoute.snapshot.params['id'];
+    if (this.satId) {
+      this.loadSAT(this.satId);
     } else {
       this.router.navigate(['/dashboard/application']).then();
     }
@@ -52,6 +59,7 @@ export class StudentApplicationComponent implements OnInit {
   }
 
   loadData = () => {
+    this.termService.getAll().subscribe((terms) => this.terms = terms);
     this.studentService.getAll().subscribe((students) => this.students = students);
     this.subjectService.getAll().subscribe((subjects) => this.subjects = subjects);
   }
@@ -109,5 +117,9 @@ export class StudentApplicationComponent implements OnInit {
         this.subjectsToRegister = [];
       });
     }
+  }
+
+  getReportCardAction(termId: number) {
+    this.reportCardService.getReportCard(this.satId, termId).subscribe();
   }
 }
