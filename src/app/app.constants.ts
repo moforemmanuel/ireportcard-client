@@ -17,6 +17,8 @@ export const RC_DEFAULT_API_URL = `${RC_SERVER_URL}/api/default`;
 
 export const RC_GRADE_API_URL = `${RC_SERVER_URL}/api/grade`;
 
+export const RC_REPORT_CARD_API_URL = `${RC_SERVER_URL}/api/rc`;
+
 export const RC_SCHOOL_API_URL = `${RC_SERVER_URL}/api/school`;
 
 export const RC_SECTION_API_URL = `${RC_SERVER_URL}/api/section`;

@@ -47,6 +47,7 @@ import {ToggleButtonModule} from "primeng/togglebutton";
     RadioButtonModule,
     FormsModule,
     ToggleButtonModule,
+
   ],
   providers: [
     injectables,
