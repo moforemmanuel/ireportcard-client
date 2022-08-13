@@ -5,7 +5,7 @@ import {addToMessageService} from "../../../../utils/message-service.util";
 import {HttpErrorResponse} from "@angular/common/http";
 import {LocalStorageUtil} from "../../../../utils/local-storage.util";
 import {Router} from "@angular/router";
-import {DefaultService} from "../../../../services/default.service";
+import {ReportCardService} from "../../../../services/report-card.service";
 
 @Component({
   selector: 'app-top-menu',
@@ -36,7 +36,7 @@ export class TopMenuComponent implements OnInit {
   menuItems: MenuItem[] = [];
 
 
-  constructor(private router: Router, private authService: AuthService, private defaultService: DefaultService, private msgService: MessageService) {
+  constructor(private router: Router, private authService: AuthService, private defaultService: ReportCardService, private msgService: MessageService) {
   }
 
   ngOnInit(): void {

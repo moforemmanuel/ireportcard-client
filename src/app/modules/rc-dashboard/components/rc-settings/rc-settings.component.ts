@@ -8,7 +8,7 @@ import {AcademicYearService} from "../../../../services/academic-year.service";
 import {Term} from "../../../../models/dto/term.model";
 import {AcademicYear} from "../../../../models/dto/academic-year.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {DefaultService} from "../../../../services/default.service";
+import {ReportCardService} from "../../../../services/report-card.service";
 import {AcademicYearUtil} from "../../../../utils/academic-year.util";
 import {SchoolService} from "../../../../services/school.service";
 import {School} from "../../../../models/dto/school.model";
@@ -41,7 +41,7 @@ export class RcSettingsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private msgService: MessageService,
-    private defaultService: DefaultService,
+    private defaultService: ReportCardService,
     private schoolService: SchoolService,
     private sectionService: SectionService,
     private sequenceService: SequenceService,

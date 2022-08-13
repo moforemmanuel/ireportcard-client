@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LocalStorageUtil} from "../../../../utils/local-storage.util";
-import {DefaultService} from "../../../../services/default.service";
+import {ReportCardService} from "../../../../services/report-card.service";
 import {Router} from "@angular/router";
 import {addToMessageService} from "../../../../utils/message-service.util";
 import {MessageService} from "primeng/api";
@@ -13,7 +13,7 @@ import {MessageService} from "primeng/api";
 export class AuthComponent implements OnInit {
   login: boolean = true;
 
-  constructor(private defaultService: DefaultService, private router: Router, private msgService: MessageService) {
+  constructor(private defaultService: ReportCardService, private router: Router, private msgService: MessageService) {
   }
 
   ngOnInit(): void {

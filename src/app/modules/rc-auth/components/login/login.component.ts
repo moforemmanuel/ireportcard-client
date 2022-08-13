@@ -4,7 +4,7 @@ import {AuthService} from "../../../../services/auth.service";
 import {UserLoginRequest} from "../../../../models/dto/user.model";
 import {LocalStorageUtil} from "../../../../utils/local-storage.util";
 import {Router} from "@angular/router";
-import {DefaultService} from "../../../../services/default.service";
+import {ReportCardService} from "../../../../services/report-card.service";
 
 @Component({
   selector: 'app-login',
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private defaultService: DefaultService,
+    private defaultService: ReportCardService,
   ) {
   }
 
