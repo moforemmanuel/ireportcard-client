@@ -1,13 +1,13 @@
 import {TestBed} from '@angular/core/testing';
 
-import {DefaultService} from './default.service';
+import {ReportCardService} from './report-card.service';
 
 describe('DefaultService', () => {
-  let service: DefaultService;
+  let service: ReportCardService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DefaultService);
+    service = TestBed.inject(ReportCardService);
   });
 
   it('should be created', () => {
