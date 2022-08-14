@@ -20,10 +20,11 @@ import {StudentComponent} from "./components/rc-students/student/student.compone
 import {AddClassLevelComponent} from "./components/rc-classes/add-class-level/add-class-level.component";
 import {SubjectComponent} from "./components/rc-subjects/subject/subject.component";
 import {AddSubjectComponent} from "./components/rc-subjects/add-subject/add-subject.component";
+import {AuthTeacherGuard} from "../../guards/auth/auth-teacher.guard";
 
 const routes: Routes = [
   {
-    component: DashboardComponent, path: 'dashboard', canActivate: [AuthGuard, SchoolGuard],
+    component: DashboardComponent, path: 'dashboard', canActivate: [AuthGuard, SchoolGuard, AuthTeacherGuard],
     children: [
       {component: RcHomeComponent, path: ''},
       {component: RcSubjectsComponent, path: 'subject'},
