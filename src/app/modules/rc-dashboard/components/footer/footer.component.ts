@@ -10,7 +10,8 @@ import {Component, OnInit} from '@angular/core';
       </div>
 
       <div class="p-3">
-        <button *ngFor="let button of buttons" pButton pRipple type="button" [icon]="button.icon" class="p-button-rounded mx-1"></button>&nbsp;
+        <button *ngFor="let button of buttons" pButton pRipple type="button" [icon]="button.icon"
+                class="p-button-rounded mx-1"></button>&nbsp;
       </div>
     </div>
   `

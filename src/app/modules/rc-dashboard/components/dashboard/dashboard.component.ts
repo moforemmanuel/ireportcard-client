@@ -12,7 +12,7 @@ import {MenuItem} from "primeng/api";
     <main class="z-0 h-full min-h-screen py-8">
       <div class="dashboard-container row no-gutters dashbody-container">
         <div class="dash-body container-fluid dash-body-content">
-          <router-outlet ></router-outlet>
+          <router-outlet></router-outlet>
         </div>
       </div>
     </main>
