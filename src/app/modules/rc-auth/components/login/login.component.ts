@@ -12,8 +12,6 @@ import {ReportCardService} from "../../../../services/report-card.service";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  @Input() show: boolean = true;
-  @Output() switchToRegister: EventEmitter<void> = new EventEmitter<void>();
   loginForm!: FormGroup;
 
   constructor(
@@ -35,11 +33,6 @@ export class LoginComponent implements OnInit {
       password: ["", Validators.required]
     });
   }
-
-  switchToRegisterForm = () => {
-    this.switchToRegister.emit();
-  }
-
   loginAction() {
     const userLogin: UserLoginRequest = {
       username: this.loginForm.get('username')?.value,

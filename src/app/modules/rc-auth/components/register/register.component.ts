@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserRegisterRequest} from "../../../../models/dto/user.model";
 import {AuthService} from "../../../../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -9,12 +10,10 @@ import {AuthService} from "../../../../services/auth.service";
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  @Input() show: boolean = false;
-  @Output() switchToLogin: EventEmitter<void> = new EventEmitter<void>();
 
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private router: Router, private fb: FormBuilder, private authService: AuthService) {
     this.registerForm = this.fb.group({
       firstName: ["", Validators.required],
       lastName: ["", Validators.required],
@@ -26,11 +25,6 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  switchToLoginForm = () => {
-    this.switchToLogin.emit();
-  }
-
-
   registerAction() {
     const userReg: UserRegisterRequest = {
       firstName: this.registerForm.get("firstName")?.value,
@@ -39,10 +33,6 @@ export class RegisterComponent implements OnInit {
       password: this.registerForm.get("password")?.value,
     }
     console.log(userReg);
-    this.authService.regiser(userReg).subscribe({
-      next: () => {
-        this.switchToLoginForm();
-      }
-    });
+    this.authService.register(userReg).subscribe(() => this.router.navigate(['/login']).then());
   }
 }
