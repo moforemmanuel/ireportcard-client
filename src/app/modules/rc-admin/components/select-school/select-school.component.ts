@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {SchoolService} from "../../services/school.service";
-import {School} from "../../models/dto/school.model";
+import {SchoolService} from "../../../../services/school.service";
+import {School} from "../../../../models/dto/school.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {LocalStorageUtil} from "../../utils/local-storage.util";
+import {LocalStorageUtil} from "../../../../utils/local-storage.util";
 import {Router} from "@angular/router";
 
 @Component({
