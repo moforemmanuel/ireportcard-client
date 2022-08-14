@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {RC_DEFAULT_API_URL, RC_REPORT_CARD_API_URL} from "../app.constants";
 import {HttpClient, HttpResponse} from "@angular/common/http";
-import {map, Observable, tap} from "rxjs";
+import {map, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
