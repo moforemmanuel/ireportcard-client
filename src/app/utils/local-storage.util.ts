@@ -8,8 +8,9 @@ export module LocalStorageUtil {
     localStorage.setItem(LS_KEY.sessionId, token)
   }
 
-  export const readUserToken = (): string | null => {
-    return localStorage.getItem(LS_KEY.sessionId);
+  export const readUserToken = (): string => {
+    const token = localStorage.getItem(LS_KEY.sessionId);
+    return token ? token : '';
   }
 
   export const deleteUserToken = (): void => {

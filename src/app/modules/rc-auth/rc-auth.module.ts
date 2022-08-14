@@ -17,6 +17,11 @@ import {RippleModule} from "primeng/ripple";
 import {AuthComponent} from './components/auth/auth.component';
 import {ToastModule} from "primeng/toast";
 import {RcAuthRoutingModule} from "./rc-auth-routing.module";
+import {RegisterTeacherComponent} from './components/register/register-teacher/register-teacher.component';
+import {RegisterStudentComponent} from './components/register/register-student/register-student.component';
+import {RadioButtonModule} from "primeng/radiobutton";
+import {CalendarModule} from "primeng/calendar";
+import {DropdownModule} from "primeng/dropdown";
 
 
 @NgModule({
@@ -24,6 +29,8 @@ import {RcAuthRoutingModule} from "./rc-auth-routing.module";
     LoginComponent,
     RegisterComponent,
     AuthComponent,
+    RegisterTeacherComponent,
+    RegisterStudentComponent,
   ],
   imports: [
     RcAuthRoutingModule,
@@ -41,7 +48,10 @@ import {RcAuthRoutingModule} from "./rc-auth-routing.module";
     ImageModule,
     CheckboxModule,
     RippleModule,
-    ToastModule
+    ToastModule,
+    RadioButtonModule,
+    CalendarModule,
+    DropdownModule
   ],
   exports: [
     AuthComponent

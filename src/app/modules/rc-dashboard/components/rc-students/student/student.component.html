@@ -1,6 +1,6 @@
 <div class="surface-section border-round bg">
   <form class="form p-3" [formGroup]="studentForm">
-    <span class="text-3xl">{{student? student.name : 'Editing'}}</span>
+    <span class="text-3xl">{{student ? student.user.firstName : 'Editing'}}</span>
     <div class="p-fluid grid py-5">
       <div class="field col-8">
         <span class="p-float-label">
@@ -10,7 +10,9 @@
       </div>
       <div class="field col-4 flex align-content-center">
         <span class="mr-2 flex align-self-center p-radiobutton-box" *ngFor="let gender of genders">
-          <input id="gender" class="p-radiobutton" type="radio" [checked]="student? student.gender.toLowerCase() == gender.toLowerCase(): false" [value]="gender" [formControlName]="'gender'">&nbsp;
+          <input id="gender" class="p-radiobutton" type="radio"
+                 [checked]="student? student.gender.toLowerCase() == gender.toLowerCase(): false" [value]="gender"
+                 [formControlName]="'gender'">&nbsp;
           <label for="gender" class="p-radiobutton-label">{{gender | titlecase}}</label>
         </span>
       </div>

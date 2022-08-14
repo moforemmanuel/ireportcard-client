@@ -3,7 +3,8 @@
     <span class="h3">Subjects</span>
     <span class="spacer"></span>
     <span class="px-2">
-      <button [routerLink]="['/dashboard/subject/add']" class="p-button-rounded" icon="pi pi-plus-circle" pButton type="button"></button>
+      <button [routerLink]="['/dashboard/subject/add']" class="p-button-rounded" icon="pi pi-plus-circle" pButton
+              type="button"></button>
     </span>
     <span class="px-2">
       <button (click)="loadSubjects()" class="p-button-rounded" icon="pi pi-refresh" pButton type="button"></button>
@@ -26,8 +27,10 @@
           <td>{{subject.code}}</td>
           <td>{{subject.coefficient}}</td>
           <td>
-            <button [routerLink]="['/dashboard/subject/view', subject.id]"  pButton pRipple  class="mx-1 p-button-rounded" icon="pi pi-pencil" pTooltip="Edit" tooltipPosition="bottom"></button>
-            <button (click)="deleteSubjectAction(subject)" pButton pRipple class="mx-1 p-button-rounded p-button-danger" icon="pi pi-trash"  pTooltip="Delete" tooltipPosition="bottom"></button>
+            <button [routerLink]="['/dashboard/subject/view', subject.id]" pButton pRipple class="mx-1 p-button-rounded"
+                    icon="pi pi-pencil" pTooltip="Edit" tooltipPosition="bottom"></button>
+            <button (click)="deleteSubjectAction(subject)" pButton pRipple class="mx-1 p-button-rounded p-button-danger"
+                    icon="pi pi-trash" pTooltip="Delete" tooltipPosition="bottom"></button>
           </td>
         </tr>
       </ng-template>

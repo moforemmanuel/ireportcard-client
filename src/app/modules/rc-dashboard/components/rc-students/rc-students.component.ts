@@ -30,7 +30,7 @@ export class RcStudentsComponent implements OnInit {
   }
 
   deleteStudentAction(student: Student) {
-    const confirmDelete = confirm(`Are you sure you want to delete account of: ${student.name}`);
+    const confirmDelete = confirm(`Are you sure you want to delete account of: ${student.user.firstName}`);
     if (confirmDelete) {
       this.studentService.delete(student.id).subscribe({next: () => this.loadStudents()});
     }

@@ -1,3 +1,18 @@
+import {Role} from "../enum/role.enum";
+
+export class User {
+  constructor(
+    public id: number,
+    public username: string,
+    public firstName: string,
+    public lastName: string,
+    public phone: string,
+    public address: string,
+    public role: Role
+  ) {
+  }
+}
+
 export interface UserLoginRequest {
   username: string;
   password: string;

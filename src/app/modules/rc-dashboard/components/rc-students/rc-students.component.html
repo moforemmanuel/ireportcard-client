@@ -13,7 +13,8 @@
 
   <div class="py-4">
     <div class="surface-section">
-      <p-table [value]="students" [rows]="10" [paginator]="true" [globalFilterFields]="['name', 'regNum', 'gender']" responsiveLayout="scroll">
+      <p-table [value]="students" [rows]="10" [paginator]="true" [globalFilterFields]="['name', 'regNum', 'gender']"
+               responsiveLayout="scroll">
         <ng-template pTemplate="header">
           <tr>
             <th>RegNo</th>
@@ -25,19 +26,22 @@
         <ng-template pTemplate="body" let-student>
           <tr>
             <td>{{student.regNum}}</td>
-            <td>{{student.name}}</td>
+            <td>{{student.user.firstName + ' ' + student.user.lastName }}</td>
             <td>{{student.gender | titlecase}}</td>
             <td>
-              <button [routerLink]="['/dashboard/student/view', student.id]" class="mr-1 p-button-rounded" icon="pi pi-pencil" pButton
+              <button [routerLink]="['/dashboard/student/view', student.id]" class="mr-1 p-button-rounded"
+                      icon="pi pi-pencil" pButton
                       type="button"></button>
-              <button (click)="deleteStudentAction(student)" class="mr-1 p-button-rounded p-button-danger" icon="pi pi-trash" pButton
+              <button (click)="deleteStudentAction(student)" class="mr-1 p-button-rounded p-button-danger"
+                      icon="pi pi-trash" pButton
                       type="button"></button>
             </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="summary">
           <div class="flex align-items-center justify-content-between">
-            In total, there {{students.length == 1? 'is':'are'}} {{students.length}} student{{students.length == 1? '':'s'}}.
+            In total, there {{students.length == 1 ? 'is' : 'are'}} {{students.length}}
+            student{{students.length == 1 ? '' : 's'}}.
           </div>
         </ng-template>
       </p-table>

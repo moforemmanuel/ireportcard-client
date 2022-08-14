@@ -18,12 +18,15 @@ import {ReportCardService} from "../../../../services/report-card.service";
         </ng-template>
         <ng-template pTemplate="end">
           <div class="flex justify-content-center align-items-center">
-            <span class="block p-button border-noround {{online ? 'bg-green-300 hover:bg-green-300': 'bg-red-300 hover:bg-red-600' }}"
-                  pTooltip="{{online ? 'Online' : 'Offline'}}" tooltipPosition="top">
+            <span
+              class="block p-button border-noround {{online ? 'bg-green-300 hover:bg-green-300': 'bg-red-300 hover:bg-red-600' }}"
+              pTooltip="{{online ? 'Online' : 'Offline'}}" tooltipPosition="top">
               <i class="{{online? 'pi pi-bolt': 'pi pi-ban'}}"></i>
             </span>
-            <button (click)="changeSchoolAction()" pButton pTooltip="Change School" tooltipPosition="top" icon="pi pi-arrows-h" class="p-button-raised border-noround m-1" ></button>
-            <button (click)="logoutAction()" pButton pTooltip="Logout" tooltipPosition="top" icon="pi pi-power-off" data-in-line="true" class="p-button-danger border-noround m-1"></button>
+            <button (click)="changeSchoolAction()" pButton pTooltip="Change School" tooltipPosition="top"
+                    icon="pi pi-arrows-h" class="p-button-raised border-noround m-1"></button>
+            <button (click)="logoutAction()" pButton pTooltip="Logout" tooltipPosition="top" icon="pi pi-power-off"
+                    data-in-line="true" class="p-button-danger border-noround m-1"></button>
           </div>
         </ng-template>
       </p-menubar>
@@ -111,7 +114,7 @@ export class TopMenuComponent implements OnInit {
     if (sessionId && confirmDelete) {
       this.authService.logout({sessionId: sessionId}).subscribe({
         next: (res) => {
-          this.router.navigate(['/auth']).then(() => {
+          this.router.navigate(['/login']).then(() => {
             addToMessageService(this.msgService, 'success', 'Log out', res.message);
           });
           LocalStorageUtil.deleteUserToken();

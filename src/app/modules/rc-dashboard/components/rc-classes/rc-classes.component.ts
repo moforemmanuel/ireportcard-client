@@ -65,23 +65,6 @@ export class RcClassesComponent implements OnInit {
     }
   }
 
-  private loadClassSubs(classLevel: ClassLevel): void {
-    this.classLevelSubService.getAllByClassLevelId(classLevel.id).subscribe({
-      next: (classLevelSubs) => {
-        const classLevelFind = this.classes.find((c) => c.classLevel.id === classLevel.id);
-        if (classLevelFind) {
-          classLevelFind.classLevelSubs = classLevelSubs;
-        } else {
-          this.classes.push({classLevel, classLevelSubs});
-        }
-        this.sortClasses();
-      },
-      error: (error) => {
-        addToMessageService(this.messageService, 'error', 'Error loading class subs', error.message);
-      }
-    });
-  }
-
   sortClasses(): void {
     this.classes.sort((a, b) => {
       return a.classLevel.name.localeCompare(b.classLevel.name);
@@ -111,14 +94,34 @@ export class RcClassesComponent implements OnInit {
     this.classLevelSubService.delete(classLevelSubId).subscribe(() => this.loadClassSubs(classLevel));
   }
 
-
   getColClass(classLevelSubs: ClassLevelSub[]) {
     switch (classLevelSubs.length) {
-      case 1: return 'col-12';
-      case 2: return 'col-6';
-      case 3: return 'col-4';
-      default : return 'col-3';
+      case 1:
+        return 'col-12';
+      case 2:
+        return 'col-6';
+      case 3:
+        return 'col-4';
+      default :
+        return 'col-3';
     }
+  }
+
+  private loadClassSubs(classLevel: ClassLevel): void {
+    this.classLevelSubService.getAllByClassLevelId(classLevel.id).subscribe({
+      next: (classLevelSubs) => {
+        const classLevelFind = this.classes.find((c) => c.classLevel.id === classLevel.id);
+        if (classLevelFind) {
+          classLevelFind.classLevelSubs = classLevelSubs;
+        } else {
+          this.classes.push({classLevel, classLevelSubs});
+        }
+        this.sortClasses();
+      },
+      error: (error) => {
+        addToMessageService(this.messageService, 'error', 'Error loading class subs', error.message);
+      }
+    });
   }
 }
 

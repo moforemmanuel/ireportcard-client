@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {RC_DEFAULT_API_URL, RC_REPORT_CARD_API_URL} from "../app.constants";
+import {RC_AUTH_TEST_API_URL, RC_DEFAULT_API_URL, RC_REPORT_CARD_API_URL} from "../app.constants";
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {map, Observable} from "rxjs";
 
@@ -11,8 +11,15 @@ export class ReportCardService {
   constructor(
     @Inject(RC_DEFAULT_API_URL) private defaultApiUrl: string,
     @Inject(RC_REPORT_CARD_API_URL) private reportCardApiUrl: string,
+    @Inject(RC_AUTH_TEST_API_URL) private testAuthApiUrl: string,
     private http: HttpClient
-  ) {}
+  ) {
+  }
+
+  testAuthUser = (): Observable<boolean> => this.http.get<boolean>(`${this.testAuthApiUrl}/user`);
+  testAuthStudent = (): Observable<boolean> => this.http.get<boolean>(`${this.testAuthApiUrl}/student`);
+  testAuthTeacher = (): Observable<boolean> => this.http.get<boolean>(`${this.testAuthApiUrl}/teacher`);
+  testAuthAdmin = (): Observable<boolean> => this.http.get<boolean>(`${this.testAuthApiUrl}/admin`);
 
   create(): Observable<string> {
     return this.http.post<string>(`${this.defaultApiUrl}/create`, {})
