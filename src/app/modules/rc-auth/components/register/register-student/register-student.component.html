@@ -1,0 +1,79 @@
+<form class="form p-3" [formGroup]="studentForm" (submit)="registerStudentAction()">
+  <div>
+    <span class="text-3xl">Student Information</span>
+    <div class="p-fluid grid">
+      <div class="field md:col-6">
+        <label for="username" class="block text-900 font-medium mb-2">Username</label>
+        <input id="username" type="text" pInputText class="w-full mb-3" [formControlName]="'username'">
+      </div>
+      <div class="field md:col-6">
+        <label for="password" class="block text-900 font-medium mb-2">Password</label>
+        <input id="password" type="password" pInputText class="w-full mb-3" [formControlName]="'password'">
+      </div>
+      <div class="field md:col-6">
+        <label for="fname" class="block text-900 font-medium mb-2">First Name</label>
+        <input id="fname" type="text" pInputText class="w-full mb-3" [formControlName]="'firstname'">
+      </div>
+      <div class="field md:col-6">
+        <label for="lname" class="block text-900 font-medium mb-2">Last Name</label>
+        <input id="lname" type="text" pInputText class="w-full mb-3" [formControlName]="'lastname'">
+      </div>
+
+      <div class="field md:col-6 align-content-center">
+        <label class="block text-900 font-medium mb-2">Gender</label>
+        <div class="flex align-content-center">
+              <span class="mr-2 flex align-self-center" *ngFor="let gender of genders">
+                <p-radioButton id="gender" [value]="gender" [formControlName]="'gender'"></p-radioButton>&nbsp;
+                <label for="gender">{{gender | titlecase}}</label>
+              </span>
+        </div>
+      </div>
+      <div class="field md:col-6">
+        <label class="block text-900 font-medium mb-2">School</label>
+        <p-dropdown [options]="schools" [optionLabel]="'name'" [optionValue]="'id'" [formControlName]="'school'"></p-dropdown>
+      </div>
+      <div class="field md:col-6">
+        <label for="dob" class="block text-900 font-medium mb-2">Date of Birth</label>
+        <p-calendar id="dob" [formControlName]="'dob'"></p-calendar>
+      </div>
+      <div class="field md:col-6">
+        <label for="pob" class="block text-900 font-medium mb-2">Place of Birth</label>
+        <input id="pob" type="text" pInputText class="w-full mb-3" [formControlName]="'pob'">
+      </div>
+    </div>
+  </div>
+  <p-divider></p-divider>
+  <div>
+    <span class="text-3xl">Guardian Information</span>
+    <div class="p-fluid grid">
+      <div class="field md:col-6">
+        <label class="block text-900 font-medium mb-2">Father's Name</label>
+        <input type="text" pInputText class="w-full mb-3" [formControlName]="'fatherName'">
+      </div>
+      <div class="field md:col-6">
+        <label class="block text-900 font-medium mb-2">Father's Phone</label>
+        <input type="text" pInputText class="w-full mb-2" [formControlName]="'fatherPhone'">
+      </div>
+      <div class="field md:col-6">
+        <label class="block text-900 font-medium mb-2">Mother's Name</label>
+        <input type="text" pInputText class="w-full mb-3" [formControlName]="'motherName'">
+      </div>
+      <div class="field md:col-6">
+        <label class="block text-900 font-medium mb-2">Mother's Phone</label>
+        <input type="text" pInputText class="w-full mb-3" [formControlName]="'motherPhone'">
+      </div>
+      <div class="field md:col-6">
+        <label class="block text-900 font-medium mb-2">Guardian's Name</label>
+        <input type="text" pInputText class="w-full mb-3" [formControlName]="'guardianName'">
+      </div>
+      <div class="field md:col-6">
+        <label class="block text-900 font-medium mb-2">Guardian' Phone</label>
+        <input type="text" pInputText class="w-full mb-3" [formControlName]="'guardianPhone'">
+      </div>
+    </div>
+  </div>
+  <p-divider></p-divider>
+  <div class="col flex justify-content-end">
+    <button [disabled]="!studentForm.valid" pButton class="" label="Save Student" icon="pi pi-check"></button>
+  </div>
+</form>
