@@ -1,7 +1,7 @@
 import {SchoolService} from "./services/school.service";
 import {
   RC_ACADEMIC_YEAR_API_URL,
-  RC_AUTH_API_URL,
+  RC_AUTH_API_URL, RC_AUTH_TEST_API_URL,
   RC_CLASS_LEVEL_API_URL,
   RC_CLASS_LEVEL_SUB_API_URL,
   RC_CLASS_LIST_API_URL,
@@ -61,6 +61,7 @@ const reportCardInjectables: Array<any> = [
   {provide: ReportCardService, useClass: ReportCardService},
   {provide: RC_REPORT_CARD_API_URL, useValue: RC_REPORT_CARD_API_URL},
   {provide: RC_DEFAULT_API_URL, useValue: RC_DEFAULT_API_URL},
+  {provide: RC_AUTH_TEST_API_URL, useValue: RC_AUTH_TEST_API_URL},
 ];
 const schoolInjectables: Array<any> = [
   {provide: SchoolService, useClass: SchoolService},

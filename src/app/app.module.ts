@@ -28,7 +28,7 @@ import {ToggleButtonModule} from "primeng/togglebutton";
   declarations: [
     AppComponent,
     RcWelcomeComponent,
-    SelectSchoolComponent
+    SelectSchoolComponent,
   ],
   imports: [
     RcDashboardModule,
