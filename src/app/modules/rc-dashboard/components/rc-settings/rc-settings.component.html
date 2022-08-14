@@ -15,12 +15,13 @@
 
       <div class="grid formgrid pb-3">
         <div class="md:col-4 py-2">
-          <label class="block text-800 font-medium mb-2">Applications {{settingsForm.get('applicationsOpen')?.value ? 'Open' : 'Closed'}}</label>
-          <p-inputSwitch [formControlName]="'applicationsOpen'" ></p-inputSwitch>
+          <label
+            class="block text-800 font-medium mb-2">Applications {{settingsForm.get('applicationsOpen')?.value ? 'Open' : 'Closed'}}</label>
+          <p-inputSwitch [formControlName]="'applicationsOpen'"></p-inputSwitch>
         </div>
         <div class="md:col-4">
           <label class="block text-800 font-medium mb-2">Min Grade Score</label>
-          <input pInputText type="number" [value]="0"  [class]="'w-100'" [disabled]="true">
+          <input pInputText type="number" [value]="0" [class]="'w-100'" [disabled]="true">
         </div>
         <div class="md:col-4">
           <label class="block text-800 font-medium mb-2">Max Grade Score</label>
@@ -32,15 +33,18 @@
       <div class="grid formgrid pb-3">
         <div class="md:col-4">
           <label class="block text-800 font-medium mb-2">Current Academic Year</label>
-          <p-dropdown [formControlName]="'year'" [options]="academicYears" [optionLabel]="'name'" [optionValue]="'id'" [styleClass]="'w-100'"></p-dropdown>
+          <p-dropdown [formControlName]="'year'" [options]="academicYears" [optionLabel]="'name'" [optionValue]="'id'"
+                      [styleClass]="'w-100'"></p-dropdown>
         </div>
         <div class="md:col-4">
           <label class="block text-800 font-medium mb-2">Current Term</label>
-          <input class="w-100" pInputText [value]="school ? (school.currentTerm ? school.currentTerm : 'None') : ''" disabled>
+          <input class="w-100" pInputText [value]="school ? (school.currentTerm ? school.currentTerm : 'None') : ''"
+                 disabled>
         </div>
         <div class="md:col-4">
           <label class="block text-800 font-medium mb-2">Current Sequence</label>
-          <p-dropdown [formControlName]="'sequence'" [options]="sequences" [optionLabel]="'name'" [optionValue]="'id'" [styleClass]="'w-100'"></p-dropdown>
+          <p-dropdown [formControlName]="'sequence'" [options]="sequences" [optionLabel]="'name'" [optionValue]="'id'"
+                      [styleClass]="'w-100'"></p-dropdown>
         </div>
       </div>
       <button [disabled]="!settingsForm.valid" class="" pButton type="submit" label="Save"></button>
@@ -65,18 +69,20 @@
         </div>
         <div class="ml-auto">
           <p-toggleButton [(ngModel)]="sectionInput.hidden" [onLabel]="'Add'"
-                          [offLabel]="sectionInput.value.length == 0? 'Cancel': 'Save'" (click)="saveSection(sectionInput, sectionInput.hidden)">
+                          [offLabel]="sectionInput.value.length == 0? 'Cancel': 'Save'"
+                          (click)="saveSection(sectionInput, sectionInput.hidden)">
           </p-toggleButton>
         </div>
       </div>
     </div>
   </p-panel>
 
-  <p-panel  [header]="'Academic Years'" [toggleable]="true" [styleClass]="'py-4'">
+  <p-panel [header]="'Academic Years'" [toggleable]="true" [styleClass]="'py-4'">
     <div *ngFor="let year of academicYears" class="my-2">
       <div class="d-flex align-middle form-group">
         <input pInputText #yearInput [disabled]="true" [value]="year.name" class="w-full">&nbsp;
-        <p-toggleButton [(ngModel)]="yearInput.disabled" [onLabel]="'Edit'" [offLabel]="'Save'" (click)="editYTSAction(0, year, yearInput)">
+        <p-toggleButton [(ngModel)]="yearInput.disabled" [onLabel]="'Edit'" [offLabel]="'Save'"
+                        (click)="editYTSAction(0, year, yearInput)">
         </p-toggleButton>&nbsp;
         <button pButton (click)="deleteATSAction(0, year)" class="p-button-danger">Delete</button>
       </div>
@@ -84,7 +90,8 @@
     <p-divider></p-divider>
     <div class="d-flex justify-content-between">
       <input pInputText #yearAddInput [hidden]="true" placeholder="20XX/20XY">&nbsp;
-      <p-toggleButton [(ngModel)]="yearAddInput.hidden" [onLabel]="'Add'" [offLabel]="'Save'" (click)="addYTSAction(0, yearAddInput)"></p-toggleButton>
+      <p-toggleButton [(ngModel)]="yearAddInput.hidden" [onLabel]="'Add'" [offLabel]="'Save'"
+                      (click)="addYTSAction(0, yearAddInput)"></p-toggleButton>
     </div>
   </p-panel>
 
@@ -92,7 +99,7 @@
   <p-panel [header]="'Terms'" [toggleable]="true" [styleClass]="'py-4'">
     <div *ngFor="let term of terms" class="my-2 d-flex">
       <input pInputText #termUpdateInput [disabled]="true" [value]="term.name" class="w-full">&nbsp;
-      <p-toggleButton [(ngModel)]="termUpdateInput.disabled"  [onLabel]="'Edit'" [offLabel]="'Save'"
+      <p-toggleButton [(ngModel)]="termUpdateInput.disabled" [onLabel]="'Edit'" [offLabel]="'Save'"
                       (click)="editYTSAction(1, term, termUpdateInput)"></p-toggleButton>&nbsp;
       <button pButton (click)="deleteATSAction(1, term)" icon="pi pi-trash" pTooltip="Delete"
               class="p-button-danger p-button-rounded"></button>
@@ -100,7 +107,8 @@
     <p-divider></p-divider>
     <div class="d-flex justify-content-end">
       <input pInputText #termAddInput [hidden]="true" class="w-full">&nbsp;
-      <p-toggleButton [(ngModel)]="termAddInput.hidden"  [onLabel]="'Add'" [offLabel]="'Save'" (click)="addYTSAction(1, termAddInput)"></p-toggleButton>&nbsp;
+      <p-toggleButton [(ngModel)]="termAddInput.hidden" [onLabel]="'Add'" [offLabel]="'Save'"
+                      (click)="addYTSAction(1, termAddInput)"></p-toggleButton>&nbsp;
     </div>
   </p-panel>
 
@@ -111,7 +119,8 @@
       <div *ngFor="let sequence of seq.sequences">
         <div class="d-flex align-middle mb-2">
           <input pInputText #seqUpdateInput [disabled]="true" [value]="sequence.name" class="w-full">&nbsp;
-          <p-toggleButton [(ngModel)]="seqUpdateInput.disabled" [onLabel]="'Edit'" [offLabel]="'Save'" (click)="editYTSAction(2, sequence, seqUpdateInput)"></p-toggleButton>&nbsp;
+          <p-toggleButton [(ngModel)]="seqUpdateInput.disabled" [onLabel]="'Edit'" [offLabel]="'Save'"
+                          (click)="editYTSAction(2, sequence, seqUpdateInput)"></p-toggleButton>&nbsp;
           <button pButton (click)="deleteATSAction(2, sequence)" icon="pi pi-trash" class="p-button-danger"></button>
         </div>
       </div>
@@ -127,7 +136,8 @@
           <label>{{type | titlecase}}</label>
         </div>
       </form>
-      <p-toggleButton (click)="addYTSAction(2, seqAddInput)" [(ngModel)]="seqAddInput.hidden" [onLabel]="'Add'" [offLabel]="'Save'"></p-toggleButton>&nbsp;
+      <p-toggleButton (click)="addYTSAction(2, seqAddInput)" [(ngModel)]="seqAddInput.hidden" [onLabel]="'Add'"
+                      [offLabel]="'Save'"></p-toggleButton>&nbsp;
     </div>
   </p-panel>
 </div>

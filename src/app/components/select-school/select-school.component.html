@@ -14,7 +14,8 @@
         <span class="h3 text-500">No Schools Found</span>
       </div>
       <div *ngFor="let school of schools" class="m-3">
-        <input [checked]="school.id == selectedSchoolId" name="school" value="{{school.id}}" [(ngModel)]="selectedSchoolId" type="radio" class="p-radiobutton">&nbsp;
+        <input [checked]="school.id == selectedSchoolId" name="school" value="{{school.id}}"
+               [(ngModel)]="selectedSchoolId" type="radio" class="p-radiobutton">&nbsp;
         <label class="p-radiobutton-label">{{school.name}}</label>
       </div>
     </div>
@@ -22,9 +23,11 @@
       <span class="text-500">Want to add a new school? Click to add on the side</span>
       <span class="spacer"></span>
 
-      <p-toggleButton [(ngModel)]="schoolFormDiv.hidden" onLabel="Add" offLabel="Cancel" offIcon="pi pi-times" onIcon="pi pi-plus" [styleClass]="'p-button-danger'"></p-toggleButton>
+      <p-toggleButton [(ngModel)]="schoolFormDiv.hidden" onLabel="Add" offLabel="Cancel" offIcon="pi pi-times"
+                      onIcon="pi pi-plus" [styleClass]="'p-button-danger'"></p-toggleButton>
       &nbsp;
-      <button (click)="setSchoolAction()" icon="pi pi-arrow-right" iconPos="right" pButton pRipple label="Continue"></button>
+      <button (click)="setSchoolAction()" icon="pi pi-arrow-right" iconPos="right" pButton pRipple
+              label="Continue"></button>
     </div>
 
 
@@ -38,14 +41,16 @@
             <input id="name" type="text" pInputText class="w-full mb-3" [formControlName]="'name'">
 
             <label for="maxGrade" class="block text-900 font-medium mb-2">Max Grade</label>
-            <input id="maxGrade" type="number" min="0" max="20" pInputText class="w-full mb-3" [formControlName]="'maxGrade'">
+            <input id="maxGrade" type="number" min="0" max="20" pInputText class="w-full mb-3"
+                   [formControlName]="'maxGrade'">
 
             <div class="mb-2 block">
               <p-checkbox id="open" [binary]="true" [formControlName]="'applicationOpen'"></p-checkbox>&nbsp;
               <label for="open" class="text-900 font-medium">Applications Open</label>
             </div>
 
-            <button (click)="addSchoolAction()" pButton pRipple label="Save School" icon="pi pi-check" class="w-full"></button>
+            <button (click)="addSchoolAction()" pButton pRipple label="Save School" icon="pi pi-check"
+                    class="w-full"></button>
           </div>
         </div>
       </form>
