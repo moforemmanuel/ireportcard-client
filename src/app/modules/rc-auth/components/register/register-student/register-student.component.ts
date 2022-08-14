@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Gender} from "../../../../../models/enum/gender.enum";
 import {School} from "../../../../../models/dto/school.model";
@@ -7,7 +7,6 @@ import {DateUtil} from "../../../../../utils/date.util";
 import {Student, StudentInfo} from "../../../../../models/dto/student.model";
 import {User} from "../../../../../models/dto/user.model";
 import {Role} from "../../../../../models/enum/role.enum";
-import {StudentService} from "../../../../../services/student.service";
 import {AuthService} from "../../../../../services/auth.service";
 import {Router} from "@angular/router";
 
@@ -20,6 +19,7 @@ export class RegisterStudentComponent implements OnInit {
   studentForm: FormGroup;
   genders: string[] = Object.keys(Gender);
   schools: School[] = [];
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -71,7 +71,7 @@ export class RegisterStudentComponent implements OnInit {
       gender: this.studentForm.get('gender')?.value,
       dob: DateUtil.toString(new Date(this.studentForm.get('dob')?.value)),
       pob: this.studentForm.get('pob')?.value,
-      schoolId: this.studentForm.get('school')?.value ,
+      schoolId: this.studentForm.get('school')?.value,
       info: info, user: user
     }
     const password = this.studentForm.get('password')?.value;

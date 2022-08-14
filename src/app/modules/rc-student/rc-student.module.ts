@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { RcStudentRoutingModule } from './rc-student-routing.module';
-import { StudentHomeComponent } from './components/student-home/student-home.component';
-import { StudentDashboardComponent } from './components/student-dashboard/student-dashboard.component';
+import {RcStudentRoutingModule} from './rc-student-routing.module';
+import {StudentHomeComponent} from './components/student-home/student-home.component';
+import {StudentDashboardComponent} from './components/student-dashboard/student-dashboard.component';
 
 
 @NgModule({
@@ -16,4 +16,5 @@ import { StudentDashboardComponent } from './components/student-dashboard/studen
     RcStudentRoutingModule
   ]
 })
-export class RcStudentModule { }
+export class RcStudentModule {
+}

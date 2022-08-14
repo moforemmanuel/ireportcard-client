@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {Observable, Subject} from 'rxjs';
 import {ReportCardService} from "../../services/report-card.service";
@@ -10,7 +10,8 @@ export class AuthStudentGuard implements CanActivate {
   constructor(
     private router: Router,
     private reportCardService: ReportCardService
-  ) {}
+  ) {
+  }
 
   canActivate(
     route: ActivatedRouteSnapshot,

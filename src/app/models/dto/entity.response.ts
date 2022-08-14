@@ -3,6 +3,7 @@ export class EntityResponse {
     public id: number,
     public message: string,
     public log: boolean
-  ) {}
+  ) {
+  }
 
 }

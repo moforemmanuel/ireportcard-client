@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserRegisterRequest} from "../../../../models/dto/user.model";
 import {AuthService} from "../../../../services/auth.service";

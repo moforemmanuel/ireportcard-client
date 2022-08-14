@@ -9,7 +9,8 @@ export class User {
     public phone: string,
     public address: string,
     public role: Role
-  ) {}
+  ) {
+  }
 }
 
 export interface UserLoginRequest {

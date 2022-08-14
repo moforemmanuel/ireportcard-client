@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {StudentDashboardComponent} from "./components/student-dashboard/student-dashboard.component";
 import {StudentHomeComponent} from "./components/student-home/student-home.component";
 import {AuthGuard} from "../../guards/auth.guard";
@@ -21,4 +21,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class RcStudentRoutingModule { }
+export class RcStudentRoutingModule {
+}

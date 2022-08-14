@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { RcAdminRoutingModule } from './rc-admin-routing.module';
+import {RcAdminRoutingModule} from './rc-admin-routing.module';
 
 
 @NgModule({
@@ -11,4 +11,5 @@ import { RcAdminRoutingModule } from './rc-admin-routing.module';
     RcAdminRoutingModule
   ]
 })
-export class RcAdminModule { }
+export class RcAdminModule {
+}

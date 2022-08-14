@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {LocalStorageUtil} from "../../../../utils/local-storage.util";
 import {ReportCardService} from "../../../../services/report-card.service";
 import {Router} from "@angular/router";
-import {addToMessageService} from "../../../../utils/message-service.util";
 import {MessageService} from "primeng/api";
 
 @Component({

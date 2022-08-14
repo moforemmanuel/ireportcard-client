@@ -33,7 +33,7 @@ export class HttpResponseInterceptor implements HttpInterceptor {
   successfulResponseHandler = (event: HttpResponse<any>): void => {
     const message: Message = {severity: 'success', summary: 'Success', detail: ''};
     if (event.status === 200 || event.status === 201) {
-      message.detail = event.body.message? event.body.message : '';
+      message.detail = event.body.message ? event.body.message : '';
     }
     if (event.status === 204) {
       message.severity = 'warn';
@@ -53,8 +53,8 @@ export class HttpResponseInterceptor implements HttpInterceptor {
     console.log(response)
     const error = response.error;
     const message: Message = {
-      severity : 'error',
-      summary : 'Error',
+      severity: 'error',
+      summary: 'Error',
       detail: 'Something unexpected happened. Please file a report to the developers!'
     };
     if (error) {
@@ -64,7 +64,7 @@ export class HttpResponseInterceptor implements HttpInterceptor {
     }
 
 
-    if(response.status == 401) {
+    if (response.status == 401) {
       message.detail = error.message ? error.message : 'You are not logged in!';
       this.router.navigate(['/login']).then(() => LocalStorageUtil.deleteUserToken());
     }

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../../../services/auth.service";
 import {UserLoginRequest} from "../../../../models/dto/user.model";
@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
       password: ["", Validators.required]
     });
   }
+
   loginAction() {
     const userLogin: UserLoginRequest = {
       username: this.loginForm.get('username')?.value,

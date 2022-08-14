@@ -114,10 +114,14 @@ export class RcClassesComponent implements OnInit {
 
   getColClass(classLevelSubs: ClassLevelSub[]) {
     switch (classLevelSubs.length) {
-      case 1: return 'col-12';
-      case 2: return 'col-6';
-      case 3: return 'col-4';
-      default : return 'col-3';
+      case 1:
+        return 'col-12';
+      case 2:
+        return 'col-6';
+      case 3:
+        return 'col-4';
+      default :
+        return 'col-3';
     }
   }
 }
