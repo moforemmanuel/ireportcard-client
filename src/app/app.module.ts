@@ -12,7 +12,6 @@ import {MessageService} from "primeng/api";
 import {NgbActiveModal, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {RcWelcomeComponent} from './components/rc-welcome/rc-welcome.component';
 import {HttpResponseInterceptor} from "./interceptors/http-response.interceptor";
-import {SelectSchoolComponent} from "./components/select-school/select-school.component";
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
 import {ToastModule} from "primeng/toast";
 import {ButtonModule} from "primeng/button";
@@ -22,17 +21,20 @@ import {InputTextModule} from "primeng/inputtext";
 import {CheckboxModule} from "primeng/checkbox";
 import {RadioButtonModule} from "primeng/radiobutton";
 import {ToggleButtonModule} from "primeng/togglebutton";
+import {RcAdminModule} from "./modules/rc-admin/rc-admin.module";
+import {RcStudentModule} from "./modules/rc-student/rc-student.module";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     RcWelcomeComponent,
-    SelectSchoolComponent,
   ],
   imports: [
     RcDashboardModule,
     RcAuthModule,
+    RcAdminModule,
+    RcStudentModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -47,7 +49,6 @@ import {ToggleButtonModule} from "primeng/togglebutton";
     RadioButtonModule,
     FormsModule,
     ToggleButtonModule,
-
   ],
   providers: [
     injectables,
