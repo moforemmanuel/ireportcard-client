@@ -9,7 +9,7 @@ import {
 } from '@angular/common/http';
 import {catchError, Observable, of, tap} from 'rxjs';
 import {Message, MessageService} from "primeng/api";
-import {EntityResponse, isEntityResponse} from "../models/dto/entity.response";
+import {EntityResponse} from "../models/dto/entity.response";
 import {LocalStorageUtil} from "../utils/local-storage.util";
 import {Router} from "@angular/router";
 
@@ -40,15 +40,17 @@ export class HttpResponseInterceptor implements HttpInterceptor {
       message.summary = 'Deleted';
       message.detail = 'Deleted successfully'
     }
-    if (isEntityResponse(event.body)) {
-      const entityResponse: EntityResponse = event.body;
-      if (entityResponse && entityResponse.log ) {
-        this.msgService.add(message);
+    if (event.body instanceof EntityResponse) {
+      const resBody = event.body;
+      if ('log' in resBody && !resBody.log) {
+        return;
       }
+      this.msgService.add(message);
     }
   }
 
   private errorResponseHandler = (response: HttpErrorResponse) => {
+    console.log(response)
     const error = response.error;
     const message: Message = {
       severity : 'error',
@@ -60,11 +62,13 @@ export class HttpResponseInterceptor implements HttpInterceptor {
     } else {
       message.detail = 'Something unexpected happened. Please file a report to the developers!'
     }
-    this.msgService.add(message);
 
-    if(response.status == 401 || response.status == 403) {
+
+    if(response.status == 401) {
+      message.detail = error.message ? error.message : 'You are not logged in!';
       this.router.navigate(['/login']).then(() => LocalStorageUtil.deleteUserToken());
     }
+    this.msgService.add(message);
     return of(error);
   }
 }
