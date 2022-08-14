@@ -16,3 +16,8 @@ export type  StudentClassLevel = {
   classLevel: ClassLevel,
   classLevelSub: ClassLevelSub
 }
+
+export type RcClass = {
+  classLevel: ClassLevel,
+  classLevelSubs: ClassLevelSub[],
+}
