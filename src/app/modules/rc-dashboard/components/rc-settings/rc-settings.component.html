@@ -123,7 +123,7 @@
         <p-dropdown [hidden]="seqAddInput.hidden" [options]="terms" [optionLabel]="'name'" [optionValue]="'id'"
                     [styleClass]="'w-full mb-2'" [formControlName]="'term'"></p-dropdown>
         <div *ngFor="let type of sequenceTypes" [hidden]="seqAddInput.hidden" class="inline-flex mx-2">
-          <input name="seq-type" [value]="type" type="radio" class="p-radiobutton" [formControlName]="'type'">&nbsp;
+          <input name="type" [value]="type" type="radio" class="p-radiobutton" [formControlName]="'type'">&nbsp;
           <label>{{type | titlecase}}</label>
         </div>
       </form>
