@@ -25,7 +25,7 @@
         <ng-template pTemplate="body" let-student>
           <tr>
             <td>{{student.regNum}}</td>
-            <td>{{student.name}}</td>
+            <td>{{student.user.firstName + ' ' + student.user.lastName }}</td>
             <td>{{student.gender | titlecase}}</td>
             <td>
               <button [routerLink]="['/dashboard/student/view', student.id]" class="mr-1 p-button-rounded" icon="pi pi-pencil" pButton

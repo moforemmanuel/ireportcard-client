@@ -46,7 +46,8 @@ export class StudentComponent implements OnInit {
 
   setUpStudentForm(): void {
     this.studentForm = this.fb.group({
-      name: [this.student.name, Validators.required],
+      firstname: [this.student.user.firstName, Validators.required],
+      lastname: [this.student.user.lastName, Validators.required],
       gender: [this.student.gender, Validators.required],
       dob: [this.student.dob, Validators.required],
       pob: [this.student.pob, Validators.required],
