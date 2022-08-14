@@ -14,7 +14,7 @@ import {ReportCardService} from "../../../../services/report-card.service";
     <div class="top-menu">
       <p-menubar [styleClass]="'p-3 text-color border-noround'" [model]="menuItems" [class]="'menu-item'">
         <ng-template pTemplate="start">
-          <span class="text-5xl">RMS</span>
+          <span class="text-4xl">iRC</span>
         </ng-template>
         <ng-template pTemplate="end">
           <div class="flex justify-content-center align-items-center">
