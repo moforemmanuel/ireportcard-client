@@ -42,6 +42,9 @@ export class RcClassesComponent implements OnInit {
     this.sectionService.getAll().subscribe({
       next: (sections) => {
         this.sections = sections;
+        if (sections.length > 0) {
+          this.sectionId = sections[0].id;
+        }
         this.loadClasses();
       }
     });
@@ -49,21 +52,34 @@ export class RcClassesComponent implements OnInit {
 
   loadClasses(): void {
     const sectionId = this.sectionId;
-    console.log(sectionId)
     this.classes = [];
     if (sectionId > 0) {
       this.classLevelService.getBySection(sectionId).subscribe({
         next: (classLevels: ClassLevel[]) => {
-          classLevels.forEach((classLevel) => {
-            this.loadClassSubs(classLevel);
-          });
-          this.sortClasses();
+          classLevels.forEach((classLevel) => this.loadClassSubs(classLevel));
         },
         error: (error) => {
           addToMessageService(this.messageService, 'error', 'Error loading classes', `Server not responding.\n${error.message}`);
         }
       });
     }
+  }
+
+  private loadClassSubs(classLevel: ClassLevel): void {
+    this.classLevelSubService.getAllByClassLevelId(classLevel.id).subscribe({
+      next: (classLevelSubs) => {
+        const classLevelFind = this.classes.find((c) => c.classLevel.id === classLevel.id);
+        if (classLevelFind) {
+          classLevelFind.classLevelSubs = classLevelSubs;
+        } else {
+          this.classes.push({classLevel, classLevelSubs});
+        }
+        this.sortClasses();
+      },
+      error: (error) => {
+        addToMessageService(this.messageService, 'error', 'Error loading class subs', error.message);
+      }
+    });
   }
 
   sortClasses(): void {
@@ -81,36 +97,28 @@ export class RcClassesComponent implements OnInit {
     }
   }
 
-  saveClassAction(classLevel?: ClassLevel) {
-    if (!classLevel) {
-      console.log('No class selected')
-    } else {
-      this.router.navigate([`/dashboard/class/${classLevel.id}`]).then();
-    }
-  }
-
-  addClassLevelSubAction(classLevelId: number, value: string) {
+  addClassLevelSubAction(classLevel: ClassLevel, inputElement: HTMLInputElement) {
     const classLevelSub: ClassLevelSub = {
-      id: 0, name: value, classLevelId: classLevelId
+      id: 0, name: inputElement.value, classLevelId: classLevel.id
     }
     this.classLevelSubService.save(classLevelSub).subscribe(() => {
-      this.loadClasses();
+      this.loadClassSubs(classLevel);
+      inputElement.value = '';
     })
   }
 
-  deleteClassSubAction(classLevelSubId: number, classLevel: ClassLevel) {
-    this.classLevelSubService.delete(classLevelSubId).subscribe(() => this.loadClasses());
+  deleteClassSubAction(classLevel: ClassLevel, classLevelSubId: number) {
+    this.classLevelSubService.delete(classLevelSubId).subscribe(() => this.loadClassSubs(classLevel));
   }
 
-  private loadClassSubs(classLevel: ClassLevel): void {
-    this.classLevelSubService.getAllByClassLevelId(classLevel.id).subscribe({
-      next: (classLevelSubs) => {
-        this.classes.push({classLevel: classLevel, classLevelSubs: classLevelSubs})
-      },
-      error: (error) => {
-        addToMessageService(this.messageService, 'error', 'Error loading class subs', error.message);
-      }
-    });
+
+  getColClass(classLevelSubs: ClassLevelSub[]) {
+    switch (classLevelSubs.length) {
+      case 1: return 'col-12';
+      case 2: return 'col-6';
+      case 3: return 'col-4';
+      default : return 'col-3';
+    }
   }
 }
 
