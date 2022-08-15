@@ -22,6 +22,7 @@ import {RegisterStudentComponent} from './components/register/register-student/r
 import {RadioButtonModule} from "primeng/radiobutton";
 import {CalendarModule} from "primeng/calendar";
 import {DropdownModule} from "primeng/dropdown";
+import {RcSharedModule} from "../rc-shared.module";
 
 
 @NgModule({
@@ -35,23 +36,7 @@ import {DropdownModule} from "primeng/dropdown";
   imports: [
     RcAuthRoutingModule,
     CommonModule,
-    SplitterModule,
-    DividerModule,
-    ButtonModule,
-    InputTextModule,
-    StyleClassModule,
-    CardModule,
-    PasswordModule,
-    AvatarModule,
-    ReactiveFormsModule,
-    FormsModule,
-    ImageModule,
-    CheckboxModule,
-    RippleModule,
-    ToastModule,
-    RadioButtonModule,
-    CalendarModule,
-    DropdownModule
+    RcSharedModule
   ],
   exports: [
     AuthComponent

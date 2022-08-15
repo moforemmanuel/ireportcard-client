@@ -13,6 +13,7 @@ import {CheckboxModule} from "primeng/checkbox";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
+import {RcSharedModule} from "../rc-shared.module";
 
 
 @NgModule({
@@ -26,13 +27,7 @@ import { AdminHomeComponent } from './components/admin-home/admin-home.component
   imports: [
     CommonModule,
     RcAdminRoutingModule,
-    FormsModule,
-    ToggleButtonModule,
-    ReactiveFormsModule,
-    InputTextModule,
-    CheckboxModule,
-    ButtonModule,
-    RippleModule
+    RcSharedModule
   ],
   exports: [
     AdminDashboardComponent

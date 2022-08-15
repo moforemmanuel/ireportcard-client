@@ -23,6 +23,8 @@ import {RadioButtonModule} from "primeng/radiobutton";
 import {ToggleButtonModule} from "primeng/togglebutton";
 import {RcAdminModule} from "./modules/rc-admin/rc-admin.module";
 import {RcStudentModule} from "./modules/rc-student/rc-student.module";
+import {RcReusableModule} from "./modules/rc-reusable/rc-reusable.module";
+import {RcSharedModule} from "./modules/rc-shared.module";
 
 
 @NgModule({
@@ -31,6 +33,8 @@ import {RcStudentModule} from "./modules/rc-student/rc-student.module";
     RcWelcomeComponent,
   ],
   imports: [
+    RcReusableModule,
+    RcSharedModule,
     RcDashboardModule,
     RcAuthModule,
     RcAdminModule,
@@ -38,17 +42,6 @@ import {RcStudentModule} from "./modules/rc-student/rc-student.module";
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    HttpClientModule,
-    NgbModule,
-    ToastModule,
-    ButtonModule,
-    RippleModule,
-    ReactiveFormsModule,
-    InputTextModule,
-    CheckboxModule,
-    RadioButtonModule,
-    FormsModule,
-    ToggleButtonModule,
   ],
   providers: [
     injectables,
