@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AdminSettingComponent } from './admin-setting.component';
+import {AdminSettingComponent} from './admin-setting.component';
 
 describe('AdminSettingComponent', () => {
   let component: AdminSettingComponent;
@@ -8,9 +8,9 @@ describe('AdminSettingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdminSettingComponent ]
+      declarations: [AdminSettingComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

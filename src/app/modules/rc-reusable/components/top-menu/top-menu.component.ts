@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from "../../../../services/auth.service";
 import {MenuItem, MessageService} from "primeng/api";
 import {addToMessageService} from "../../../../utils/message-service.util";
@@ -19,14 +19,14 @@ import {ReportCardService} from "../../../../services/report-card.service";
         <ng-template pTemplate="end">
           <div class="flex justify-content-center align-items-center">
             <span
-              class="block p-button border-noround {{online ? 'bg-green-300 hover:bg-green-300': 'bg-red-300 hover:bg-red-600' }}"
+              class="p-button p-button-icon text-white border-circle {{online ? 'bg-green-300 hover:bg-green-300': 'bg-red-300 hover:bg-red-600' }}"
               pTooltip="{{online ? 'Online' : 'Offline'}}" tooltipPosition="top">
               <i class="{{online? 'pi pi-bolt': 'pi pi-ban'}}"></i>
             </span>
             <button (click)="changeSchoolAction()" pButton pTooltip="Change School" tooltipPosition="top"
-                    icon="pi pi-arrows-h" class="p-button-raised border-noround m-1"></button>
+                    icon="pi pi-arrows-h" class="p-button-sm p-button-raised border-noround m-1"></button>
             <button (click)="logoutAction()" pButton pTooltip="Logout" tooltipPosition="top" icon="pi pi-power-off"
-                    data-in-line="true" class="p-button-danger border-noround m-1"></button>
+                    data-in-line="true" class="p-button-sm p-button-danger border-noround m-1"></button>
           </div>
         </ng-template>
       </p-menubar>
@@ -36,7 +36,7 @@ import {ReportCardService} from "../../../../services/report-card.service";
 export class TopMenuComponent implements OnInit {
 
   online: boolean = false;
-  menuItems: MenuItem[] = [];
+  @Input() menuItems: MenuItem[] = [];
 
 
   constructor(private router: Router, private authService: AuthService, private defaultService: ReportCardService, private msgService: MessageService) {
@@ -44,60 +44,6 @@ export class TopMenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkOnlineStatus();
-
-    this.menuItems = [
-      {
-        label: 'Home',
-        icon: 'pi pi-fw pi-home',
-        routerLink: ['/dashboard'],
-        routerLinkActiveOptions: {exact: true},
-      },
-      {
-        label: 'Subjects',
-        icon: 'pi pi-fw pi-book',
-        routerLink: ['/dashboard/subject'],
-        routerLinkActiveOptions: {exact: true},
-      },
-      {
-        label: 'Classes',
-        icon: 'pi pi-fw pi-list',
-        routerLink: ['/dashboard/class'],
-        routerLinkActiveOptions: {exact: true},
-      },
-      {
-        label: 'Students',
-        icon: 'pi pi-fw pi-users',
-        routerLink: ['/dashboard/student'],
-        routerLinkActiveOptions: {exact: true},
-        items: [
-          {
-            label: 'Add',
-            icon: 'pi pi-fw pi-plus',
-            routerLink: ['/dashboard/student/add'],
-            routerLinkActiveOptions: {exact: true},
-          },
-        ]
-      },
-      {
-        label: 'Applications',
-        icon: 'pi pi-fw pi-plus-circle',
-        routerLink: ['/dashboard/application'],
-        routerLinkActiveOptions: {exact: true},
-      },
-      {
-        label: 'Class Lists',
-        icon: 'pi pi-fw pi-folder',
-        routerLink: ['/dashboard/class-list'],
-        routerLinkActiveOptions: {exact: true},
-      },
-      {
-        label: 'Settings',
-        icon: 'pi pi-fw pi-cog',
-        routerLink: ['/dashboard/settings'],
-        routerLinkActiveOptions: {exact: true},
-      }
-
-    ]
   }
 
   checkOnlineStatus(): void {

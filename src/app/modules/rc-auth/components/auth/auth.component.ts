@@ -1,7 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ReportCardService} from "../../../../services/report-card.service";
-import {Router} from "@angular/router";
-import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-auth',
@@ -20,7 +17,7 @@ import {MessageService} from "primeng/api";
 export class AuthComponent implements OnInit {
   login: boolean = true;
 
-  constructor(private defaultService: ReportCardService, private router: Router, private msgService: MessageService) {
+  constructor() {
   }
 
   ngOnInit(): void {

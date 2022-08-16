@@ -12,6 +12,7 @@ export class AuthTeacherGuard implements CanActivate {
     private reportCardService: ReportCardService
   ) {
   }
+
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {

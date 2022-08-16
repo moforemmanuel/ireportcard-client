@@ -5,6 +5,7 @@ import {RcStudentRoutingModule} from './rc-student-routing.module';
 import {StudentHomeComponent} from './components/student-home/student-home.component';
 import {StudentDashboardComponent} from './components/student-dashboard/student-dashboard.component';
 import {RcSharedModule} from "../rc-shared.module";
+import {RcReusableModule} from "../rc-reusable/rc-reusable.module";
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {RcSharedModule} from "../rc-shared.module";
   imports: [
     CommonModule,
     RcStudentRoutingModule,
-    RcSharedModule
+    RcSharedModule,
+    RcReusableModule
   ]
 })
 export class RcStudentModule {

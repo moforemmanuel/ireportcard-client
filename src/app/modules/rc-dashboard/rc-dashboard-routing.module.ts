@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {DashboardComponent} from "./components/dashboard/dashboard.component";
 import {AuthGuard} from "../../guards/auth.guard";
-import {SchoolGuard} from "../../guards/school.guard";
 import {RcSubjectsComponent} from "./components/rc-subjects/rc-subjects.component";
 import {RcClassesComponent} from "./components/rc-classes/rc-classes.component";
 import {ClassLevelComponent} from "./components/rc-classes/class-level/class-level.component";
@@ -24,7 +23,7 @@ import {AuthTeacherGuard} from "../../guards/auth/auth-teacher.guard";
 
 const routes: Routes = [
   {
-    component: DashboardComponent, path: 'dashboard', canActivate: [AuthGuard, SchoolGuard, AuthTeacherGuard],
+    component: DashboardComponent, path: 'dashboard', canActivate: [AuthGuard, AuthTeacherGuard],
     children: [
       {component: RcHomeComponent, path: ''},
       {component: RcSubjectsComponent, path: 'subject'},

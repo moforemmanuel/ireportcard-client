@@ -12,7 +12,7 @@ const routes: Routes = [
       AuthGuard, AuthStudentGuard
     ],
     children: [
-      {component: StudentHomeComponent, path: 'home'}
+      {component: StudentHomeComponent, path: ''}
     ]
   }
 ];

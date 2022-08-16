@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private defaultService: ReportCardService,
+    private reportCardService: ReportCardService,
   ) {
   }
 
@@ -39,15 +40,38 @@ export class LoginComponent implements OnInit {
       username: this.loginForm.get('username')?.value,
       password: this.loginForm.get('password')?.value,
     }
+    LocalStorageUtil.deleteUserToken();
     this.authService.login(userLogin).subscribe({
       next: (res) => {
         LocalStorageUtil.writeUserToken(res.sessionId);
-        const routerTarget = LocalStorageUtil.readSchoolId() ? "/select-school" : "/dashboard";
-        this.router.navigate([routerTarget]).then((r) => console.log(r));
+        this.navigateToHome();
       },
       error: (e) => {
         console.log(e)
       }
+    });
+  }
+
+  private navigateToHome = () => {
+    this.reportCardService.testAuthUser().subscribe(() => {
+      this.reportCardService.testAuthStudent().subscribe((isStudent) => {
+        console.log("student : " + isStudent)
+        if (isStudent) {
+          this.router.navigate(['/student']).then()
+        } else {
+          this.reportCardService.testAuthTeacher().subscribe((isTeacher) => {
+            if (isTeacher) {
+              this.router.navigate(['/dashboard']).then()
+            } else {
+              this.reportCardService.testAuthAdmin().subscribe((isAdmin) => {
+                if (isAdmin) {
+                  this.router.navigate(['/admin']).then()
+                }
+              });
+            }
+          });
+        }
+      });
     });
   }
 
