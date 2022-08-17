@@ -6,4 +6,5 @@ export interface School {
   currentSequenceId?: number,
   maxGrade: number,
   applicationOpen: boolean,
+  ownerId: number
 }

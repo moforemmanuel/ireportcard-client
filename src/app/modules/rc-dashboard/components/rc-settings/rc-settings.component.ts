@@ -101,15 +101,18 @@ export class RcSettingsComponent implements OnInit {
   }
 
   saveSettingsAction() {
-    const school: School = {
-      id: this.schoolId,
-      name: this.settingsForm.get('name')?.value,
-      applicationOpen: this.settingsForm.get('applicationsOpen')?.value,
-      currentYearId: parseInt(this.settingsForm.get("year")?.value),
-      maxGrade: this.settingsForm.get('maxGrade')?.value,
-      currentSequenceId: parseInt(this.settingsForm.get("sequence")?.value),
+    if (this.school) {
+      const school: School = {
+        id: this.schoolId,
+        name: this.settingsForm.get('name')?.value,
+        applicationOpen: this.settingsForm.get('applicationsOpen')?.value,
+        currentYearId: parseInt(this.settingsForm.get("year")?.value),
+        maxGrade: this.settingsForm.get('maxGrade')?.value,
+        currentSequenceId: parseInt(this.settingsForm.get("sequence")?.value),
+        ownerId: this.school.ownerId
+      }
+      this.schoolService.update(school).subscribe(() => document.location.reload());
     }
-    this.schoolService.update(school).subscribe(() => document.location.reload());
   }
 
   editYTSAction(atsOrdinal: ATSName, entity: ATS, inputElement: HTMLInputElement) {
