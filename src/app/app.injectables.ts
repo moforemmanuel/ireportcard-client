@@ -17,7 +17,7 @@ import {
   RC_STUDENT_APPLICATION_API_URL,
   RC_SUBJECT_API_URL,
   RC_SUBJECT_REGISTRATION_API_URL,
-  RC_TERM_API_URL
+  RC_TERM_API_URL, RC_USER_API_URL
 } from "./app.constants";
 import {StudentService} from "./services/student.service";
 import {ClassLevelService} from "./services/class-level.service";
@@ -34,6 +34,7 @@ import {TermService} from "./services/term.service";
 import {ReportCardService} from "./services/report-card.service";
 import {StudentApplicationService} from "./services/student-application.service";
 import {AuthService} from "./services/auth.service";
+import {UserService} from "./services/user.service";
 
 const academicYearInjectables: Array<any> = [
   {provide: AcademicYearService, useClass: AcademicYearService},
@@ -101,6 +102,10 @@ const termInjectables: Array<any> = [
   {provide: TermService, useClass: TermService},
   {provide: RC_TERM_API_URL, useValue: RC_TERM_API_URL}
 ];
+const userInjectables: Array<any> = [
+  {provide: UserService, useClass: UserService},
+  {provide: RC_USER_API_URL, useValue: RC_USER_API_URL}
+];
 
 export const injectables = [
   academicYearInjectables,
@@ -119,4 +124,5 @@ export const injectables = [
   subjectInjectables,
   subjectRegistrationInjectables,
   termInjectables,
+  userInjectables
 ];
