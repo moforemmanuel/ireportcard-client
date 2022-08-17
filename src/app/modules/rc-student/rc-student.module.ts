@@ -6,12 +6,20 @@ import {StudentHomeComponent} from './components/student-home/student-home.compo
 import {StudentDashboardComponent} from './components/student-dashboard/student-dashboard.component';
 import {RcSharedModule} from "../rc-shared.module";
 import {RcReusableModule} from "../rc-reusable/rc-reusable.module";
+import { StudentApplicationsComponent } from './components/student-applications/student-applications.component';
+import { StudentViewApplicationComponent } from './components/student-applications/student-view-application/student-view-application.component';
+import { StudentResultsComponent } from './components/student-results/student-results.component';
+import { StudentSubjectsComponent } from './components/student-subjects/student-subjects.component';
 
 
 @NgModule({
   declarations: [
     StudentHomeComponent,
-    StudentDashboardComponent
+    StudentDashboardComponent,
+    StudentApplicationsComponent,
+    StudentViewApplicationComponent,
+    StudentResultsComponent,
+    StudentSubjectsComponent,
   ],
   imports: [
     CommonModule,
