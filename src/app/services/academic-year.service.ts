@@ -24,4 +24,8 @@ export class AcademicYearService {
   update(academicYear: AcademicYear): Observable<EntityResponse> {
     return this.http.put<EntityResponse>(`${this.apiUrl}/${academicYear.id}`, academicYear);
   }
+
+  getById(id: number): Observable<AcademicYear> {
+    return this.http.get<AcademicYear>(`${this.apiUrl}/${id}`);
+  }
 }
