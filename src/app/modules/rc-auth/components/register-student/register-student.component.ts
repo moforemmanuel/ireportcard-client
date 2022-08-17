@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Gender} from "../../../../../models/enum/gender.enum";
-import {School} from "../../../../../models/dto/school.model";
-import {SchoolService} from "../../../../../services/school.service";
-import {DateUtil} from "../../../../../utils/date.util";
-import {Student, StudentInfo} from "../../../../../models/dto/student.model";
-import {User} from "../../../../../models/dto/user.model";
-import {Role} from "../../../../../models/enum/role.enum";
-import {AuthService} from "../../../../../services/auth.service";
+import {Gender} from "../../../../models/enum/gender.enum";
+import {School} from "../../../../models/dto/school.model";
+import {SchoolService} from "../../../../services/school.service";
+import {DateUtil} from "../../../../utils/date.util";
+import {Student, StudentInfo} from "../../../../models/dto/student.model";
+import {User} from "../../../../models/dto/user.model";
+import {Role} from "../../../../models/enum/role.enum";
+import {AuthService} from "../../../../services/auth.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -67,7 +67,7 @@ export class RegisterStudentComponent implements OnInit {
       guardianPhone: this.studentForm.get('guardianPhone')?.value,
     };
     const student: Student = {
-      id: -1, regNum: '', getName: () => '',
+      id: -1, regNum: '', name: '',
       gender: this.studentForm.get('gender')?.value,
       dob: DateUtil.toString(new Date(this.studentForm.get('dob')?.value)),
       pob: this.studentForm.get('pob')?.value,
