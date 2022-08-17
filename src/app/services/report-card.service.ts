@@ -2,6 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {RC_AUTH_TEST_API_URL, RC_DEFAULT_API_URL, RC_REPORT_CARD_API_URL} from "../app.constants";
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {map, Observable} from "rxjs";
+import {ReportCardModel} from "../models/dto/report-card.model";
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +30,14 @@ export class ReportCardService {
     return this.http.get<any>(`${this.defaultApiUrl}/test`, {})
   }
 
-  getReportCard = (satId: number, termId: number): Observable<HttpResponse<ArrayBuffer>> => {
-    return this.http.get(`${this.reportCardApiUrl}/report_card`, {
+  getReportCard = (satId: number, termId: number): Observable<ReportCardModel> => {
+    return this.http.get<ReportCardModel>(`${this.reportCardApiUrl}/report_card`, {
+      params: {satId: satId, termId: termId}
+    });
+  }
+
+  getReportCardFile = (satId: number, termId: number): Observable<HttpResponse<ArrayBuffer>> => {
+    return this.http.get(`${this.reportCardApiUrl}/report_card/file`, {
       observe: 'response',
       params: {satId: satId, termId: termId},
       responseType: 'arraybuffer',
