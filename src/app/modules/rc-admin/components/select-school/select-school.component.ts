@@ -4,6 +4,10 @@ import {School} from "../../../../models/dto/school.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {LocalStorageUtil} from "../../../../utils/local-storage.util";
 import {Router} from "@angular/router";
+import {AuthService} from "../../../../services/auth.service";
+import {ReportCardService} from "../../../../services/report-card.service";
+import {UserService} from "../../../../services/user.service";
+import {User} from "../../../../models/dto/user.model";
 
 @Component({
   selector: 'app-select-school',
@@ -16,7 +20,13 @@ export class SelectSchoolComponent implements OnInit {
   schools: School[] = [];
   addSchoolForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, private schoolService: SchoolService,) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private schoolService: SchoolService,
+    private userService: UserService,
+    private reportCardService: ReportCardService
+  ) {
     const sid = LocalStorageUtil.readSchoolId();
     if (sid) {
       this.selectedSchoolId = sid;
@@ -45,11 +55,18 @@ export class SelectSchoolComponent implements OnInit {
   }
 
   addSchoolAction() {
-    const school: School = {
-      id: -1, name: this.addSchoolForm.get('name')?.value, maxGrade: this.addSchoolForm.get('maxGrade')?.value,
-      applicationOpen: this.addSchoolForm.get('applicationOpen')?.value,
+    const saveSchool = (user: User) => {
+      const school: School = {
+        id: -1, name: this.addSchoolForm.get('name')?.value, maxGrade: this.addSchoolForm.get('maxGrade')?.value,
+        applicationOpen: this.addSchoolForm.get('applicationOpen')?.value, ownerId: user.id
+      }
+      this.schoolService.save(school).subscribe(() => this.loadSchools());
     }
-    this.schoolService.save(school).subscribe(() => this.loadSchools());
+    this.reportCardService.testAuthAdmin().subscribe(res => {
+      if (res) {
+        this.userService.getCompleteFromSession().subscribe(user => saveSchool(user.user))
+      }
+    });
   }
 
   setSchoolAction() {
