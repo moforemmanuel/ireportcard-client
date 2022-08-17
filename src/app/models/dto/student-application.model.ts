@@ -1,5 +1,6 @@
 import {Student} from "./student.model";
 import {ClassLevelSub} from "./class-level-sub.model";
+import {ClassLevel} from "./class-level.model";
 
 export interface StudentApplicationKey {
   studentId: number;
@@ -9,8 +10,9 @@ export interface StudentApplicationKey {
 export interface StudentApplication {
   key: StudentApplicationKey;
   student: Student;
+  classLevel: ClassLevel,
   classLevelSub: ClassLevelSub;
-  applicationTrials?: StudentApplicationTrial[];
+  studentApplicationTrials: StudentApplicationTrial[];
 }
 
 export interface StudentApplicationTrial {
