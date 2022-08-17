@@ -2,6 +2,7 @@ import {Gender} from "../enum/gender.enum";
 import {User} from "./user.model";
 
 export class Student {
+  public name: string = '';
   constructor(
     public id: number,
     public regNum: string,
@@ -12,10 +13,7 @@ export class Student {
     public info: StudentInfo,
     public user: User
   ) {
-  }
-
-  public getName() {
-    return `${this.user.firstName} ${this.user.lastName}`;
+    this.name = `${this.user.firstName} ${this.user.lastName}`
   }
 }
 
