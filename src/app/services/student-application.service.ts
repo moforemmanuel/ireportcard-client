@@ -35,6 +35,12 @@ export class StudentApplicationService {
     return this.http.get<StudentApplication[]>(`${this.apiUrl}/all`);
   }
 
+  getAllByStudent(studentId: number): Observable<StudentApplication[]> {
+    return this.http.get<StudentApplication[]>(`${this.apiUrl}/student`, {
+      params: {studentId: studentId}
+    });
+  }
+
   getAllByRequest(request: ApplicationRequest): Observable<ApplicationResponse[]> {
     return this.http.get<ApplicationResponse[]>(`${this.apiUrl}/all_full`, {
       params: {yearId: request.yearId, classId: request.classSubId}
@@ -64,6 +70,12 @@ export class StudentApplicationService {
 
   getTrial(satId: number): Observable<StudentApplicationTrial> {
     return this.http.get<StudentApplicationTrial>(`${this.apiUrl}/sat/${satId}`);
+  }
+
+  getTrialWithParams(studentId: number, classSubId: number, academicYearId: number,): Observable<StudentApplicationTrial> {
+    return this.http.get<StudentApplicationTrial>(`${this.apiUrl}/sat/ids`, {
+      params: {studentId: studentId, classSubId: classSubId, academicYearId: academicYearId,}
+    });
   }
 
   deleteTrial(satId: number): Observable<void> {
