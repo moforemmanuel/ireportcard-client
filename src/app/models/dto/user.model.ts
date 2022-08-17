@@ -1,4 +1,6 @@
 import {Role} from "../enum/role.enum";
+import {Teacher} from "./teacher.model";
+import {Student} from "./student.model";
 
 export class User {
   constructor(
@@ -9,6 +11,14 @@ export class User {
     public phone: string,
     public address: string,
     public role: Role
+  ) {
+  }
+}
+
+export class UserComplete {
+  constructor(
+    public user: User,
+    public account: Student | Teacher | null
   ) {
   }
 }
