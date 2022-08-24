@@ -1,0 +1,44 @@
+<div class="surface-section">
+  <div class="p-2 lg:p-4">
+    <span *ngIf="teacher" class="text-3xl">{{teacher.user.firstName + ' ' + teacher.user.lastName}}</span>
+    <p-toolbar>
+      <ng-template pTemplate="left">
+        <p-button label="Assign Subject" (click)="loadUnassignedSubjects()"></p-button>
+      </ng-template>
+      <ng-template pTemplate="right"></ng-template>
+    </p-toolbar>
+    <p-dialog header="Assign a Subject" styleClass=" w-25rem" (close)="closeDialogAction()" [(visible)]="showSubjectDialog" [modal]="true">
+      <ng-template pTemplate="content">
+        <div class="surface-card p-4">
+          <form [formGroup]="assignSubjectForm" (submit)="assignSubjectAction()" class="p-fluid">
+            <div class="field">
+              <label>Subjects</label>
+              <p-dropdown placeholder="Select a Subject" [options]="unassignedSubjects" [optionValue]="'id'" [optionLabel]="'name'" [formControlName]="'subject'"></p-dropdown>
+            </div>
+            <button pButton [disabled]="!assignSubjectForm.valid" label="Assign"></button>
+          </form>
+        </div>
+      </ng-template>
+    </p-dialog>
+    <p-table [value]="assignedSubjects">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Name</th>
+          <th>Code</th>
+          <th>Coeff</th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-s>
+        <tr>
+          <td>{{s.name}}</td>
+          <td>{{s.code}}</td>
+          <td>{{s.coefficient}}</td>
+          <td>
+            <p-button label="Un-assign"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
