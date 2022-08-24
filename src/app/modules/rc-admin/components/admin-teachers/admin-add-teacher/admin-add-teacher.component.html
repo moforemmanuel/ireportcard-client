@@ -1,0 +1,46 @@
+<div class="surface-section">
+  <div class="p-2 lg:p-4 shadow-1">
+    <form (submit)="registerAction()" [formGroup]="registerForm">
+      <div class="grid">
+        <div class="col-12 md:col-6">
+          <label class="block text-900 font-medium mb-2" for="fname">First Name</label>
+          <input [formControlName]="'firstName'" class="w-full mb-3" id="fname" pInputText type="text">
+        </div>
+        <div class="col-12 md:col-6">
+          <label class="block text-900 font-medium mb-2" for="lname">Last Name</label>
+          <input [formControlName]="'lastName'" class="w-full mb-3" id="lname" pInputText type="text">
+        </div>
+        <div class="col-12">
+          <label class="block text-900 font-medium mb-2" for="email">Email</label>
+          <input [formControlName]="'username'" class="w-full mb-3" id="email" pInputText type="text">
+        </div>
+        <div class="col-12 md:col-6">
+          <label class="block text-900 font-medium mb-2" for="password">Password</label>
+          <input [formControlName]="'password'" class="w-full mb-3" id="password" pInputText pPassword type="password">
+        </div>
+        <div class="col-12 md:col-6">
+          <label class="block text-900 font-medium mb-2" for="rpassword">Repeat Password</label>
+          <input [formControlName]="'rpassword'" class="w-full mb-3" id="rpassword" pInputText pPassword
+                 type="password">
+        </div>
+        <div class="col-12 md:col-6">
+          <label class="block text-900 font-medium mb-2" for="phone">Phone Number</label>
+          <input [formControlName]="'phone'" class="w-full mb-3" id="phone" pInputText type="text">
+        </div>
+        <div class="col-12 md:col-6">
+          <label class="block text-900 font-medium mb-2" for="address">Address</label>
+          <input [formControlName]="'address'" class="w-full mb-3" id="address" pInputText type="text">
+        </div>
+        <div class="col-12">
+          <label class="block text-900 font-medium mb-2" for="rpassword">School</label>
+          <p-dropdown [formControlName]="'school'" [optionLabel]="'name'" [optionValue]="'id'"
+                      [options]="schools" placeholder="Select School for this teacher" styleClass="w-full"></p-dropdown>
+        </div>
+
+        <div class="col-12">
+          <button [disabled]="!isFormValid()" class="w-full" icon="pi pi-user" label="Save" pButton pRipple></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
