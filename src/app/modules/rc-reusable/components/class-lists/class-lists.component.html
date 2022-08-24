@@ -1,0 +1,78 @@
+<div class="surface-section">
+  <div class="p-2 lg:p-4">
+    <div class="py-2 d-flex">
+      <span class="h3">Class Lists</span>
+      <span class="spacer"></span>
+      <span class="px-2">
+      <button class="p-button-rounded" icon="pi pi-plus-circle" pButton></button>
+    </span>
+      <span class="px-2">
+      <button class="p-button-rounded" icon="pi pi-refresh" pButton type="button"></button>
+    </span>
+    </div>
+    <div class="py-2">
+      <div class="grid">
+        <div class="md:col-3">
+          <label class="block">Academic Year</label>
+          <p-dropdown styleClass="w-full" [options]="academicYears" [optionLabel]="'name'" [optionValue]="'id'"
+                      [(ngModel)]="classListRequest.yearId" (ngModelChange)="loadGrades()"></p-dropdown>
+        </div>
+        <div class="md:col-3">
+          <label class="block">Class</label>
+          <p-dropdown styleClass="w-full" [options]="classes" [optionLabel]="'name'" [optionValue]="'id'"
+                      [(ngModel)]="classListRequest.classId" (ngModelChange)="loadGrades()"></p-dropdown>
+        </div>
+        <div class="md:col-3">
+          <label class="block">Subject</label>
+          <p-dropdown styleClass="w-full" [options]="subjects" [optionLabel]="'name'" [optionValue]="'id'"
+                      [(ngModel)]="classListRequest.subjectId" (ngModelChange)="loadGrades()"></p-dropdown>
+        </div>
+        <div class="md:col-3">
+          <label class="block">Sequence</label>
+          <p-dropdown styleClass="w-full" [options]="sequences" [optionLabel]="'name'" [optionValue]="'id'"
+                      [(ngModel)]="classListRequest.sequenceId" (ngModelChange)="loadGrades()"></p-dropdown>
+        </div>
+      </div>
+    </div>
+
+    <div class="surface-section">
+      <p-table [value]="classListResponse.studentGrades" [rows]="25" [paginator]="true" responsiveLayout="scroll" styleClass="p-datatable-striped">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Student</th>
+            <th>RegNo</th>
+            <th>Grade</th>
+            <th>Remarks</th>
+            <th>Actions</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-sg>
+          <tr>
+            <td>{{sg.student.name}}</td>
+            <td>{{sg.student.regNum}}</td>
+            <td>
+              <input pInputText #gradeInput (change)="gradeInput.value" [disabled]="true" [max]="20" [min]="0"
+                     [value]="sg.grade.score != null ? sg.grade.score: '-'" class="form-control" type="number">
+            </td>
+            <td>
+              <span class="{{sg.grade.score < 10 ? 'text-danger':''}}">{{sg.grade.description | titlecase}}</span>
+            </td>
+            <td>
+              <button pButton (click)="gradeInput.disabled = !gradeInput.disabled"
+                      class="{{gradeInput.disabled ? 'p-button-secondary': 'p-button-help'}}"
+                      label="{{gradeInput.disabled ? 'Edit' : 'Done'}}"></button>
+              &nbsp;
+              <button pButton (click)="saveGrade(sg.grade, gradeInput)"
+                      [disabled]="!gradeInputValid(sg.grade, gradeInput)" label="Save"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="flex align-items-center justify-content-between">
+
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
