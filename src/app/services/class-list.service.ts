@@ -15,10 +15,10 @@ export class ClassListService {
   get(classListRequest: ClassListRequest): Observable<ClassListResponse> {
     return this.http.get<ClassListResponse>(this.apiUrl, {
       params: {
-        yearId: classListRequest.year_id,
-        classId: classListRequest.class_id,
-        subjectId: classListRequest.subject_id,
-        sequenceId: classListRequest.sequence_id,
+        yearId: classListRequest.yearId,
+        classId: classListRequest.classId,
+        subjectId: classListRequest.subjectId,
+        sequenceId: classListRequest.sequenceId,
       }
     });
   }

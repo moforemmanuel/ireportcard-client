@@ -4,11 +4,13 @@ import {Grade} from "./grade.model";
 import {Student} from "./student.model";
 import {ClassLevel} from "./class-level.model";
 
-export interface ClassListRequest {
-  year_id: number;
-  class_id: number;
-  subject_id: number;
-  sequence_id: number;
+export class ClassListRequest {
+  constructor(public yearId: number, public classId: number, public subjectId: number, public sequenceId: number) {
+  }
+
+  isValid = () => {
+    return this.yearId > 0 && this.classId > 0 && this.subjectId > 0 && this.sequenceId > 0;
+  }
 }
 
 export interface ClassListResponse {
