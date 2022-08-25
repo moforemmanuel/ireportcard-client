@@ -22,6 +22,6 @@ export class TermService {
   }
 
   update(term: Term): Observable<EntityResponse> {
-    return this.http.put<EntityResponse>(`${this.apiUrl}/${term.id}`, term);
+    return this.http.put<EntityResponse>(`${this.apiUrl}`, term);
   }
 }
