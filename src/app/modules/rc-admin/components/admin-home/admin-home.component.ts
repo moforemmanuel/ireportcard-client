@@ -18,10 +18,10 @@ export class AdminHomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadUser();
+    this.loadUserComplete();
   }
 
-  loadUser = () => this._userService.getCompleteFromSession().subscribe(u => {
+  loadUserComplete = () => this._userService.getCompleteFromSession().subscribe(u => {
     this.admin = u;
   });
 }

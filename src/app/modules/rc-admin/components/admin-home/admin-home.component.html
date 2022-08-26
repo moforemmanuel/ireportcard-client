@@ -4,7 +4,7 @@
       Welcome, <span class="text-black-alpha-70" *ngIf="admin">{{admin.user.username}}</span>
     </div>
     <p-divider></p-divider>
-    <app-user-details *ngIf="admin" [user]="admin.user" (onUserSaved)="loadUser()"></app-user-details>
+    <app-user-details *ngIf="admin" [user]="admin.user" (onUserSaved)="loadUserComplete()"></app-user-details>
     <app-change-password *ngIf="admin" [username]="admin.user.username"></app-change-password>
   </div>
 </div>
