@@ -31,21 +31,24 @@ export class HttpResponseInterceptor implements HttpInterceptor {
   }
 
   successfulResponseHandler = (event: HttpResponse<any>): void => {
-    const message: Message = {severity: 'success', summary: 'Success', detail: ''};
-    if (event.status === 200 || event.status === 201) {
-      message.detail = event.body.message ? event.body.message : '';
-    }
-    if (event.status === 204) {
-      message.severity = 'warn';
-      message.summary = 'Deleted';
-      message.detail = 'Deleted successfully'
-    }
-    if (event.body instanceof EntityResponse) {
+    try {
+      const message: Message = {severity: 'success', summary: 'Success', detail: ''};
+      if (event.status === 200 || event.status === 201) {
+        message.detail = event.body == null ? '': (event.body.message ? event.body.message : '');
+      }
+      if (event.status === 204) {
+        message.severity = 'warn';
+        message.summary = 'Deleted';
+        message.detail = 'Deleted successfully'
+      }
+
       const resBody = event.body;
-      if ('log' in resBody && !resBody.log) {
+      if ('log' in Object.keys(resBody) || !resBody.log) {
         return;
       }
       this.msgService.add(message);
+    } catch (e: any) {
+      console.log(event.url + ' : ' + event.status)
     }
   }
 
