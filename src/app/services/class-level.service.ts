@@ -4,6 +4,7 @@ import {RC_CLASS_LEVEL_API_URL} from "../app.constants";
 import {Observable} from "rxjs";
 import {ClassLevel} from "../models/dto/class-level.model";
 import {EntityResponse} from "../models/dto/entity.response";
+import {Subject} from "../models/dto/subject.model";
 
 @Injectable({
   providedIn: 'root'
@@ -19,17 +20,13 @@ export class ClassLevelService {
 
   getBySection(sectionId: number): Observable<ClassLevel[]> {
     return this.http.get<ClassLevel[]>(`${this.classLevelApiUrl}/section`, {
-      params: {
-        sectionId: sectionId
-      }
+      params: {sectionId: sectionId}
     });
   }
 
   getBySchool(schoolId: number): Observable<ClassLevel[]> {
     return this.http.get<ClassLevel[]>(`${this.classLevelApiUrl}/school`, {
-      params: {
-        schoolId: schoolId
-      }
+      params: {schoolId: schoolId}
     });
   }
 
@@ -47,5 +44,16 @@ export class ClassLevelService {
 
   delete(classLevel: ClassLevel): Observable<any> {
     return this.http.delete<any>(`${this.classLevelApiUrl}/${classLevel.id}`);
+  }
+
+  // Mandatory subjects
+  getSubjects = (id: number): Observable<Subject[]> => {
+    return this.http.get<Subject[]>(`${this.classLevelApiUrl}/${id}/subjects`)
+  }
+  updateSubject = (id: number, subjectId: number): Observable<EntityResponse> => {
+    return this.http.put<EntityResponse>(`${this.classLevelApiUrl}/${id}/subjects/${subjectId}`, {})
+  }
+  updateSubjects = (id: number, subjectIds: number[]): Observable<EntityResponse> => {
+    return this.http.put<EntityResponse>(`${this.classLevelApiUrl}/${id}/subjects`, subjectIds)
   }
 }
