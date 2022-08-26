@@ -21,6 +21,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules/rc-admin/rc-admin.module').then(m => m.RcAdminModule)
   },
   {
+    path: 'teacher',
+    loadChildren: () => import('./modules/rc-teacher/rc-teacher.module').then(m => m.RcTeacherModule)
+  },
+  {
     path: 'student',
     loadChildren: () => import('./modules/rc-student/rc-student.module').then(m => m.RcStudentModule)
   },
