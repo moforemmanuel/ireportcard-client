@@ -11,6 +11,7 @@ import {
 } from "../models/dto/user.model";
 import {Student} from "../models/dto/student.model";
 import {EntityResponse} from "../models/dto/entity.response";
+import {Teacher} from "../models/dto/teacher.model";
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,12 @@ export class AuthService {
 
   registerStudent = (student: Student, password: string): Observable<UserRegisterResponse> => {
     return this.http.post<UserRegisterResponse>(`${this.apiUrl}/register/student`, student, {
+      params: {password: password}
+    });
+  }
+
+  registerTeacher = (teacher: Teacher, password: string): Observable<UserRegisterResponse> => {
+    return this.http.post<UserRegisterResponse>(`${this.apiUrl}/register/teacher`, teacher, {
       params: {password: password}
     });
   }
