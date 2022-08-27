@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
         } else {
           this.reportCardService.testAuthTeacher().subscribe((isTeacher) => {
             if (isTeacher) {
-              this.router.navigate(['/dashboard']).then()
+              this.router.navigate(['/teacher']).then()
             } else {
               this.reportCardService.testAuthAdmin().subscribe((isAdmin) => {
                 if (isAdmin) {
