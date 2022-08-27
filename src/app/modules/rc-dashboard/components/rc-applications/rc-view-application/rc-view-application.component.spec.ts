@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { RcViewApplicationComponent } from './rc-view-application.component';
+import {RcViewApplicationComponent} from './rc-view-application.component';
 
 describe('RcViewApplicationComponent', () => {
   let component: RcViewApplicationComponent;
@@ -8,9 +8,9 @@ describe('RcViewApplicationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RcViewApplicationComponent ]
+      declarations: [RcViewApplicationComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

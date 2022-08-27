@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
@@ -8,10 +8,12 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class RcViewApplicationComponent implements OnInit {
   satId: number = -1;
+
   constructor(
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.satId = this._activatedRoute.snapshot.params['id'];
