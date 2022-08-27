@@ -28,7 +28,7 @@ export class AdminDashboardComponent implements OnInit {
       {
         label: 'Home',
         icon: 'pi pi-fw pi-home',
-        routerLink: [''],
+        routerLink: ['/admin'],
         routerLinkActiveOptions: {exact: true},
       },
       {
