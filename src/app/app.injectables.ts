@@ -17,7 +17,8 @@ import {
   RC_STUDENT_APPLICATION_API_URL,
   RC_SUBJECT_API_URL,
   RC_SUBJECT_REGISTRATION_API_URL,
-  RC_TERM_API_URL, RC_USER_API_URL
+  RC_TERM_API_URL,
+  RC_USER_API_URL
 } from "./app.constants";
 import {StudentService} from "./services/student.service";
 import {ClassLevelService} from "./services/class-level.service";
