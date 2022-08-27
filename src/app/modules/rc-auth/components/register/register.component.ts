@@ -33,6 +33,6 @@ export class RegisterComponent implements OnInit {
       password: this.registerForm.get("password")?.value,
     }
     console.log(userReg);
-    this.authService.register(userReg).subscribe(() => this.router.navigate(['/login']).then());
+    this.authService.register(userReg).subscribe(() => this.router.navigate(['/auth/login']).then());
   }
 }

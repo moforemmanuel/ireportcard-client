@@ -76,7 +76,7 @@ export class RegisterStudentComponent implements OnInit {
     }
     const password = this.studentForm.get('password')?.value;
     this.authService.registerStudent(student, password).subscribe(() => {
-      this.router.navigate(['/login']).then();
+      this.router.navigate(['/auth/login']).then();
     });
   }
 }

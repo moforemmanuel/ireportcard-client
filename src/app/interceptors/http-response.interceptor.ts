@@ -66,7 +66,7 @@ export class HttpResponseInterceptor implements HttpInterceptor {
 
     if (response.status == 401) {
       message.detail = error.message ? error.message : 'You are not logged in!';
-      this.router.navigate(['/login']).then(() => LocalStorageUtil.deleteUserToken());
+      this.router.navigate(['/auth/login']).then(() => LocalStorageUtil.deleteUserToken());
     }
     this.msgService.add(message);
     return of(error);

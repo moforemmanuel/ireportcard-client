@@ -9,7 +9,7 @@ import {RegisterStudentComponent} from "./components/register-student/register-s
 const routes: Routes = [
 
   {
-    path: '', component: AuthComponent, children: [
+    path: 'auth', component: AuthComponent, children: [
       {path: 'login', component: LoginComponent},
       {path: 'register', component: RegisterComponent},
       {path: 'register/teacher', component: RegisterTeacherComponent},

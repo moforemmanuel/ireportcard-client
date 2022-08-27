@@ -20,12 +20,12 @@ export class AuthAdminGuard implements CanActivate {
     this.reportCardService.testAuthAdmin().subscribe({
       next: (adminRes) => {
         if (!adminRes) {
-          this.router.navigate(['/login']).then();
+          this.router.navigate(['/auth/login']).then();
         }
         isAdmin.next(adminRes);
         isAdmin.complete();
       }, error: () => {
-        this.router.navigate(['/login']).then();
+        this.router.navigate(['/auth/login']).then();
         isAdmin.next(false);
         isAdmin.complete();
       }
