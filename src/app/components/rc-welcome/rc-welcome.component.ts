@@ -15,6 +15,7 @@ export class RcWelcomeComponent implements OnInit {
     {title: 'Open Source', description: 'Open Source, it\'s free to use', icon: 'pi pi-code'},
   ];
   constructor() {
+    console.log("qsds")
   }
 
   ngOnInit(): void {
