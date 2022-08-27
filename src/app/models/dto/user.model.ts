@@ -10,6 +10,7 @@ export class User {
     public lastName: string,
     public phone: string,
     public address: string,
+    public approved: boolean,
     public role: Role
   ) {
   }
