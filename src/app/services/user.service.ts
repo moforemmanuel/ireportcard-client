@@ -35,4 +35,8 @@ export class UserService {
   toggleApproved(id: number): Observable<EntityResponse> {
     return this.http.put<EntityResponse>(`${this.apiUrl}/${id}/toggle-approved`, {});
   }
+
+  update(user: User): Observable<EntityResponse> {
+    return this.http.put<EntityResponse>(`${this.apiUrl}`, user);
+  }
 }
