@@ -24,12 +24,14 @@ import {RcReusableModule} from "../rc-reusable/rc-reusable.module";
 import {
   RcViewApplicationComponent
 } from './components/rc-applications/rc-view-application/rc-view-application.component';
+import {RcSelectSchoolComponent} from "./components/rc-select-school/rc-select-school.component";
 
 
 @NgModule({
   declarations: [
     SideMenuComponent,
     DashboardComponent,
+    RcSelectSchoolComponent,
     RcHomeComponent,
     RcSubjectsComponent,
     RcStudentsComponent,
@@ -52,7 +54,7 @@ import {
     RcDashboardRoutingModule,
     CommonModule,
     RcSharedModule,
-    RcReusableModule
+    RcReusableModule,
   ],
   exports: [
     DashboardComponent
