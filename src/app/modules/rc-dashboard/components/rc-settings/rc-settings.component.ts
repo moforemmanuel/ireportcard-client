@@ -1,16 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {SchoolSettings} from "../../../../models/dto/school-settings.model";
-import {SchoolSettingsService} from "../../../../services/school-settings.service";
 import {addToMessageService} from "../../../../utils/message-service.util";
 import {MessageService} from "primeng/api";
-import {Sequence} from "../../../../models/dto/sequence.model";
+import {Sequence, SequenceType} from "../../../../models/dto/sequence.model";
 import {SequenceService} from "../../../../services/sequence.service";
 import {TermService} from "../../../../services/term.service";
 import {AcademicYearService} from "../../../../services/academic-year.service";
 import {Term} from "../../../../models/dto/term.model";
 import {AcademicYear} from "../../../../models/dto/academic-year.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {DefaultService} from "../../../../services/default.service";
+import {ReportCardService} from "../../../../services/report-card.service";
 import {AcademicYearUtil} from "../../../../utils/academic-year.util";
 import {SchoolService} from "../../../../services/school.service";
 import {School} from "../../../../models/dto/school.model";
@@ -20,9 +18,7 @@ import {SectionService} from "../../../../services/section.service";
 
 type ATS = AcademicYear | Term | Sequence;
 
-enum ATSName {
-  YEAR, TERM, SEQUENCE,
-}
+enum ATSName {YEAR, TERM, SEQUENCE,}
 
 @Component({
   selector: 'app-rc-settings',
@@ -33,16 +29,19 @@ export class RcSettingsComponent implements OnInit {
 
   schoolId: number = -1;
   settingsForm: FormGroup = this.fb.group({});
+  sequenceForm: FormGroup = this.fb.group({});
   school?: School;
   sections: Section[] = [];
   terms: Term[] = [];
   sequences: Sequence[] = [];
+  sequencesByTerms: { term: Term, sequences: Sequence[] }[] = [];
   academicYears: AcademicYear[] = [];
+  sequenceTypes: string[] = Object.keys(SequenceType);
 
   constructor(
     private fb: FormBuilder,
     private msgService: MessageService,
-    private defaultService: DefaultService,
+    private defaultService: ReportCardService,
     private schoolService: SchoolService,
     private sectionService: SectionService,
     private sequenceService: SequenceService,
@@ -52,16 +51,15 @@ export class RcSettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadSchoolId();
     this.loadSchool();
     this.loadSettingsInfo();
     this.settingsForm = this.fb.group({
-      applicationsOpen: [false, Validators.required],
-      name: ["", Validators.required],
-      year: [0, Validators.required],
-      term: ["", Validators.required],
-      sequence: [0, Validators.required],
+      applicationsOpen: [false, Validators.required], name: ["", Validators.required], year: [0, Validators.required],
+      term: ["", Validators.required], sequence: [0, Validators.required],
       maxGrade: [0, Validators.compose([Validators.min(0), Validators.max(100)])]
+    });
+    this.sequenceForm = this.fb.group({
+      name: ['', Validators.required], term: [0, Validators.required], type: [SequenceType.OPENING, Validators.required]
     });
   }
 
@@ -69,21 +67,17 @@ export class RcSettingsComponent implements OnInit {
     if (this.school) {
       this.settingsForm = this.fb.group({
         applicationsOpen: [this.school.applicationOpen, Validators.required],
-        name: [this.school.name ? this.school.name: '', Validators.required],
-        year: [this.school.currentYearId? this.school.currentYearId: -1, Validators.required],
-        term: [this.school.currentTerm? this.school.currentTerm: 'None'],
-        sequence: [this.school.currentSequenceId? this.school: -1, Validators.required],
-        maxGrade: [this.school.maxGrade? this.school.maxGrade: -1, Validators.compose([Validators.min(0), Validators.max(100)])]
+        name: [this.school.name ? this.school.name : '', Validators.required],
+        year: [this.school.currentYearId ? this.school.currentYearId : -1, Validators.required],
+        term: [this.school.currentTerm ? this.school.currentTerm : 'None'],
+        sequence: [this.school.currentSequenceId ? this.school : -1, Validators.required],
+        maxGrade: [this.school.maxGrade ? this.school.maxGrade : -1, Validators.compose([Validators.min(0), Validators.max(100)])]
       });
     }
   }
 
-  loadSchoolId = () => {
-    const sid = LocalStorageUtil.readSchoolId();
-    this.schoolId = sid? sid: this.schoolId;
-  }
-
   loadSchool(): void {
+    this.schoolId = LocalStorageUtil.getSchoolId();
     this.schoolService.getById(this.schoolId).subscribe((school) => {
       localStorage.setItem("school", JSON.stringify(school))
       this.school = school;
@@ -91,10 +85,18 @@ export class RcSettingsComponent implements OnInit {
     });
   }
 
+  loadDefaultDataAction = () => this.defaultService.create().subscribe();
+
   loadSettingsInfo(): void {
     this.sectionService.getBySchoolId(this.schoolId).subscribe((sections) => this.sections = sections)
     this.sequenceService.getAll().subscribe((sequences) => this.sequences = sequences);
-    this.termService.getAll().subscribe((terms) => this.terms = terms);
+    this.termService.getAll().subscribe((terms) => {
+      this.sequencesByTerms = [];
+      this.terms = terms;
+      this.terms.forEach(term => this.sequenceService.getByTermId(term.id).subscribe((sequences) => {
+        this.sequencesByTerms.push({term: term, sequences: sequences});
+      }))
+    });
     this.academicYearService.getAll().subscribe((years) => this.academicYears = years);
   }
 
@@ -103,132 +105,51 @@ export class RcSettingsComponent implements OnInit {
       id: this.schoolId,
       name: this.settingsForm.get('name')?.value,
       applicationOpen: this.settingsForm.get('applicationsOpen')?.value,
-      maxGrade: this.settingsForm.get('maxGrade')?.value,
       currentYearId: parseInt(this.settingsForm.get("year")?.value),
+      maxGrade: this.settingsForm.get('maxGrade')?.value,
       currentSequenceId: parseInt(this.settingsForm.get("sequence")?.value),
     }
     this.schoolService.update(school).subscribe(() => document.location.reload());
   }
 
-  loadDefaultDataAction() {
-    this.defaultService.create().subscribe({
-      next: (res) => addToMessageService(this.msgService, 'success', 'Success', 'Successfully loaded default data!\n' + res),
-      error: (err) => {
-        addToMessageService(this.msgService, 'error', 'Error', err.message);
-      }
-    })
-  }
-
-  editATSAction($event: MouseEvent, atsName: ATSName, entity: ATS, inputElement: HTMLInputElement) {
-    const editButton = $event.target as HTMLButtonElement;
-
-    if (inputElement.disabled) {
-      editButton.textContent = "Save";
-      inputElement.disabled = false;
-    } else {
-      editButton.textContent = "Edit";
-      inputElement.disabled = true;
-      if (entity.name !== inputElement.value) {
-        entity.name = inputElement.value;
-        switch (atsName) {
-          case ATSName.YEAR: {
-            console.log(entity)
-            if (AcademicYearUtil.isValid(entity.name)) {
-              this.academicYearService.update(entity as AcademicYear).subscribe({
-                next: (res) => addToMessageService(this.msgService, 'success', 'Update successful', res.message),
-                error: (err) => addToMessageService(this.msgService, 'error', 'Update failed', err.message),
-                complete: () => this.loadSettingsInfo()
-              });
-            } else {
-              addToMessageService(this.msgService, 'warn', 'Invalid Year', `The value '${entity.name}' is not valid!`);
-            }
-
-            break;
-          }
-          case ATSName.TERM: {
-            this.termService.update(entity as Term).subscribe({
-              next: (res) => addToMessageService(this.msgService, 'success', 'Update successful', res.message),
-              error: (err) => addToMessageService(this.msgService, 'error', 'Update failed', err.message),
-              complete: () => this.loadSettingsInfo()
-            });
-            break;
-          }
-          case ATSName.SEQUENCE: {
-            this.sequenceService.update(entity as Sequence).subscribe({
-              next: (res) => addToMessageService(this.msgService, 'success', 'Update successful', res.message),
-              error: (err) => addToMessageService(this.msgService, 'error', 'Update failed', err.message),
-              complete: () => this.loadSettingsInfo()
-            });
-            break;
-          }
-          default:
-            addToMessageService(this.msgService, 'error', 'Error', 'Something has happened');
-            break;
+  editYTSAction(atsOrdinal: ATSName, entity: ATS, inputElement: HTMLInputElement) {
+    if (inputElement.disabled && entity.name !== inputElement.value && inputElement.value) {
+      entity.name = inputElement.value;
+      if (atsOrdinal == ATSName.YEAR) {
+        if (AcademicYearUtil.isValid(entity.name)) {
+          this.academicYearService.update(entity as AcademicYear).subscribe(() => this.loadSettingsInfo());
+        } else {
+          addToMessageService(this.msgService, 'warn', 'Invalid Year', `The value '${entity.name}' is not valid!`);
         }
+      } else if (atsOrdinal == ATSName.TERM) {
+        this.termService.update(entity as Term).subscribe(() => this.loadSettingsInfo());
+      } else if (atsOrdinal == ATSName.SEQUENCE) {
+        this.sequenceService.update(entity as Sequence).subscribe(() => this.loadSettingsInfo());
       }
     }
   }
 
-  addATSAction($event: MouseEvent, atsName: ATSName, inputElement: HTMLInputElement, seqTermAddInput?: HTMLSelectElement) {
-    const addButton = $event.target as HTMLButtonElement;
-    if (inputElement.hidden) {
-      inputElement.hidden = false;
-      addButton.textContent = "Save";
-    } else {
-      const entityValue = inputElement.value;
-      switch (atsName) {
-        case ATSName.SEQUENCE: {
-          const termId = seqTermAddInput ? parseInt(seqTermAddInput.value) : -1;
-          const seq: Sequence = {id: -1, name: entityValue, termId: termId};
-          if (seq.termId > 0) {
-            this.sequenceService.save(seq).subscribe({
-              next: (res) => addToMessageService(this.msgService, 'success', 'Success', res.message),
-              error: (err) => addToMessageService(this.msgService, 'error', 'Error', err.error.message),
-              complete: () => this.loadSettingsInfo()
-            });
-          } else addToMessageService(this.msgService, 'warn', 'No term selected', 'Select a term first to save the sequence')
-          break;
+  addYTSAction(atsOrdinal: ATSName, inputElement: HTMLInputElement) {
+    if (inputElement.hidden && inputElement.value !== '') {
+      const elValue = inputElement.value;
+      if (atsOrdinal == ATSName.YEAR) {
+        const year: AcademicYear = {id: -1, name: elValue};
+        if (AcademicYearUtil.isValid(elValue)) {
+          this.academicYearService.save(year).subscribe(() => this.loadSettingsInfo());
+        } else {
+          addToMessageService(this.msgService, 'warn', 'Invalid Year', `The value '${elValue}' is not valid!`);
         }
-        case ATSName.TERM: {
-          const term: Term = {id: -1, name: entityValue};
-          this.termService.save(term).subscribe({
-            next: (res) => addToMessageService(this.msgService, 'success', 'Success', res.message),
-            error: (err) => addToMessageService(this.msgService, 'error', 'Error', err.error.message),
-            complete: () => this.loadSettingsInfo()
-          });
-          break;
+      } else if (atsOrdinal == ATSName.TERM) {
+        const term: Term = {id: -1, name: elValue};
+        this.termService.save(term).subscribe(() => this.loadSettingsInfo());
+      } else if (atsOrdinal == ATSName.SEQUENCE) {
+        const sequence: Sequence = {
+          id: -1, termId: this.sequenceForm.get('term')?.value, type: this.sequenceForm.get('type')?.value,
+          name: this.sequenceForm.get('name')?.value
         }
-        case ATSName.YEAR: {
-          if (AcademicYearUtil.isValid(entityValue)) {
-            const year: AcademicYear = {id: -1, name: entityValue};
-            this.academicYearService.save(year).subscribe({
-              next: (res) => addToMessageService(this.msgService, 'success', 'Success', res.message),
-              error: (err) => addToMessageService(this.msgService, 'error', 'Error', err.error.message),
-              complete: () => this.loadSettingsInfo()
-            });
-          } else {
-            addToMessageService(this.msgService, 'warn', 'Invalid Year', `The value '${entityValue}' is not valid!`);
-          }
-          break;
-        }
+        this.sequenceService.save(sequence).subscribe(() => this.loadSettingsInfo());
       }
-
-      inputElement.hidden = true;
-      addButton.textContent = "Add";
     }
-  }
-
-  // TODO move this to a util module
-  getTermBySequenceId(sequenceId: number): Term {
-    const sequence = this.sequences.find(seq => seq.id == sequenceId);
-
-    let res: Term[] = [];
-    if (sequence) {
-      res = this.terms.filter((term) => {
-        return sequence.termId == term.id
-      });
-    }
-    return res.length == 1? res[0]: {id: -1, name: 'None'}
   }
 
   deleteATSAction(number: number, year: AcademicYear) {
@@ -257,5 +178,3 @@ export class RcSettingsComponent implements OnInit {
     this.sectionService.delete(section.id).subscribe(() => this.loadSettingsInfo());
   }
 }
-
-

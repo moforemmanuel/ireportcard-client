@@ -28,6 +28,7 @@ export class RcClasslistsComponent implements OnInit {
   academicYears: AcademicYear[] = [];
   subjects: Subject[] = [];
   sequences: Sequence[] = [];
+  testInput: string = "";
 
 
   constructor(
@@ -42,9 +43,10 @@ export class RcClasslistsComponent implements OnInit {
   ) {
     this.classListRequest = {year_id: -1, class_id: -1, subject_id: -1, sequence_id: -1};
     this.classListResponse = {
-      class_level: {id: -1, classLevelId: -1, name: ''},
+      classLevel: {id: -1, name: '', sectionId: -1},
+      classLevelSub: {id: -1, classLevelId: -1, name: ''},
       subject: {id: -1, name: '', code: '', coefficient: 0, sectionId: -1},
-      class_name: '', sequence_name: '', student_grades: []
+      className: '', sequenceName: '', studentGrades: []
     };
   }
 
@@ -109,6 +111,7 @@ export class RcClasslistsComponent implements OnInit {
 
   loadGrades() {
     const req = this.classListRequest;
+    console.log(req)
     if (!(req.year_id < 0 || req.class_id < 0 || req.subject_id < 0 || req.sequence_id < 0)) {
       this.classListService.get(req).subscribe({
         next: (classList) => this.classListResponse = classList

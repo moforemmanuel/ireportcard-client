@@ -1,12 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Subject} from "../../../../../models/dto/subject.model";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {SubjectService} from "../../../../../services/subject.service";
 import {Section} from "../../../../../models/dto/section.model";
 import {SectionService} from "../../../../../services/section.service";
-import {MessageService} from "primeng/api";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {addToMessageService} from "../../../../../utils/message-service.util";
+import {LocalStorageUtil} from "../../../../../utils/local-storage.util";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-subject',
@@ -14,67 +13,55 @@ import {addToMessageService} from "../../../../../utils/message-service.util";
   styleUrls: ['./subject.component.scss']
 })
 export class SubjectComponent implements OnInit {
-
-  @Input() subject: Subject;
+  subject!: Subject;
   subjectForm: FormGroup = this.fb.group({});
   sections: Section[] = [];
-  private readonly defaultSubject: Subject = {id: -1, name: '', coefficient: 0, code: '', sectionId: -1};
+  private readonly schoolId = LocalStorageUtil.getSchoolId();
 
   constructor(
     private fb: FormBuilder,
-    private activeModal: NgbActiveModal,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     private subjectService: SubjectService,
-    private sectionService: SectionService,
-    private msgService: MessageService
+    private sectionService: SectionService
   ) {
-    this.subject = this.defaultSubject;
-    this.setupSubjectForm();
+    this.subjectForm = this.fb.group({
+      name: ['', Validators.required], code: ['', Validators.required],
+      coeff: ['', Validators.required], section: [0, Validators.required]
+    });
+    const subjectId: number = this.activatedRoute.snapshot.params['id'];
+    if (subjectId) {
+      this.subjectService.getById(subjectId).subscribe((subject) => {
+        this.subject = subject;
+        this.setupSubjectForm(subject);
+      })
+    }
   }
 
   ngOnInit(): void {
-    this.sectionService.getAll().subscribe({
-      next: (sections) => this.sections = sections,
-      error: (err) => addToMessageService(this.msgService, 'warn', 'Error connecting to server', `${err.message}`)
-    });
+    this.loadSections();
   }
 
-  resetSubject(): void {
-    this.subject = this.defaultSubject;
-  }
-
-  setupSubjectForm() {
-    this.subjectForm = new FormGroup({
-      name: new FormControl(this.subject.name, Validators.required),
-      code: new FormControl(this.subject.code, Validators.required),
-      coeff: new FormControl(this.subject.coefficient, [Validators.required, Validators.min(0)]),
-      sectionId: new FormControl(this.subject.sectionId, Validators.required)
-    });
-  }
-
-  saveSubject(): void {
-    const subjectToSave: Subject = {
-      id: -1,
-      name: this.subjectForm.get('name')?.value,
-      code: this.subjectForm.get('code')?.value,
-      coefficient: this.subjectForm.get('coeff')?.value,
-      sectionId: this.subjectForm.get('sectionId')?.value.id
-    }
-
-    if (this.subject.id < 0) {
-      this.subjectService.save(subjectToSave).subscribe({
-        next: (res) => addToMessageService(this.msgService, 'success', 'Success', `${res.message}`),
-        error: (err) => addToMessageService(this.msgService, 'error', 'Failed', `${err.message}`)
-      });
-    } else {
-      subjectToSave.id = this.subject.id;
-      this.subjectService.update(subjectToSave).subscribe({
-        next: (res) => addToMessageService(this.msgService, 'success', 'Success', `${res.message}`),
-        error: (err) => addToMessageService(this.msgService, 'error', 'Error', `${err.message}`)
-      });
+  loadSections = () => {
+    if (this.schoolId > 0) {
+      this.sectionService.getBySchoolId(this.schoolId).subscribe((sections) => this.sections = sections);
     }
   }
 
-  closeModal() {
-    this.activeModal.close();
+  setupSubjectForm(subject: Subject) {
+    this.subjectForm = this.fb.group({
+      name: [subject.name, Validators.required], code: [subject.code, Validators.required],
+      coeff: [subject.coefficient, Validators.required], section: [subject.sectionId, Validators.required]
+    });
+  }
+
+  saveSubjectAction(): void {
+    const subject: Subject = {
+      id: this.subject.id, name: this.subjectForm.get('name')?.value, code: this.subjectForm.get('code')?.value,
+      coefficient: this.subjectForm.get('coeff')?.value, sectionId: this.subjectForm.get('section')?.value
+    }
+    this.subjectService.update(subject).subscribe(() => {
+
+    });
   }
 }

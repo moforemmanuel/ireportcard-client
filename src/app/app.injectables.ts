@@ -2,11 +2,13 @@ import {SchoolService} from "./services/school.service";
 import {
   RC_ACADEMIC_YEAR_API_URL,
   RC_AUTH_API_URL,
+  RC_AUTH_TEST_API_URL,
   RC_CLASS_LEVEL_API_URL,
   RC_CLASS_LEVEL_SUB_API_URL,
   RC_CLASS_LIST_API_URL,
   RC_DEFAULT_API_URL,
   RC_GRADE_API_URL,
+  RC_REPORT_CARD_API_URL,
   RC_SCHOOL_API_URL,
   RC_SECTION_API_URL,
   RC_SEQUENCE_API_URL,
@@ -29,7 +31,7 @@ import {GradeService} from "./services/grade.service";
 import {SubjectRegistrationService} from "./services/subject-registration.service";
 import {SchoolSettingsService} from "./services/school-settings.service";
 import {TermService} from "./services/term.service";
-import {DefaultService} from "./services/default.service";
+import {ReportCardService} from "./services/report-card.service";
 import {StudentApplicationService} from "./services/student-application.service";
 import {AuthService} from "./services/auth.service";
 
@@ -53,14 +55,16 @@ const classListInjectables: Array<any> = [
   {provide: ClassListService, useClass: ClassListService},
   {provide: RC_CLASS_LIST_API_URL, useValue: RC_CLASS_LIST_API_URL}
 ];
-const defaultInjectables: Array<any> = [
-  {provide: DefaultService, useClass: DefaultService},
-  {provide: RC_DEFAULT_API_URL, useValue: RC_DEFAULT_API_URL}
-];
 const gradeInjectables: Array<any> = [
   {provide: GradeService, useClass: GradeService},
   {provide: RC_GRADE_API_URL, useValue: RC_GRADE_API_URL}
 ]
+const reportCardInjectables: Array<any> = [
+  {provide: ReportCardService, useClass: ReportCardService},
+  {provide: RC_REPORT_CARD_API_URL, useValue: RC_REPORT_CARD_API_URL},
+  {provide: RC_DEFAULT_API_URL, useValue: RC_DEFAULT_API_URL},
+  {provide: RC_AUTH_TEST_API_URL, useValue: RC_AUTH_TEST_API_URL},
+];
 const schoolInjectables: Array<any> = [
   {provide: SchoolService, useClass: SchoolService},
   {provide: RC_SCHOOL_API_URL, useValue: RC_SCHOOL_API_URL}
@@ -104,8 +108,8 @@ export const injectables = [
   classLevelInjectables,
   classLevelSubInjectables,
   classListInjectables,
-  defaultInjectables,
   gradeInjectables,
+  reportCardInjectables,
   schoolInjectables,
   sectionInjectables,
   sequenceInjectables,

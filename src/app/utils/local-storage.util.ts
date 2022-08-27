@@ -8,8 +8,9 @@ export module LocalStorageUtil {
     localStorage.setItem(LS_KEY.sessionId, token)
   }
 
-  export const readUserToken = (): string | null => {
-    return localStorage.getItem(LS_KEY.sessionId);
+  export const readUserToken = (): string => {
+    const token = localStorage.getItem(LS_KEY.sessionId);
+    return token ? token : '';
   }
 
   export const deleteUserToken = (): void => {
@@ -22,7 +23,13 @@ export module LocalStorageUtil {
 
   export const readSchoolId = (): number | null => {
     const id = localStorage.getItem(LS_KEY.schoolId);
-    return id? parseInt(id): -1;
+    return id ? parseInt(id) : null;
+  }
+
+  export const getSchoolId = (): number => {
+    const id = readSchoolId();
+    if (id) return id;
+    else throw new Error('School id not found');
   }
 
   export const deleteSchoolId = (): void => {

@@ -3,7 +3,7 @@
     <span class="h3">Students</span>
     <span class="spacer"></span>
     <span class="px-2">
-      <button (click)="saveStudentAction()" class="p-button-rounded" icon="pi pi-plus-circle" pButton
+      <button [routerLink]="['/dashboard/student/add']" class="p-button-rounded" icon="pi pi-plus-circle" pButton
               type="button"></button>
     </span>
     <span class="px-2">
@@ -12,44 +12,39 @@
   </div>
 
   <div class="py-4">
-    <div class="subject-data-container data-container">
-      <table class="table table-striped">
-        <thead class="table-info">
-        <tr>
-          <th>SN</th>
-          <th>RegNo</th>
-          <th>Student Name</th>
-          <th>Gender</th>
-          <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let student of students; let i = index">
-          <td>{{i + 1}}</td>
-          <td>{{student.regNum}}</td>
-          <td>{{student.name}}</td>
-          <td>{{student.gender}}</td>
-          <td>
-              <span class="px-2">
-                <a (click)="saveStudentAction(student)" class="btn btn-primary rc-button-primary action-button"
-                   title="Edit" type="button">
-                  <i class="bi bi-pencil"></i>
-                </a>
-              </span>
-            <span class="px-2">
-                <a (click)="deleteStudentAction(student)" class="btn btn-danger action-button" title="Delete">
-                  <i class="bi bi-trash"></i>
-                </a>
-              </span>
-          </td>
-        </tr>
-        <tr *ngIf="students.length < 1">
-          <td colspan="5">
-            <span class="text-center">No data found</span>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+    <div class="surface-section">
+      <p-table [value]="students" [rows]="10" [paginator]="true" [globalFilterFields]="['name', 'regNum', 'gender']"
+               responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>RegNo</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Action</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-student>
+          <tr>
+            <td>{{student.regNum}}</td>
+            <td>{{student.user.firstName + ' ' + student.user.lastName }}</td>
+            <td>{{student.gender | titlecase}}</td>
+            <td>
+              <button [routerLink]="['/dashboard/student/view', student.id]" class="mr-1 p-button-rounded"
+                      icon="pi pi-pencil" pButton
+                      type="button"></button>
+              <button (click)="deleteStudentAction(student)" class="mr-1 p-button-rounded p-button-danger"
+                      icon="pi pi-trash" pButton
+                      type="button"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="flex align-items-center justify-content-between">
+            In total, there {{students.length == 1 ? 'is' : 'are'}} {{students.length}}
+            student{{students.length == 1 ? '' : 's'}}.
+          </div>
+        </ng-template>
+      </p-table>
     </div>
   </div>
 </div>

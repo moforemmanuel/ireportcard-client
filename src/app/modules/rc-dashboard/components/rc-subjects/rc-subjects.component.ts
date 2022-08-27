@@ -3,7 +3,6 @@ import {Subject} from "../../../../models/dto/subject.model";
 import {SubjectService} from "../../../../services/subject.service";
 import {MessageService} from "primeng/api";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {SubjectComponent} from "./subject/subject.component";
 import {addToMessageService} from "../../../../utils/message-service.util";
 
 @Component({
@@ -32,23 +31,6 @@ export class RcSubjectsComponent implements OnInit {
       next: (subjects) => this.subjects = subjects,
       error: (err) => addToMessageService(this.msgService, 'error', 'Error', err.message),
     })
-  }
-
-  saveSubjectAction(subject?: Subject) {
-    const modalRef = this.modalService.open(SubjectComponent, {
-      size: 'lg', centered: true, backdrop: 'static', keyboard: true
-    });
-    const saveSubjectComponent: SubjectComponent = modalRef.componentInstance;
-    if (!subject) {
-      saveSubjectComponent.resetSubject();
-      saveSubjectComponent.subjectForm.reset();
-    } else {
-      saveSubjectComponent.subject = subject;
-      saveSubjectComponent.setupSubjectForm();
-    }
-    modalRef.result.then(() => {
-      this.loadSubjects();
-    });
   }
 
   deleteSubjectAction(subject: Subject) {

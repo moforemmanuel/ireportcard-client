@@ -1,9 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Student} from "../../../../models/dto/student.model";
 import {StudentService} from "../../../../services/student.service";
-import {StudentComponent} from "./student/student.component";
-import {MessageService} from "primeng/api";
-import {addToMessageService} from "../../../../utils/message-service.util";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
@@ -16,7 +13,7 @@ export class RcStudentsComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private studentService: StudentService, private messageService: MessageService) {
+    private studentService: StudentService) {
   }
 
   ngOnInit(): void {
@@ -27,42 +24,15 @@ export class RcStudentsComponent implements OnInit {
     this.studentService.getAll().subscribe({
       next: (students) => {
         this.students = students;
+        console.log(students)
       },
     });
   }
 
-  saveStudentAction(student?: Student) {
-    const modalRef = this.modalService.open(StudentComponent, {
-      size: 'lg', centered: true, backdrop: 'static', keyboard: true
-    });
-    const saveStudentComponent: StudentComponent = modalRef.componentInstance;
-    if (!student) {
-      saveStudentComponent.resetStudent();
-      saveStudentComponent.studentForm.reset();
-    } else {
-      saveStudentComponent.student = student;
-      saveStudentComponent.setUpStudentForm();
-    }
-    modalRef.result.then((result) => {
-      if (result) {
-        // TODO this should be removed from here
-      }
-      this.loadStudents();
-    });
-  }
-
   deleteStudentAction(student: Student) {
-    const confirmDelete = confirm(`Are you sure you want to delete account of: ${student.name}`);
+    const confirmDelete = confirm(`Are you sure you want to delete account of: ${student.user.firstName}`);
     if (confirmDelete) {
-      this.studentService.delete(student.id).subscribe({
-        next: (res) => {
-          addToMessageService(this.messageService, 'success', `Student ${student.name} deleted successfully`, `${res.message}`);
-          this.loadStudents();
-        },
-        error: (err) => {
-          addToMessageService(this.messageService, 'error', `Student ${student.name} not deleted`, `${err.message}`);
-        }
-      });
+      this.studentService.delete(student.id).subscribe({next: () => this.loadStudents()});
     }
   }
 }

@@ -10,26 +10,26 @@ import {EntityResponse} from "../models/dto/entity.response";
 })
 export class StudentService {
 
-  constructor(private http: HttpClient, @Inject(RC_STUDENT_API_URL) private studentApiUrl: string) {
+  constructor(private http: HttpClient, @Inject(RC_STUDENT_API_URL) private apiUrl: string) {
   }
 
   getAll(): Observable<Student[]> {
-    return this.http.get<Student[]>(this.studentApiUrl);
+    return this.http.get<Student[]>(this.apiUrl);
   }
 
   getById(id: number): Observable<Student> {
-    return this.http.get<Student>(`${this.studentApiUrl}/${id}`);
+    return this.http.get<Student>(`${this.apiUrl}/${id}`);
   }
 
   save(student: Student): Observable<EntityResponse> {
-    return this.http.post<EntityResponse>(this.studentApiUrl, student);
+    return this.http.post<EntityResponse>(this.apiUrl, student);
   }
 
   update(student: Student): Observable<EntityResponse> {
-    return this.http.put<EntityResponse>(`${this.studentApiUrl}/${student.id}`, student);
+    return this.http.put<EntityResponse>(`${this.apiUrl}`, student);
   }
 
   delete(id: number): Observable<EntityResponse> {
-    return this.http.delete<EntityResponse>(`${this.studentApiUrl}/${id}`);
+    return this.http.delete<EntityResponse>(`${this.apiUrl}/${id}`);
   }
 }

@@ -17,6 +17,10 @@ export class SequenceService {
     return this.http.get<Sequence[]>(this.apiUrl);
   }
 
+  getByTermId(termId: number): Observable<Sequence[]> {
+    return this.http.get<Sequence[]>(`${this.apiUrl}/term/${termId}`);
+  }
+
   save(sequence: Sequence): Observable<EntityResponse> {
     return this.http.post<EntityResponse>(`${this.apiUrl}`, sequence);
   }

@@ -7,6 +7,8 @@ export const RC_ACADEMIC_YEAR_API_URL = `${RC_SERVER_URL}/api/academic_year`;
 
 export const RC_AUTH_API_URL = `${RC_SERVER_URL}/api/auth`;
 
+export const RC_AUTH_TEST_API_URL = `${RC_SERVER_URL}/api/auth_test`;
+
 export const RC_CLASS_LEVEL_API_URL = `${RC_SERVER_URL}/api/class_level`;
 
 export const RC_CLASS_LEVEL_SUB_API_URL = `${RC_SERVER_URL}/api/class_level_sub`;
@@ -16,6 +18,8 @@ export const RC_CLASS_LIST_API_URL = `${RC_SERVER_URL}/api/class_list`;
 export const RC_DEFAULT_API_URL = `${RC_SERVER_URL}/api/default`;
 
 export const RC_GRADE_API_URL = `${RC_SERVER_URL}/api/grade`;
+
+export const RC_REPORT_CARD_API_URL = `${RC_SERVER_URL}/api/rc`;
 
 export const RC_SCHOOL_API_URL = `${RC_SERVER_URL}/api/school`;
 

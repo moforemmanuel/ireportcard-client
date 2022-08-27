@@ -1,7 +1,7 @@
 name: 🏮 A Simple Issue
 description: File a simple issue
 title: "<title>"
-labels: [needs triage, to be reviewed]
+labels: [needs triage, 'rc: to be reviewed']
 body:
   - type: textarea
     attributes:

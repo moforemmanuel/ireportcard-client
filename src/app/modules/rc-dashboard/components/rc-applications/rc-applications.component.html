@@ -3,7 +3,8 @@
     <span class="h3">Student Applications</span>
     <span class="spacer"></span>
     <span class="px-2">
-      <button (click)="saveApplicationAction()" class="p-button-rounded" icon="pi pi-plus-circle" pButton></button>
+      <button [routerLink]="['/dashboard/application/add']" class="p-button-rounded" icon="pi pi-plus-circle"
+              pButton></button>
     </span>
     <span class="px-2">
       <button class="p-button-rounded" icon="pi pi-refresh" pButton></button>
@@ -14,84 +15,47 @@
       <!-- If the applications are not loading properly for some reason, check that the order of the ngModel and ngModelChange attribs is correct -->
       <div class="col-md-6">
         <label class="block text-800 font-medium mb-2">Select Academic Year</label>
-        <p-dropdown [(ngModel)]="applicationRequest.year_id" (onChange)="loadApplications()" [options]="academicYears" [optionLabel]="'name'" [optionValue]="'id'" [styleClass]="'w-100'"></p-dropdown>
+        <p-dropdown [(ngModel)]="applicationsRequest.yearId" (onChange)="loadApplications()" [options]="academicYears"
+                    [optionLabel]="'name'" [optionValue]="'id'" [styleClass]="'w-100'"></p-dropdown>
       </div>
       <div class="col-md-6">
         <label class="block text-800 font-medium mb-2">Select Class</label>
-        <p-dropdown [(ngModel)]="applicationRequest.class_id" (onChange)="loadApplications()" [options]="classes" [optionLabel]="'name'" [optionValue]="'sub_id'" [styleClass]="'w-100'"></p-dropdown>
+        <p-dropdown [(ngModel)]="applicationsRequest.classSubId" (onChange)="loadApplications()" [options]="classes"
+                    [optionLabel]="'name'" [optionValue]="'sub_id'" [styleClass]="'w-100'"></p-dropdown>
       </div>
     </div>
   </div>
 
-  <div class="py-2">
-    <p-table [value]="studentATs">
+  <div class="py-2 fadein animation-delay-500 animation-ease-in">
+    <p-table [value]="studentATs" responsiveLayout="scroll" styleClass="p-datatable-striped">
       <ng-template pTemplate="header">
         <tr>
           <th>Student</th>
           <th>Reg No</th>
-          <th *ngIf="applicationRequest.class_id < 0">Class Level</th>
+          <th *ngIf="applicationsRequest.classSubId < 0">Class Level</th>
           <th>Applied On</th>
           <th>Number of Subjects</th>
           <th>Actions</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" >
-        <tr *ngIf="applicationRequest.year_id < 1">
+      <ng-template pTemplate="body" let-studentAT>
+        <tr *ngIf="applicationsRequest.yearId < 1">
           <td colspan="5">Select all fields above to view student applications</td>
         </tr>
-        <tr *ngFor="let studentAT of studentATs">
+        <tr>
           <td>{{studentAT.student.name}}</td>
           <td>{{studentAT.student.regNum}}</td>
-          <td *ngIf="applicationRequest.class_id < 0">{{studentAT.application.key.classSubId}}</td>
+          <td *ngIf="applicationsRequest.classSubId < 0">{{studentAT.application.key.classSubId}}</td>
           <td>{{studentAT.sat.createdAt}}</td>
-          <td>{{studentAT.sat.numOfSubjects}}</td>
+          <td>{{studentAT.sat.numberOfSubjects}}</td>
           <td>
-            <button pButton (click)="saveApplicationAction(studentAT)" label="Edit"></button>
+            <button [routerLink]="['/dashboard/application/view', studentAT.sat.id]" pButton
+                    class="mr-1 p-button-rounded" icon="pi pi-pencil"></button>
+            <button (click)="deleteSatAction(studentAT.sat.id)" pButton class="mr-1 p-button-danger p-button-rounded"
+                    icon="pi pi-trash"></button>
           </td>
         </tr>
       </ng-template>
     </p-table>
   </div>
-
-  <!--
-  <div class="py-2">
-    <div class="container-fluid">
-      <table class="table table-striped text-center align-items-center align-middle">
-        <thead>
-        <tr *ngIf="applications.length != 0">
-          <td colspan="5">
-            <div class="h5">
-              Student Applications
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <th>Student</th>
-          <th>RegNo</th>
-          <th *ngIf="applicationRequest.class_id < 0">Class Level</th>
-          <th>Applied On</th>
-          <th>No of Subjects</th>
-          <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngIf="applications.length == 0">
-          <td colspan="5">Select all fields above to view student applications</td>
-        </tr>
-
-        <tr *ngFor="let studentAT of studentATs">
-          <td>{{studentAT.student.name}}</td>
-          <td>{{studentAT.student.regno}}</td>
-          <td *ngIf="applicationRequest.class_id < 0">{{studentAT.application.application_key.class_sub_id}}</td>
-          <td>{{studentAT.sat.created_at}}</td>
-          <td>{{studentAT.sat.num_of_subjects}}</td>
-          <td>
-            <button (click)="saveApplicationAction(studentAT)" class="btn btn-primary">Edit</button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  -->
 </div>

@@ -7,9 +7,8 @@ import {ClassLevelSubService} from "../../../../services/class-level-sub.service
 import {ClassLevelSub} from "../../../../models/dto/class-level-sub.model";
 import {SectionService} from "../../../../services/section.service";
 import {Section} from "../../../../models/dto/section.model";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {ClassLevelComponent} from "./class-level/class-level.component";
 import {Router} from "@angular/router";
+import {RcClass} from "../../../../app.types";
 
 @Component({
   selector: 'app-rc-classes',
@@ -20,23 +19,18 @@ export class RcClassesComponent implements OnInit {
   classMenuItems: MenuItem[] = [];
   classes: RcClass[] = [];
   sections: Section[] = [];
-  sectionModelId: number = -1;
+  sectionId: number = 0;
 
   constructor(
     private router: Router,
-    private classLevelService: ClassLevelService, private classLevelSubService: ClassLevelSubService,
-              private sectionService: SectionService, private messageService: MessageService,
-              private modalService: NgbModal
+    private classLevelService: ClassLevelService,
+    private classLevelSubService: ClassLevelSubService,
+    private sectionService: SectionService,
+    private messageService: MessageService
   ) {
     this.classMenuItems = [
-      {
-        label: 'Edit',
-        icon: 'pi pi-pencil',
-      },
-      {
-        label: 'Delete',
-        icon: 'pi pi-trash',
-      }
+      {label: 'Edit', icon: 'pi pi-pencil',},
+      {label: 'Delete', icon: 'pi pi-trash',}
     ]
   }
 
@@ -48,27 +42,27 @@ export class RcClassesComponent implements OnInit {
     this.sectionService.getAll().subscribe({
       next: (sections) => {
         this.sections = sections;
-        this.sectionModelId = this.sections[0].id;
+        if (sections.length > 0) {
+          this.sectionId = sections[0].id;
+        }
         this.loadClasses();
-      },
-      error: (err) => addToMessageService(this.messageService, 'error', 'Error loading sections', `Connection refused. Check that the server is running!`)
+      }
     });
   }
 
   loadClasses(): void {
-    const sectionId = this.sectionModelId;
+    const sectionId = this.sectionId;
     this.classes = [];
-    this.classLevelService.getBySection(sectionId).subscribe({
-      next: (classLevels: ClassLevel[]) => {
-        classLevels.forEach((classLevel) => {
-          this.loadClassSubs(classLevel);
-        });
-        this.sortClasses();
-      },
-      error: (error) => {
-        addToMessageService(this.messageService, 'error', 'Error loading classes', `Server not responding.\n${error.message}`);
-      }
-    });
+    if (sectionId > 0) {
+      this.classLevelService.getBySection(sectionId).subscribe({
+        next: (classLevels: ClassLevel[]) => {
+          classLevels.forEach((classLevel) => this.loadClassSubs(classLevel));
+        },
+        error: (error) => {
+          addToMessageService(this.messageService, 'error', 'Error loading classes', `Server not responding.\n${error.message}`);
+        }
+      });
+    }
   }
 
   sortClasses(): void {
@@ -80,25 +74,49 @@ export class RcClassesComponent implements OnInit {
   deleteClassAction(classLevel: ClassLevel) {
     const confirmDelete = confirm(`Are you sure you want to delete this class: ${classLevel.name}?`)
     if (confirmDelete) {
-      this.classLevelService.delete(classLevel).subscribe({
-        next: (res) => addToMessageService(this.messageService, 'warn', 'Delete successful', res),
-        error: (err) => addToMessageService(this.messageService, 'error', 'Delete failed', 'There was a problem deleting this entity. Contact the admin.')
-      })
+      this.classLevelService.delete(classLevel).subscribe(
+        (res) => addToMessageService(this.messageService, 'warn', 'Delete successful', res)
+      )
     }
   }
 
-  saveClassAction(classLevel?: ClassLevel) {
-    if (!classLevel) {
-      console.log('No class selected')
-    } else {
-      this.router.navigate([`/dashboard/class/${classLevel.id}`]).then();
+  addClassLevelSubAction(classLevel: ClassLevel, inputElement: HTMLInputElement) {
+    const classLevelSub: ClassLevelSub = {
+      id: 0, name: inputElement.value, classLevelId: classLevel.id
+    }
+    this.classLevelSubService.save(classLevelSub).subscribe(() => {
+      this.loadClassSubs(classLevel);
+      inputElement.value = '';
+    })
+  }
+
+  deleteClassSubAction(classLevel: ClassLevel, classLevelSubId: number) {
+    this.classLevelSubService.delete(classLevelSubId).subscribe(() => this.loadClassSubs(classLevel));
+  }
+
+  getColClass(classLevelSubs: ClassLevelSub[]) {
+    switch (classLevelSubs.length) {
+      case 1:
+        return 'col-12';
+      case 2:
+        return 'col-6';
+      case 3:
+        return 'col-4';
+      default :
+        return 'col-3';
     }
   }
 
   private loadClassSubs(classLevel: ClassLevel): void {
     this.classLevelSubService.getAllByClassLevelId(classLevel.id).subscribe({
       next: (classLevelSubs) => {
-        this.classes.push({classLevel: classLevel, classLevelSubs: classLevelSubs})
+        const classLevelFind = this.classes.find((c) => c.classLevel.id === classLevel.id);
+        if (classLevelFind) {
+          classLevelFind.classLevelSubs = classLevelSubs;
+        } else {
+          this.classes.push({classLevel, classLevelSubs});
+        }
+        this.sortClasses();
       },
       error: (error) => {
         addToMessageService(this.messageService, 'error', 'Error loading class subs', error.message);
@@ -107,7 +125,4 @@ export class RcClassesComponent implements OnInit {
   }
 }
 
-type RcClass = {
-  classLevel: ClassLevel,
-  classLevelSubs: ClassLevelSub[],
-}
+

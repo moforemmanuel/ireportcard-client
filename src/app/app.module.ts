@@ -1,53 +1,41 @@
+import '@angular/compiler';
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-
+import '@angular/compiler';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {RcAuthModule} from './modules/rc-auth/rc-auth.module';
 import {RcDashboardModule} from "./modules/rc-dashboard/rc-dashboard.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {injectables} from "./app.injectables";
 import {MessageService} from "primeng/api";
-import {NgbActiveModal, NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {RcWelcomeComponent} from './components/rc-welcome/rc-welcome.component';
 import {HttpResponseInterceptor} from "./interceptors/http-response.interceptor";
-import {SelectSchoolComponent} from "./components/select-school/select-school.component";
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
-import {ToastModule} from "primeng/toast";
-import {ButtonModule} from "primeng/button";
-import {RippleModule} from "primeng/ripple";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {InputTextModule} from "primeng/inputtext";
-import {CheckboxModule} from "primeng/checkbox";
-import {RadioButtonModule} from "primeng/radiobutton";
-import {ToggleButtonModule} from "primeng/togglebutton";
+import {RcAdminModule} from "./modules/rc-admin/rc-admin.module";
+import {RcStudentModule} from "./modules/rc-student/rc-student.module";
+import {RcReusableModule} from "./modules/rc-reusable/rc-reusable.module";
+import {RcSharedModule} from "./modules/rc-shared.module";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     RcWelcomeComponent,
-    SelectSchoolComponent
   ],
-    imports: [
-        RcDashboardModule,
-        RcAuthModule,
-        BrowserModule,
-        BrowserAnimationsModule,
-        AppRoutingModule,
-        HttpClientModule,
-        NgbModule,
-        ToastModule,
-        ButtonModule,
-        RippleModule,
-        ReactiveFormsModule,
-        InputTextModule,
-        CheckboxModule,
-        RadioButtonModule,
-        FormsModule,
-        ToggleButtonModule,
-    ],
+  imports: [
+    RcReusableModule,
+    RcSharedModule,
+    RcDashboardModule,
+    RcAuthModule,
+    RcAdminModule,
+    RcStudentModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+  ],
   providers: [
     injectables,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

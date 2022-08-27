@@ -2,6 +2,7 @@ import {Subject} from "./subject.model";
 import {ClassLevelSub} from "./class-level-sub.model";
 import {Grade} from "./grade.model";
 import {Student} from "./student.model";
+import {ClassLevel} from "./class-level.model";
 
 export interface ClassListRequest {
   year_id: number;
@@ -11,9 +12,10 @@ export interface ClassListRequest {
 }
 
 export interface ClassListResponse {
-  class_name: string;
-  sequence_name: string;
+  className: string;
+  sequenceName: string;
   subject: Subject;
-  class_level: ClassLevelSub;
-  student_grades: { student: Student, grade: Grade }[];
+  classLevel: ClassLevel;
+  classLevelSub: ClassLevelSub;
+  studentGrades: { student: Student, grade: Grade }[];
 }

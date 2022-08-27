@@ -1,5 +1,5 @@
 import {Student} from "./models/dto/student.model";
-import {ApplicationResponse, StudentApplication, StudentApplicationTrial} from "./models/dto/student-application.model";
+import {StudentApplication, StudentApplicationTrial} from "./models/dto/student-application.model";
 import {ClassLevel} from "./models/dto/class-level.model";
 import {ClassLevelSub} from "./models/dto/class-level-sub.model";
 
@@ -15,4 +15,9 @@ export type  StudentClassLevel = {
   name: string,
   classLevel: ClassLevel,
   classLevelSub: ClassLevelSub
+}
+
+export type RcClass = {
+  classLevel: ClassLevel,
+  classLevelSubs: ClassLevelSub[],
 }
