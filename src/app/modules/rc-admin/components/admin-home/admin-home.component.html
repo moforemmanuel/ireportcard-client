@@ -1,1 +1,10 @@
-<p>admin-home works!</p>
+<div class="surface-section ">
+  <div class="mx-4 lg:mx-8 my-2 lg:my-4">
+    <div class="text-4xl p-2 m-2 text-black-alpha-60">
+      Welcome, <span class="text-black-alpha-70" *ngIf="admin">{{admin.user.username}}</span>
+    </div>
+    <p-divider></p-divider>
+    <app-user-details *ngIf="admin" [user]="admin.user" (onUserSaved)="loadUser()"></app-user-details>
+    <app-change-password *ngIf="admin" [username]="admin.user.username"></app-change-password>
+  </div>
+</div>
