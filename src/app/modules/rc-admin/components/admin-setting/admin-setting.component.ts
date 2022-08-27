@@ -51,7 +51,9 @@ export class AdminSettingComponent implements OnInit {
       name: ['', Validators.required], term: [0, Validators.required], type: [SequenceType.OPENING, Validators.required]
     });
     this.schoolForm = this._fb.group({
-      name: ['', Validators.required], maxGrade: [20, Validators.required], owner: [-1, [Validators.required, Validators.min(1)]]
+      name: ['', Validators.required],
+      maxGrade: [20, Validators.required],
+      owner: [-1, [Validators.required, Validators.min(1)]]
     });
     this.loadSettings();
   }

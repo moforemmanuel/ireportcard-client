@@ -1,12 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SchoolService} from "../../../../services/school.service";
 import {School} from "../../../../models/dto/school.model";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {LocalStorageUtil} from "../../../../utils/local-storage.util";
-import {Router} from "@angular/router";
-import {ReportCardService} from "../../../../services/report-card.service";
-import {UserService} from "../../../../services/user.service";
-import {User} from "../../../../models/dto/user.model";
 
 @Component({
   selector: 'rc-app-select-school',
@@ -18,6 +12,7 @@ export class RcSelectSchoolComponent implements OnInit {
   selectedSchoolId: number = -1;
   @Input() schools: School[] = [];
   @Output() onSchoolSelect = new EventEmitter<boolean>();
+
   constructor() {
   }
 

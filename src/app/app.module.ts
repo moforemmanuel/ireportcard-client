@@ -1,7 +1,6 @@
 import '@angular/compiler';
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import '@angular/compiler';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {RcAuthModule} from './modules/rc-auth/rc-auth.module';

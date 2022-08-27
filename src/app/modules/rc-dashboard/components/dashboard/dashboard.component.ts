@@ -44,7 +44,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private _userService: UserService,
     private _schoolService: SchoolService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.menuItems = [
@@ -116,7 +117,7 @@ export class DashboardComponent implements OnInit {
       this.showSchoolsDialog = false;
     } else {
       if (u.user.role == Role.RC_ADMIN) {
-        this._schoolService.getAllByOwner(u.user.id).subscribe(schools => this.schools = schools );
+        this._schoolService.getAllByOwner(u.user.id).subscribe(schools => this.schools = schools);
       } else {
         this._schoolService.getAll().subscribe(schools => this.schools = schools);
       }

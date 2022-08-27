@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MessageService} from "primeng/api";
-import {Sequence, SequenceType} from "../../../../models/dto/sequence.model";
+import {Sequence} from "../../../../models/dto/sequence.model";
 import {SequenceService} from "../../../../services/sequence.service";
 import {TermService} from "../../../../services/term.service";
 import {AcademicYearService} from "../../../../services/academic-year.service";

@@ -2,8 +2,10 @@
   <div class="card p-4">
     <p-toolbar styleClass="mb-4">
       <ng-template pTemplate="left">
-        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="addNewSchoolAction(false)"></button>
-        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedSchoolAction()"></button>
+        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+                (click)="addNewSchoolAction(false)"></button>
+        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"
+                (click)="deleteSelectedSchoolAction()"></button>
       </ng-template>
 
       <ng-template pTemplate="right">
@@ -22,7 +24,7 @@
       <ng-template pTemplate="body" let-school>
         <tr>
           <td>{{school.name}}</td>
-          <td>{{school.applicationOpen ? 'Yes': 'No'}}</td>
+          <td>{{school.applicationOpen ? 'Yes' : 'No'}}</td>
           <td>Action</td>
         </tr>
       </ng-template>
@@ -35,12 +37,14 @@
       </ng-template>
     </p-table>
 
-    <p-dialog [(visible)]="showSchoolDialog" header="Add new School" [modal]="true" styleClass="p-fluid w-50 max-h-screen">
+    <p-dialog [(visible)]="showSchoolDialog" header="Add new School" [modal]="true"
+              styleClass="p-fluid w-50 max-h-screen">
       <ng-template pTemplate="content">
         <form [formGroup]="schoolForm" (submit)="addNewSchoolAction(true)">
           <div class="field">
             <label class="block">Name</label>
-            <p-dropdown placeholder="Select an admin to manage this school" [options]="admins" [optionValue]="'id'" [optionLabel]="'username'" [formControlName]="'owner'"></p-dropdown>
+            <p-dropdown placeholder="Select an admin to manage this school" [options]="admins" [optionValue]="'id'"
+                        [optionLabel]="'username'" [formControlName]="'owner'"></p-dropdown>
           </div>
           <div class="field">
             <label>Name</label>

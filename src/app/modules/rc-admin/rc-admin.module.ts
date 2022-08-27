@@ -9,7 +9,6 @@ import {AdminHomeComponent} from './components/admin-home/admin-home.component';
 import {RcSharedModule} from "../rc-shared.module";
 import {RcReusableModule} from "../rc-reusable/rc-reusable.module";
 import {ToolbarModule} from "primeng/toolbar";
-import {DialogModule} from "primeng/dialog";
 
 
 @NgModule({
