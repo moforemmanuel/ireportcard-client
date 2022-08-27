@@ -60,7 +60,7 @@ export class TopMenuComponent implements OnInit {
     if (sessionId && confirmDelete) {
       this.authService.logout({sessionId: sessionId}).subscribe({
         next: (res) => {
-          this.router.navigate(['/login']).then(() => {
+          this.router.navigate(['/auth/login']).then(() => {
             addToMessageService(this.msgService, 'success', 'Log out', res.message);
           });
           LocalStorageUtil.deleteUserToken();

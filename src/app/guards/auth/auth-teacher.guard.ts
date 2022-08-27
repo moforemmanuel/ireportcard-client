@@ -23,12 +23,12 @@ export class AuthTeacherGuard implements CanActivate {
           this.reportCardService.testAuthAdmin().subscribe({
             next: (adminRes) => {
               if (!adminRes) {
-                this.router.navigate(['/login']).then();
+                this.router.navigate(['/auth/login']).then();
               }
               isTeacherOrAdmin.next(adminRes);
               isTeacherOrAdmin.complete();
             }, error: () => {
-              this.router.navigate(['/login']).then();
+              this.router.navigate(['/auth/login']).then();
               isTeacherOrAdmin.next(false);
               isTeacherOrAdmin.complete();
             }
@@ -38,7 +38,7 @@ export class AuthTeacherGuard implements CanActivate {
           isTeacherOrAdmin.complete();
         }
       }, error: () => {
-        this.router.navigate(['/login']).then();
+        this.router.navigate(['/auth/login']).then();
         isTeacherOrAdmin.next(false);
         isTeacherOrAdmin.complete()
       }

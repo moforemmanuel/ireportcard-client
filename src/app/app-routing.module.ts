@@ -5,6 +5,10 @@ import {RcWelcomeComponent} from "./components/rc-welcome/rc-welcome.component";
 const routes: Routes = [
   {
     component: RcWelcomeComponent,
+    path: 'welcome',
+    children: []
+  },{
+    component: RcWelcomeComponent,
     path: '',
     children: []
   },
