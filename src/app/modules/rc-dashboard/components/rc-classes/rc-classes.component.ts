@@ -8,7 +8,7 @@ import {ClassLevelSub} from "../../../../models/dto/class-level-sub.model";
 import {SectionService} from "../../../../services/section.service";
 import {Section} from "../../../../models/dto/section.model";
 import {Router} from "@angular/router";
-import {RcClass} from "../../../../app.types";
+import {RcClassLevel} from "../../../../app.types";
 
 @Component({
   selector: 'app-rc-classes',
@@ -17,7 +17,7 @@ import {RcClass} from "../../../../app.types";
 })
 export class RcClassesComponent implements OnInit {
   classMenuItems: MenuItem[] = [];
-  classes: RcClass[] = [];
+  classes: RcClassLevel[] = [];
   sections: Section[] = [];
   sectionId: number = 0;
 

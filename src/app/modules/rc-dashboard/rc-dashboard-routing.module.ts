@@ -11,15 +11,15 @@ import {AddApplicationComponent} from "./components/rc-applications/add-applicat
 import {RcClasslistsComponent} from "./components/rc-classlists/rc-classlists.component";
 import {RcSettingsComponent} from "./components/rc-settings/rc-settings.component";
 import {RcHomeComponent} from "./components/rc-home/rc-home.component";
-import {
-  StudentApplicationComponent
-} from "./components/rc-applications/student-application/student-application.component";
 import {AddStudentComponent} from "./components/rc-students/add-student/add-student.component";
 import {StudentComponent} from "./components/rc-students/student/student.component";
 import {AddClassLevelComponent} from "./components/rc-classes/add-class-level/add-class-level.component";
 import {SubjectComponent} from "./components/rc-subjects/subject/subject.component";
 import {AddSubjectComponent} from "./components/rc-subjects/add-subject/add-subject.component";
 import {AuthTeacherGuard} from "../../guards/auth/auth-teacher.guard";
+import {
+  RcViewApplicationComponent
+} from "./components/rc-applications/rc-view-application/rc-view-application.component";
 
 const routes: Routes = [
   {
@@ -37,7 +37,7 @@ const routes: Routes = [
       {component: StudentComponent, path: 'student/view/:id'},
       {component: RcApplicationsComponent, path: 'application'},
       {component: AddApplicationComponent, path: 'application/add'},
-      {component: StudentApplicationComponent, path: 'application/view/:id'},
+      {component: RcViewApplicationComponent, path: 'application/view/:id'},
       {component: RcClasslistsComponent, path: 'class-list'},
       {component: RcSettingsComponent, path: 'settings'},
     ]

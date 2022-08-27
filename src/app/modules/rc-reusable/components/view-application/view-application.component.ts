@@ -1,33 +1,35 @@
-import {Component, OnInit} from '@angular/core';
-import {StudentApplication, StudentApplicationTrial} from "../../../../../models/dto/student-application.model";
+import {Component, Input, OnInit} from '@angular/core';
+import {StudentApplication, StudentApplicationTrial} from "../../../../models/dto/student-application.model";
 import {FormBuilder} from "@angular/forms";
-import {Subject} from "../../../../../models/dto/subject.model";
-import {SubjectService} from "../../../../../services/subject.service";
-import {SubjectRegistration} from "../../../../../models/dto/subject-registration.model";
-import {SubjectRegistrationService} from "../../../../../services/subject-registration.service";
-import {StudentService} from "../../../../../services/student.service";
-import {Student} from "../../../../../models/dto/student.model";
-import {AcademicYear} from "../../../../../models/dto/academic-year.model";
-import {StudentApplicationService} from "../../../../../services/student-application.service";
+import {Subject} from "../../../../models/dto/subject.model";
+import {SubjectService} from "../../../../services/subject.service";
+import {SubjectRegistration} from "../../../../models/dto/subject-registration.model";
+import {SubjectRegistrationService} from "../../../../services/subject-registration.service";
+import {StudentService} from "../../../../services/student.service";
+import {Student} from "../../../../models/dto/student.model";
+import {AcademicYear} from "../../../../models/dto/academic-year.model";
+import {StudentApplicationService} from "../../../../services/student-application.service";
 import {MessageService} from "primeng/api";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Dropdown} from "primeng/dropdown";
-import {Term} from "../../../../../models/dto/term.model";
-import {TermService} from "../../../../../services/term.service";
-import {ReportCardService} from "../../../../../services/report-card.service";
+import {Term} from "../../../../models/dto/term.model";
+import {TermService} from "../../../../services/term.service";
+import {ReportCardService} from "../../../../services/report-card.service";
+import {RcSubjectRegistered} from "../../../../app.types";
 
 @Component({
-  selector: 'app-application',
-  templateUrl: './student-application.component.html',
-  styleUrls: ['./student-application.component.scss']
+  selector: 'app-view-application',
+  templateUrl: './view-application.component.html',
+  styleUrls: ['./view-application.component.scss']
 })
-export class StudentApplicationComponent implements OnInit {
-  satId: number = -1;
+export class ViewApplicationComponent implements OnInit {
+  @Input() isAdmin: boolean = false;
+  @Input() satId: number = -1;
+  student!: Student;
   studentApplication!: StudentApplication;
   studentApplicationTrial!: StudentApplicationTrial;
-  registeredSubjects: { reg: SubjectRegistration, subject: Subject }[] = [];
+  registeredSubjects: RcSubjectRegistered[] = [];
   subjects: Subject[] = [];
-  students: Student[] = [];
   terms: Term[] = [];
   academicYears: AcademicYear[] = [];
 
@@ -43,50 +45,45 @@ export class StudentApplicationComponent implements OnInit {
     private subjectService: SubjectService,
     private studentService: StudentService,
     private termService: TermService,
-    private studentApplicationService: StudentApplicationService,
+    private _studentApplicationService: StudentApplicationService,
     private subjectRegistrationService: SubjectRegistrationService,
   ) {
-    this.satId = this.activatedRoute.snapshot.params['id'];
-    if (this.satId) {
-      this.loadSAT(this.satId);
-    } else {
-      this.router.navigate(['/dashboard/application']).then();
-    }
   }
 
   ngOnInit(): void {
     this.loadData();
+    this.loadStudentApplicationTrial(this.satId);
   }
 
   loadData = () => {
     this.termService.getAll().subscribe((terms) => this.terms = terms);
-    this.studentService.getAll().subscribe((students) => this.students = students);
     this.subjectService.getAll().subscribe((subjects) => this.subjects = subjects);
   }
 
-  loadSAT = (satId: number) => {
-    this.studentApplicationService.getTrial(satId).subscribe((sat) => {
+  loadStudentApplicationTrial = (satId: number) => {
+    this._studentApplicationService.getTrial(satId).subscribe((sat) => {
       this.studentApplicationTrial = sat;
-      this.studentApplicationService.get(sat.applicationKey).subscribe((application) => {
+      this._studentApplicationService.get(sat.applicationKey).subscribe((application) => {
         this.studentApplication = application;
+        this.student = application.student;
       });
-      this.loadRegisteredSubjects(satId);
     });
   }
+
 
   loadRegisteredSubjects = (satId: number) => {
     this.registeredSubjects = [];
     this.subjectRegistrationService.getBySatId(satId).subscribe((subjectRegs) => {
       subjectRegs.forEach(subjectReg => {
         this.subjectService.getById(subjectReg.subjectId).subscribe((subject) => {
-          this.registeredSubjects.push({reg: subjectReg, subject: subject});
+          this.registeredSubjects.push({registration: subjectReg, subject: subject});
         });
       });
     });
   }
 
-  unregisterSubjectAction(subject: { reg: SubjectRegistration; subject: Subject }) {
-    this.subjectRegistrationService.delete(subject.reg.id).subscribe(() => this.loadRegisteredSubjects(subject.reg.satId));
+  unregisterSubjectAction(subject: RcSubjectRegistered) {
+    this.subjectRegistrationService.delete(subject.registration.id).subscribe(() => this.loadRegisteredSubjects(subject.registration.satId));
   }
 
   addSubjectToRegisterAction(subjectDropDown: Dropdown) {
@@ -120,6 +117,6 @@ export class StudentApplicationComponent implements OnInit {
   }
 
   getReportCardAction(termId: number) {
-    this.reportCardService.getReportCard(this.satId, termId).subscribe();
+    this.reportCardService.getReportCardFile(this.satId, termId).subscribe();
   }
 }

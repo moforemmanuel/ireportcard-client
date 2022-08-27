@@ -1,4 +1,4 @@
-<div class="rc-subjects">
+<div class="rc-subjects" *ngIf="schoolId > 0">
   <div class="py-2 d-flex">
     <span class="h3">Settings</span>
     <span class="spacer"></span>
@@ -74,70 +74,6 @@
           </p-toggleButton>
         </div>
       </div>
-    </div>
-  </p-panel>
-
-  <p-panel [header]="'Academic Years'" [toggleable]="true" [styleClass]="'py-4'">
-    <div *ngFor="let year of academicYears" class="my-2">
-      <div class="d-flex align-middle form-group">
-        <input pInputText #yearInput [disabled]="true" [value]="year.name" class="w-full">&nbsp;
-        <p-toggleButton [(ngModel)]="yearInput.disabled" [onLabel]="'Edit'" [offLabel]="'Save'"
-                        (click)="editYTSAction(0, year, yearInput)">
-        </p-toggleButton>&nbsp;
-        <button pButton (click)="deleteATSAction(0, year)" class="p-button-danger">Delete</button>
-      </div>
-    </div>
-    <p-divider></p-divider>
-    <div class="d-flex justify-content-between">
-      <input pInputText #yearAddInput [hidden]="true" placeholder="20XX/20XY">&nbsp;
-      <p-toggleButton [(ngModel)]="yearAddInput.hidden" [onLabel]="'Add'" [offLabel]="'Save'"
-                      (click)="addYTSAction(0, yearAddInput)"></p-toggleButton>
-    </div>
-  </p-panel>
-
-  <!-- Terms -->
-  <p-panel [header]="'Terms'" [toggleable]="true" [styleClass]="'py-4'">
-    <div *ngFor="let term of terms" class="my-2 d-flex">
-      <input pInputText #termUpdateInput [disabled]="true" [value]="term.name" class="w-full">&nbsp;
-      <p-toggleButton [(ngModel)]="termUpdateInput.disabled" [onLabel]="'Edit'" [offLabel]="'Save'"
-                      (click)="editYTSAction(1, term, termUpdateInput)"></p-toggleButton>&nbsp;
-      <button pButton (click)="deleteATSAction(1, term)" icon="pi pi-trash" pTooltip="Delete"
-              class="p-button-danger p-button-rounded"></button>
-    </div>
-    <p-divider></p-divider>
-    <div class="d-flex justify-content-end">
-      <input pInputText #termAddInput [hidden]="true" class="w-full">&nbsp;
-      <p-toggleButton [(ngModel)]="termAddInput.hidden" [onLabel]="'Add'" [offLabel]="'Save'"
-                      (click)="addYTSAction(1, termAddInput)"></p-toggleButton>&nbsp;
-    </div>
-  </p-panel>
-
-  <!-- Seqs -->
-  <p-panel [header]="'Sequences'" [toggleable]="true" [styleClass]="'py-4'">
-    <div *ngFor="let seq of sequencesByTerms" class="my-2">
-      <label class="form-label">{{seq.term.name}}</label>
-      <div *ngFor="let sequence of seq.sequences">
-        <div class="d-flex align-middle mb-2">
-          <input pInputText #seqUpdateInput [disabled]="true" [value]="sequence.name" class="w-full">&nbsp;
-          <p-toggleButton [(ngModel)]="seqUpdateInput.disabled" [onLabel]="'Edit'" [offLabel]="'Save'"
-                          (click)="editYTSAction(2, sequence, seqUpdateInput)"></p-toggleButton>&nbsp;
-          <button pButton (click)="deleteATSAction(2, sequence)" icon="pi pi-trash" class="p-button-danger"></button>
-        </div>
-      </div>
-    </div>
-    <p-divider></p-divider>
-    <div class="d-flex">
-      <form class="mr-auto" [formGroup]="sequenceForm">
-        <input pInputText #seqAddInput [hidden]="true" class="w-full mb-2" [formControlName]="'name'">&nbsp;
-        <p-dropdown [hidden]="seqAddInput.hidden" [options]="terms" [optionLabel]="'name'" [optionValue]="'id'"
-                    [styleClass]="'w-full mb-2'" [formControlName]="'term'"></p-dropdown>
-        <div *ngFor="let type of sequenceTypes" [hidden]="seqAddInput.hidden" class="inline-flex mx-2">
-          <input name="type" [value]="type" type="radio" class="p-radiobutton" [formControlName]="'type'">&nbsp;
-          <label>{{type | titlecase}}</label>
-        </div>
-      </form>
-      <p-toggleButton (click)="addYTSAction(2, seqAddInput)" [(ngModel)]="seqAddInput.hidden" [onLabel]="'Add'"
-                      [offLabel]="'Save'"></p-toggleButton>&nbsp;
     </div>
   </p-panel>
 </div>

@@ -7,7 +7,7 @@ const routes: Routes = [
     component: RcWelcomeComponent,
     path: 'welcome',
     children: []
-  },{
+  }, {
     component: RcWelcomeComponent,
     path: '',
     children: []

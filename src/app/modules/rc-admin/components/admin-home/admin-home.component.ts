@@ -11,7 +11,6 @@ export class AdminHomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("Qsd")
   }
 
 }

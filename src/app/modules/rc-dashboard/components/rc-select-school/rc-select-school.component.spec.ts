@@ -1,20 +1,20 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {StudentApplicationComponent} from './student-application.component';
+import {RcSelectSchoolComponent} from './rc-select-school.component';
 
-describe('SaveApplicationComponent', () => {
-  let component: StudentApplicationComponent;
-  let fixture: ComponentFixture<StudentApplicationComponent>;
+describe('SelectSchoolComponent', () => {
+  let component: RcSelectSchoolComponent;
+  let fixture: ComponentFixture<RcSelectSchoolComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [StudentApplicationComponent]
+      declarations: [RcSelectSchoolComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StudentApplicationComponent);
+    fixture = TestBed.createComponent(RcSelectSchoolComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -6,7 +6,7 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./rc-welcome.component.scss']
 })
 export class RcWelcomeComponent implements OnInit {
-  features: {title: string, description: string, icon: string}[] = [
+  features: { title: string, description: string, icon: string }[] = [
     {title: 'Easy to use', description: 'Easy to use, no need to learn anything', icon: 'pi pi-check-circle'},
     {title: 'Flexible', description: 'Flexible, you can use it in your project', icon: 'pi pi-replay'},
     {title: 'Lightweight', description: 'Lightweight, it\'s just a few MB', icon: 'pi pi-circle'},
@@ -14,6 +14,7 @@ export class RcWelcomeComponent implements OnInit {
     {title: 'Fast', description: 'Fast, it\'s just a few milliseconds', icon: 'pi pi-bolt'},
     {title: 'Open Source', description: 'Open Source, it\'s free to use', icon: 'pi pi-code'},
   ];
+
   constructor() {
     console.log("qsds")
   }

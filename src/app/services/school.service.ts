@@ -32,4 +32,8 @@ export class SchoolService {
   deleteSchool(id: number): Observable<EntityResponse> {
     return this.http.delete<EntityResponse>(`${this.apiUrl}/${id}`)
   }
+
+  getAllByOwner(ownerId: number): Observable<School[]> {
+    return this.http.get<School[]>(`${this.apiUrl}/owner/${ownerId}`)
+  }
 }

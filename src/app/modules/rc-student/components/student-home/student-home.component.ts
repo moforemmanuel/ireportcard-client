@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {UserService} from "../../../../services/user.service";
+import {Student} from "../../../../models/dto/student.model";
 
 @Component({
   selector: 'app-student-home',
@@ -6,11 +8,21 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./student-home.component.scss']
 })
 export class StudentHomeComponent implements OnInit {
+  student!: Student;
 
-  constructor() {
+  constructor(
+    private userService: UserService,
+  ) {
   }
 
   ngOnInit(): void {
+    this.loadUserComplete();
   }
+
+  loadUserComplete = () => this.userService.getCompleteFromSession().subscribe(user => {
+    console.log(user)
+    this.student = user.account as Student
+  });
+
 
 }

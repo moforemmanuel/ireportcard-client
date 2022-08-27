@@ -1,20 +1,20 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {SelectSchoolComponent} from './select-school.component';
+import {RcViewApplicationComponent} from './rc-view-application.component';
 
-describe('SelectSchoolComponent', () => {
-  let component: SelectSchoolComponent;
-  let fixture: ComponentFixture<SelectSchoolComponent>;
+describe('RcViewApplicationComponent', () => {
+  let component: RcViewApplicationComponent;
+  let fixture: ComponentFixture<RcViewApplicationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SelectSchoolComponent]
+      declarations: [RcViewApplicationComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SelectSchoolComponent);
+    fixture = TestBed.createComponent(RcViewApplicationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

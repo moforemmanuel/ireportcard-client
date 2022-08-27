@@ -38,3 +38,5 @@ export const RC_SUBJECT_API_URL = `${RC_SERVER_URL}/api/subject`;
 export const RC_SUBJECT_REGISTRATION_API_URL = `${RC_SERVER_URL}/api/subject_registration`;
 
 export const RC_TERM_API_URL = `${RC_SERVER_URL}/api/term`;
+
+export const RC_USER_API_URL = `${RC_SERVER_URL}/api/user`;

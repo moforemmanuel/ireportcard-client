@@ -1,0 +1,32 @@
+<div class="surface-section lg:p-4 p-2">
+  <div class="lg:m-4 m-2 lg:p-4 p-4 border-round shadow-2">
+    <div class=" flex justify-content-between">
+      <span class="text-2xl">Current Academic Year</span>
+      <button pButton label="Apply"></button>
+    </div>
+  </div>
+  <div class="border-round">
+    <p-table [value]="sats" responsiveLayout="scroll" styleClass="p-datatable-striped">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Class Level</th>
+          <th>Academic Year</th>
+          <th>Subjects</th>
+          <th>Repeated</th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-sat>
+        <tr>
+          <td>{{sat.sa.classLevel.name + ' ' + sat.sa.classLevelSub.name}}</td>
+          <td>{{sat.year.name}}</td>
+          <td>{{sat.sat.numberOfSubjects ? sat.sat.numberOfSubjects : 0}}</td>
+          <td>{{sat.sat.repeating ? 'Yes' : 'No'}}</td>
+          <td>
+            <p-button [routerLink]="['/student/application/view', sat.sat.id]" label="View"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

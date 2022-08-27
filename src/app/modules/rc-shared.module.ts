@@ -30,6 +30,7 @@ import {AvatarModule} from "primeng/avatar";
 import {ImageModule} from "primeng/image";
 import {HttpClientModule} from "@angular/common/http";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {DialogModule} from "primeng/dialog";
 
 // TODO find duplicates and remove
 
@@ -96,6 +97,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     RadioButtonModule,
     FormsModule,
     ToggleButtonModule,
+    DialogModule,
   ],
   exports: [
     MenubarModule,
@@ -157,6 +159,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     RadioButtonModule,
     FormsModule,
     ToggleButtonModule,
+    DialogModule,
   ]
 })
 export class RcSharedModule {

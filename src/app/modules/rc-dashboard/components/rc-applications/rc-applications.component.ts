@@ -41,10 +41,14 @@ export class RcApplicationsComponent implements OnInit {
   ngOnInit(): void {
     this.loadAcademicYears();
     this.loadClasses();
+
     const loadApplicationsInterval = setInterval(() => {
       if (this.applicationsQueried) clearInterval(loadApplicationsInterval);
       else this.loadApplications();
     }, 1000);
+    setTimeout(() => {
+      clearInterval(loadApplicationsInterval)
+    }, 20000)
   }
 
   loadAcademicYears() {
@@ -84,8 +88,10 @@ export class RcApplicationsComponent implements OnInit {
         next: (response) => {
           this.studentApplicationTrials = response;
           response.forEach((sat) => {
-            this.studentApplicationService.get(sat.applicationKey).subscribe((studentApplication) => {
-              this.studentATs.push({sat: sat, application: studentApplication, student: studentApplication.student});
+            this.studentApplicationService.get(sat.applicationKey).subscribe((sa) => {
+              this.academicYearService.getById(sat.academicYearId).subscribe(academicYear => {
+                this.studentATs.push({student: sa.student, sat: sat, sa: sa, year: academicYear})
+              })
             })
           });
         },
