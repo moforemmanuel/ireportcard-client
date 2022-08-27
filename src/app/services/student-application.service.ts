@@ -68,6 +68,10 @@ export class StudentApplicationService {
     });
   }
 
+  getTrialByStudent(studentId: number): Observable<StudentApplicationTrial[]> {
+    return this.http.get<StudentApplicationTrial[]>(`${this.apiUrl}/sat/student/${studentId}`);
+  }
+
   getTrial(satId: number): Observable<StudentApplicationTrial> {
     return this.http.get<StudentApplicationTrial>(`${this.apiUrl}/sat/${satId}`);
   }
