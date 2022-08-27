@@ -1,0 +1,24 @@
+<div class="surface-card p-4">
+  <div class="text-3xl font-medium text-900 mb-3">Select School</div>
+  <div class="font-medium text-500 mb-3 d-flex">
+      <span>
+        Select a school from the list to continue or add a new school to manage
+      </span>
+    <span class="spacer"></span>
+  </div>
+
+  <div class="my-2 border-2 surface-border border-round">
+    <!-- list the schools -->
+    <div *ngIf="schools.length == 0" style="height: 150px" class="text-center p-8">
+      <span class="h3 text-500">No Schools Found</span>
+    </div>
+    <div class="max-h-30rem overflow-y-scroll">
+      <div *ngFor="let school of schools" class="m-3">
+        <input [checked]="school.id == selectedSchoolId" name="school" value="{{school.id}}"
+               [(ngModel)]="selectedSchoolId" type="radio" class="p-radiobutton">&nbsp;
+        <label class="p-radiobutton-label">{{school.name}}</label>
+      </div>
+    </div>
+  </div>
+  <button class="my-2" (click)="setSchoolAction()" icon="pi pi-arrow-right" iconPos="right" pButton pRipple label="Continue"></button>
+</div>
