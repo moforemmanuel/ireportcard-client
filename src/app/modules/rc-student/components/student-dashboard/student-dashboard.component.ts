@@ -28,7 +28,7 @@ export class StudentDashboardComponent implements OnInit {
       {
         label: 'Home',
         icon: 'pi pi-fw pi-home',
-        routerLink: ['/student/'],
+        routerLink: ['/student/home'],
         routerLinkActiveOptions: {exact: true},
       },
       {

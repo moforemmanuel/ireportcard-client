@@ -13,12 +13,12 @@ import {StudentSubjectsComponent} from "./components/student-subjects/student-su
 
 const routes: Routes = [
   {
-    component: StudentDashboardComponent, path: '',
+    component: StudentDashboardComponent, path: 'student',
     canActivate: [
       AuthGuard, AuthStudentGuard
     ],
     children: [
-      {component: StudentHomeComponent, path: ''},
+      {component: StudentHomeComponent, path: 'home'},
       {component: StudentApplicationsComponent, path: 'application'},
       {component: StudentViewApplicationComponent, path: 'application/view/:id'},
       {component: StudentSubjectsComponent, path: 'subjects'},
