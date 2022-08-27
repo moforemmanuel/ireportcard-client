@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {addToMessageService} from "../../../../utils/message-service.util";
 import {MessageService} from "primeng/api";
 import {Sequence, SequenceType} from "../../../../models/dto/sequence.model";
 import {SequenceService} from "../../../../services/sequence.service";
@@ -9,16 +8,11 @@ import {Term} from "../../../../models/dto/term.model";
 import {AcademicYear} from "../../../../models/dto/academic-year.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ReportCardService} from "../../../../services/report-card.service";
-import {AcademicYearUtil} from "../../../../utils/academic-year.util";
 import {SchoolService} from "../../../../services/school.service";
 import {School} from "../../../../models/dto/school.model";
 import {LocalStorageUtil} from "../../../../utils/local-storage.util";
 import {Section} from "../../../../models/dto/section.model";
 import {SectionService} from "../../../../services/section.service";
-
-type ATS = AcademicYear | Term | Sequence;
-
-enum ATSName {YEAR, TERM, SEQUENCE,}
 
 @Component({
   selector: 'app-rc-settings',
@@ -29,11 +23,11 @@ export class RcSettingsComponent implements OnInit {
 
   schoolId: number = -1;
   settingsForm: FormGroup = this.fb.group({});
-  sequenceForm: FormGroup = this.fb.group({});
   school?: School;
   sections: Section[] = [];
-  terms: Term[] = [];
   sequences: Sequence[] = [];
+
+  terms: Term[] = [];
   sequencesByTerms: { term: Term, sequences: Sequence[] }[] = [];
   academicYears: AcademicYear[] = [];
   sequenceTypes: string[] = Object.keys(SequenceType);
@@ -58,9 +52,7 @@ export class RcSettingsComponent implements OnInit {
       term: ["", Validators.required], sequence: [0, Validators.required],
       maxGrade: [0, Validators.compose([Validators.min(0), Validators.max(100)])]
     });
-    this.sequenceForm = this.fb.group({
-      name: ['', Validators.required], term: [0, Validators.required], type: [SequenceType.OPENING, Validators.required]
-    });
+
   }
 
   initSchoolForm = () => {
@@ -84,8 +76,6 @@ export class RcSettingsComponent implements OnInit {
       this.initSchoolForm();
     });
   }
-
-  loadDefaultDataAction = () => this.defaultService.create().subscribe();
 
   loadSettingsInfo(): void {
     this.sectionService.getBySchoolId(this.schoolId).subscribe((sections) => this.sections = sections)
@@ -113,50 +103,6 @@ export class RcSettingsComponent implements OnInit {
       }
       this.schoolService.update(school).subscribe(() => document.location.reload());
     }
-  }
-
-  editYTSAction(atsOrdinal: ATSName, entity: ATS, inputElement: HTMLInputElement) {
-    if (inputElement.disabled && entity.name !== inputElement.value && inputElement.value) {
-      entity.name = inputElement.value;
-      if (atsOrdinal == ATSName.YEAR) {
-        if (AcademicYearUtil.isValid(entity.name)) {
-          this.academicYearService.update(entity as AcademicYear).subscribe(() => this.loadSettingsInfo());
-        } else {
-          addToMessageService(this.msgService, 'warn', 'Invalid Year', `The value '${entity.name}' is not valid!`);
-        }
-      } else if (atsOrdinal == ATSName.TERM) {
-        this.termService.update(entity as Term).subscribe(() => this.loadSettingsInfo());
-      } else if (atsOrdinal == ATSName.SEQUENCE) {
-        this.sequenceService.update(entity as Sequence).subscribe(() => this.loadSettingsInfo());
-      }
-    }
-  }
-
-  addYTSAction(atsOrdinal: ATSName, inputElement: HTMLInputElement) {
-    if (inputElement.hidden && inputElement.value !== '') {
-      const elValue = inputElement.value;
-      if (atsOrdinal == ATSName.YEAR) {
-        const year: AcademicYear = {id: -1, name: elValue};
-        if (AcademicYearUtil.isValid(elValue)) {
-          this.academicYearService.save(year).subscribe(() => this.loadSettingsInfo());
-        } else {
-          addToMessageService(this.msgService, 'warn', 'Invalid Year', `The value '${elValue}' is not valid!`);
-        }
-      } else if (atsOrdinal == ATSName.TERM) {
-        const term: Term = {id: -1, name: elValue};
-        this.termService.save(term).subscribe(() => this.loadSettingsInfo());
-      } else if (atsOrdinal == ATSName.SEQUENCE) {
-        const sequence: Sequence = {
-          id: -1, termId: this.sequenceForm.get('term')?.value, type: this.sequenceForm.get('type')?.value,
-          name: this.sequenceForm.get('name')?.value
-        }
-        this.sequenceService.save(sequence).subscribe(() => this.loadSettingsInfo());
-      }
-    }
-  }
-
-  deleteATSAction(number: number, year: AcademicYear) {
-
   }
 
   saveSection(sectionInput: HTMLInputElement | Section, blocked: boolean) {
