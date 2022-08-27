@@ -1,5 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuItem} from "primeng/api";
+import {LocalStorageUtil} from "../../../../utils/local-storage.util";
+import {UserComplete} from "../../../../models/dto/user.model";
+import {UserService} from "../../../../services/user.service";
+import {Teacher} from "../../../../models/dto/teacher.model";
+import {School} from "../../../../models/dto/school.model";
+import {Role} from "../../../../models/enum/role.enum";
+import {SchoolService} from "../../../../services/school.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -15,6 +22,12 @@ import {MenuItem} from "primeng/api";
           <router-outlet></router-outlet>
         </div>
       </div>
+
+      <p-dialog [visible]="showSchoolsDialog" [modal]="true">
+        <ng-template pTemplate="content">
+          <rc-app-select-school [schools]="schools" (onSchoolSelect)="onSchoolSelectAction()"></rc-app-select-school>
+        </ng-template>
+      </p-dialog>
     </main>
     <footer class="z-1">
       <app-footer></app-footer>
@@ -22,11 +35,16 @@ import {MenuItem} from "primeng/api";
   `
 })
 export class DashboardComponent implements OnInit {
+  showSchoolsDialog: boolean = LocalStorageUtil.readSchoolId() == null;
+  user?: UserComplete;
+  schools: School[] = [];
   menuItems: MenuItem[] = [];
   dashboardMenuItems: MenuItem[] = [];
 
-  constructor() {
-  }
+  constructor(
+    private _userService: UserService,
+    private _schoolService: SchoolService,
+  ) {}
 
   ngOnInit(): void {
     this.menuItems = [
@@ -88,7 +106,24 @@ export class DashboardComponent implements OnInit {
         routerLinkActiveOptions: {exact: true},
       }
 
-    ]
+    ];
+    this.loadUser();
   }
 
+  loadUser = () => this._userService.getCompleteFromSession().subscribe((u) => {
+    if (u.account instanceof Teacher) {
+      LocalStorageUtil.writeSchoolId(u.account.schoolId);
+      this.showSchoolsDialog = false;
+    } else {
+      if (u.user.role == Role.RC_ADMIN) {
+        this._schoolService.getAllByOwner(u.user.id).subscribe(schools => this.schools = schools );
+      } else {
+        this._schoolService.getAll().subscribe(schools => this.schools = schools);
+      }
+    }
+  });
+
+  onSchoolSelectAction() {
+    this.showSchoolsDialog = false;
+  }
 }
