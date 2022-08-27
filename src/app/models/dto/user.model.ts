@@ -46,3 +46,9 @@ export interface UserRegisterResponse {
   username: string;
   message: string;
 }
+
+export interface UserChangePassword {
+  username: string,
+  oldPassword: string,
+  newPassword: string,
+}
