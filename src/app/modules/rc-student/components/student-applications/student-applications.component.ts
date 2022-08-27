@@ -1,11 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserComplete} from "../../../../models/dto/user.model";
 import {UserService} from "../../../../services/user.service";
 import {StudentApplicationService} from "../../../../services/student-application.service";
 import {Student} from "../../../../models/dto/student.model";
-import {StudentApplication} from "../../../../models/dto/student-application.model";
-import {map, Observable, Subject} from "rxjs";
-import {AcademicYear} from "../../../../models/dto/academic-year.model";
 import {AcademicYearService} from "../../../../services/academic-year.service";
 import {SAT} from "../../../../app.types";
 
@@ -17,11 +14,13 @@ import {SAT} from "../../../../app.types";
 export class StudentApplicationsComponent implements OnInit {
   userComplete?: UserComplete;
   sats: SAT[] = [];
+
   constructor(
     private _userService: UserService,
     private _academicYearService: AcademicYearService,
     private _studentApplicationService: StudentApplicationService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadUser();

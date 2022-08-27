@@ -21,7 +21,7 @@
           <td>{{sat.sa.classLevel.name + ' ' + sat.sa.classLevelSub.name}}</td>
           <td>{{sat.year.name}}</td>
           <td>{{sat.sat.numberOfSubjects ? sat.sat.numberOfSubjects : 0}}</td>
-          <td>{{sat.sat.repeating ? 'Yes': 'No'}}</td>
+          <td>{{sat.sat.repeating ? 'Yes' : 'No'}}</td>
           <td>
             <p-button [routerLink]="['/student/application/view', sat.sat.id]" label="View"></p-button>
           </td>

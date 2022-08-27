@@ -1,10 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {
-  StudentApplication,
-  StudentApplicationKey,
-  StudentApplicationTrial
-} from "../../../../../models/dto/student-application.model";
+import {StudentApplication, StudentApplicationTrial} from "../../../../../models/dto/student-application.model";
 import {StudentApplicationService} from "../../../../../services/student-application.service";
 
 @Component({
@@ -18,6 +14,7 @@ export class StudentViewApplicationComponent implements OnInit {
   studentApplicationTrial!: StudentApplicationTrial;
   studentId: number = -1;
   classSubId: number = -1;
+
   constructor(
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
