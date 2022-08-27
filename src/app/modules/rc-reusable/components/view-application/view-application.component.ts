@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {StudentApplication, StudentApplicationTrial} from "../../../../models/dto/student-application.model";
 import {FormBuilder} from "@angular/forms";
 import {Subject} from "../../../../models/dto/subject.model";
@@ -15,7 +15,7 @@ import {Dropdown} from "primeng/dropdown";
 import {Term} from "../../../../models/dto/term.model";
 import {TermService} from "../../../../services/term.service";
 import {ReportCardService} from "../../../../services/report-card.service";
-import {Observable} from "rxjs";
+import {RcSubjectRegistered} from "../../../../app.types";
 
 @Component({
   selector: 'app-view-application',
@@ -28,7 +28,7 @@ export class ViewApplicationComponent implements OnInit {
   student!: Student;
   studentApplication!: StudentApplication;
   studentApplicationTrial!: StudentApplicationTrial;
-  registeredSubjects: { reg: SubjectRegistration, subject: Subject }[] = [];
+  registeredSubjects: RcSubjectRegistered[] = [];
   subjects: Subject[] = [];
   terms: Term[] = [];
   academicYears: AcademicYear[] = [];
@@ -47,7 +47,8 @@ export class ViewApplicationComponent implements OnInit {
     private termService: TermService,
     private _studentApplicationService: StudentApplicationService,
     private subjectRegistrationService: SubjectRegistrationService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadData();
@@ -75,14 +76,14 @@ export class ViewApplicationComponent implements OnInit {
     this.subjectRegistrationService.getBySatId(satId).subscribe((subjectRegs) => {
       subjectRegs.forEach(subjectReg => {
         this.subjectService.getById(subjectReg.subjectId).subscribe((subject) => {
-          this.registeredSubjects.push({reg: subjectReg, subject: subject});
+          this.registeredSubjects.push({registration: subjectReg, subject: subject});
         });
       });
     });
   }
 
-  unregisterSubjectAction(subject: { reg: SubjectRegistration; subject: Subject }) {
-    this.subjectRegistrationService.delete(subject.reg.id).subscribe(() => this.loadRegisteredSubjects(subject.reg.satId));
+  unregisterSubjectAction(subject: RcSubjectRegistered) {
+    this.subjectRegistrationService.delete(subject.registration.id).subscribe(() => this.loadRegisteredSubjects(subject.registration.satId));
   }
 
   addSubjectToRegisterAction(subjectDropDown: Dropdown) {
