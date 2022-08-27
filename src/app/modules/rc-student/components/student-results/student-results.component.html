@@ -13,7 +13,8 @@
         <ng-template pTemplate="header">
           <tr>
             <th colspan="1" class="lg:text-2xl">{{reportCardModel.student.name}}</th>
-            <th colspan="1" class="lg:text-2xl">{{reportCardModel.classLevel.name}} {{reportCardModel.classLevelSub.name}}</th>
+            <th colspan="1"
+                class="lg:text-2xl">{{reportCardModel.classLevel.name}} {{reportCardModel.classLevelSub.name}}</th>
             <th colspan="2"></th>
           </tr>
           <tr>
@@ -40,7 +41,8 @@
           </tr>
           <tr>
             <td colspan="4">
-              <button (click)="loadReportCardFile(reportCardModel.satId, reportCardModel.termId)" pButton label="Download"></button>
+              <button (click)="loadReportCardFile(reportCardModel.satId, reportCardModel.termId)" pButton
+                      label="Download"></button>
             </td>
           </tr>
         </ng-template>

@@ -1,18 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AcademicYear} from "../../../../models/dto/academic-year.model";
 import {Term} from "../../../../models/dto/term.model";
 import {TermService} from "../../../../services/term.service";
 import {AcademicYearService} from "../../../../services/academic-year.service";
 import {UserService} from "../../../../services/user.service";
-import {User, UserComplete} from "../../../../models/dto/user.model";
+import {UserComplete} from "../../../../models/dto/user.model";
 import {Student} from "../../../../models/dto/student.model";
 import {StudentApplicationService} from "../../../../services/student-application.service";
-import {
-  StudentApplication,
-  StudentApplicationKey,
-  StudentApplicationTrial
-} from "../../../../models/dto/student-application.model";
-import {RcClassLevel, StudentClassLevel} from "../../../../app.types";
+import {StudentApplicationTrial} from "../../../../models/dto/student-application.model";
+import {StudentClassLevel} from "../../../../app.types";
 import {ReportCardModel} from "../../../../models/dto/report-card.model";
 import {ReportCardService} from "../../../../services/report-card.service";
 
@@ -24,11 +20,12 @@ import {ReportCardService} from "../../../../services/report-card.service";
 export class StudentResultsComponent implements OnInit {
   reportCardModel?: ReportCardModel;
   user!: UserComplete;
-  rcRequest: {termId: number, academicYearId: number, classLevelSubId: number};
+  rcRequest: { termId: number, academicYearId: number, classLevelSubId: number };
   studentClassLevels: StudentClassLevel[] = [];
   terms: Term[] = [];
   academicYears: AcademicYear[] = [];
   studentApplicationTrials: StudentApplicationTrial[] = [];
+
   constructor(
     private _userService: UserService,
     private _termService: TermService,
@@ -36,7 +33,7 @@ export class StudentResultsComponent implements OnInit {
     private _reportCardService: ReportCardService,
     private _studentApplicationService: StudentApplicationService,
   ) {
-    this.rcRequest= {termId: -1, academicYearId: -1, classLevelSubId: -1}
+    this.rcRequest = {termId: -1, academicYearId: -1, classLevelSubId: -1}
   }
 
   ngOnInit(): void {
@@ -54,7 +51,7 @@ export class StudentResultsComponent implements OnInit {
       studentApplications.forEach(sa => {
         this.studentApplicationTrials.push(...sa.studentApplicationTrials);
         this.studentClassLevels.push({
-          classLevel: sa.classLevel,  id: sa.classLevel.id,
+          classLevel: sa.classLevel, id: sa.classLevel.id,
           classLevelSub: sa.classLevelSub, sub_id: sa.classLevelSub.id,
           name: `${sa.classLevel.name} ${sa.classLevelSub.name}`
         });
@@ -68,7 +65,7 @@ export class StudentResultsComponent implements OnInit {
   requestResults() {
     const requestResultAlright: boolean = this.rcRequest.termId > 0 &&
       this.rcRequest.academicYearId > 0 && this.rcRequest.classLevelSubId > 0;
-    if (requestResultAlright ) {
+    if (requestResultAlright) {
       const student: Student = this.user.account as Student;
       this._studentApplicationService.getTrialWithParams(
         student.id, this.rcRequest.classLevelSubId, this.rcRequest.academicYearId
