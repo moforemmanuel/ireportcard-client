@@ -34,5 +34,4 @@ export type RcSubjectRegistered = {
 }
 
 
-
 export type ATS = AcademicYear | Term | Sequence;

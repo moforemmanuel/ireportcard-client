@@ -13,11 +13,13 @@ export class UserService {
   constructor(
     @Inject(RC_USER_API_URL) private apiUrl: string,
     private http: HttpClient
-  ) { }
+  ) {
+  }
 
   getAll(): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}`);
   }
+
   getComplete(id: number): Observable<UserComplete> {
     return this.http.get<UserComplete>(`${this.apiUrl}/complete/${id}`);
   }

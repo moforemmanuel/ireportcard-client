@@ -22,7 +22,8 @@ class ReportCardStats {
     public rank: number,
     public average: number,
     public classAverage: number
-  ) {}
+  ) {
+  }
 }
 
 class SubjectGrade {
@@ -33,7 +34,8 @@ class SubjectGrade {
     public coefficient: number,
     public openingSequenceGrade: SubjectGradeScore,
     public closingSequenceGrade: SubjectGradeScore
-  ) {}
+  ) {
+  }
 }
 
 class SubjectGradeScore {

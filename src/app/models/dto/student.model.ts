@@ -3,6 +3,7 @@ import {User} from "./user.model";
 
 export class Student {
   public name: string = '';
+
   constructor(
     public id: number,
     public regNum: string,

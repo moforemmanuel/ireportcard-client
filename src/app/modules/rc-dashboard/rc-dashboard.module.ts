@@ -14,9 +14,6 @@ import {SubjectComponent} from "./components/rc-subjects/subject/subject.compone
 import {StudentComponent} from "./components/rc-students/student/student.component";
 import {ClassLevelComponent} from "./components/rc-classes/class-level/class-level.component";
 import {SectionComponent} from "./components/rc-settings/section/section.component";
-import {
-  ViewApplicationComponent
-} from "../rc-reusable/components/view-application/view-application.component";
 import {AddStudentComponent} from './components/rc-students/add-student/add-student.component';
 import {AddApplicationComponent} from './components/rc-applications/add-application/add-application.component';
 import {RcDashboardRoutingModule} from "./rc-dashboard-routing.module";
@@ -24,7 +21,9 @@ import {AddClassLevelComponent} from './components/rc-classes/add-class-level/ad
 import {AddSubjectComponent} from './components/rc-subjects/add-subject/add-subject.component';
 import {RcSharedModule} from "../rc-shared.module";
 import {RcReusableModule} from "../rc-reusable/rc-reusable.module";
-import { RcViewApplicationComponent } from './components/rc-applications/rc-view-application/rc-view-application.component';
+import {
+  RcViewApplicationComponent
+} from './components/rc-applications/rc-view-application/rc-view-application.component';
 
 
 @NgModule({
