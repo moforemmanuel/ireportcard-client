@@ -20,6 +20,10 @@ export class UserService {
     return this.http.get<User[]>(`${this.apiUrl}`);
   }
 
+  getAllAdmin(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/admin`);
+  }
+
   getComplete(id: number): Observable<UserComplete> {
     return this.http.get<UserComplete>(`${this.apiUrl}/complete/${id}`);
   }
