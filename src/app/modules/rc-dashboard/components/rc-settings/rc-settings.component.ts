@@ -21,7 +21,7 @@ import {SectionService} from "../../../../services/section.service";
 })
 export class RcSettingsComponent implements OnInit {
 
-  schoolId: number = -1;
+  schoolId: number = LocalStorageUtil.getSchoolId();
   settingsForm: FormGroup = this.fb.group({});
   school?: School;
   sections: Section[] = [];
@@ -30,7 +30,6 @@ export class RcSettingsComponent implements OnInit {
   terms: Term[] = [];
   sequencesByTerms: { term: Term, sequences: Sequence[] }[] = [];
   academicYears: AcademicYear[] = [];
-  sequenceTypes: string[] = Object.keys(SequenceType);
 
   constructor(
     private fb: FormBuilder,
@@ -70,11 +69,13 @@ export class RcSettingsComponent implements OnInit {
 
   loadSchool(): void {
     this.schoolId = LocalStorageUtil.getSchoolId();
-    this.schoolService.getById(this.schoolId).subscribe((school) => {
-      localStorage.setItem("school", JSON.stringify(school))
-      this.school = school;
-      this.initSchoolForm();
-    });
+    if (this.schoolId > 0) {
+      this.schoolService.getById(this.schoolId).subscribe((school) => {
+        localStorage.setItem("school", JSON.stringify(school))
+        this.school = school;
+        this.initSchoolForm();
+      });
+    }
   }
 
   loadSettingsInfo(): void {
