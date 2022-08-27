@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
         loggedIn.next(res);
         loggedIn.complete();
       }, error: () => {
-        this.router.navigate(['/login']).then();
+        this.router.navigate(['/auth/login']).then();
         loggedIn.next(false);
         loggedIn.complete();
       }

@@ -22,12 +22,12 @@ export class AuthStudentGuard implements CanActivate {
     this.reportCardService.testAuthStudent().subscribe({
       next: (res) => {
         if (!res) {
-          this.router.navigate(['/login']).then()
+          this.router.navigate(['/auth/login']).then()
         }
         isStudent.next(res);
         isStudent.complete();
       }, error: () => {
-        this.router.navigate(['/login']).then();
+        this.router.navigate(['/auth/login']).then();
         isStudent.next(false);
         isStudent.complete();
       }
