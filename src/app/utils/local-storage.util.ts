@@ -1,7 +1,8 @@
 const LS_KEY = {
-  sessionId: 'session_id',
-  schoolId: 'school_id',
-  rememberMe: 'remember_me'
+  sessionId: 'rc_session_id',
+  school: 'rc_school',
+  schoolId: 'rc_school_id',
+  rememberMe: 'rc_remember_me',
 };
 export module LocalStorageUtil {
   export const writeUserToken = (token: string) => {
