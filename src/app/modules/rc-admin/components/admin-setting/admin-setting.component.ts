@@ -10,6 +10,10 @@ import {AcademicYearService} from "../../../../services/academic-year.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ATS} from "../../../../app.types";
 import {MessageService} from "primeng/api";
+import {School} from "../../../../models/dto/school.model";
+import {SchoolService} from "../../../../services/school.service";
+import {User} from "../../../../models/dto/user.model";
+import {UserService} from "../../../../services/user.service";
 
 enum ATSName {YEAR, TERM, SEQUENCE,}
 
@@ -19,8 +23,10 @@ enum ATSName {YEAR, TERM, SEQUENCE,}
   styleUrls: ['./admin-setting.component.scss']
 })
 export class AdminSettingComponent implements OnInit {
-
-
+  showSchoolDialog: boolean = false;
+  schools: School[] = [];
+  admins: User[] = [];
+  schoolForm: FormGroup = this._fb.group({});
   sequenceForm: FormGroup = this._fb.group({});
   terms: Term[] = [];
   years: AcademicYear[] = [];
@@ -32,28 +38,33 @@ export class AdminSettingComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private msgService: MessageService,
-    private _sequenceService: SequenceService,
     private _termService: TermService,
+    private _userService: UserService,
+    private _schoolService: SchoolService,
+    private _sequenceService: SequenceService,
     private _academicYearService: AcademicYearService
   ) {
   }
 
   ngOnInit(): void {
-    this.loadSettings();
     this.sequenceForm = this._fb.group({
       name: ['', Validators.required], term: [0, Validators.required], type: [SequenceType.OPENING, Validators.required]
     });
+    this.schoolForm = this._fb.group({
+      name: ['', Validators.required], maxGrade: [20, Validators.required], owner: [-1, [Validators.required, Validators.min(1)]]
+    });
+    this.loadSettings();
   }
 
   loadSettings = () => {
+    this._userService.getAllAdmin().subscribe(admins => this.admins = admins);
+    this._schoolService.getAll().subscribe(schools => this.schools = schools);
     this._sequenceService.getAll().subscribe((sequences) => this.sequences = sequences);
     this._termService.getAll().subscribe((terms) => {
       this.sequencesByTerms = [];
       this.terms = terms;
       this.terms.forEach(term => this._sequenceService.getByTermId(term.id).subscribe((sequences) => {
         sequences.forEach(s => this.sequencesByTerms.push({term: term, sequence: s}))
-
-        console.log(this.sequencesByTerms)
       }))
     });
     this._academicYearService.getAll().subscribe((years) => this.academicYears = years);
@@ -106,4 +117,23 @@ export class AdminSettingComponent implements OnInit {
   }
 
 
+  addNewSchoolAction(submitting: boolean) {
+    if (submitting) {
+
+      const school: School = {
+        id: -1, name: this.schoolForm.get('name')?.value, ownerId: this.schoolForm.get('owner')?.value,
+        applicationOpen: false, maxGrade: this.schoolForm.get('maxGrade')?.value
+      }
+      this._schoolService.save(school).subscribe((res) => {
+        this.showSchoolDialog = false;
+        this.loadSettings();
+      })
+    } else {
+      this.showSchoolDialog = true;
+    }
+  }
+
+  deleteSelectedSchoolAction() {
+
+  }
 }

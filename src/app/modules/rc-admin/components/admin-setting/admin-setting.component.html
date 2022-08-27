@@ -1,4 +1,65 @@
 <div class="surface-section px-2 py-5 bg-indigo-50">
+  <div class="card p-4">
+    <p-toolbar styleClass="mb-4">
+      <ng-template pTemplate="left">
+        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="addNewSchoolAction(false)"></button>
+        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedSchoolAction()"></button>
+      </ng-template>
+
+      <ng-template pTemplate="right">
+        <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+      </ng-template>
+    </p-toolbar>
+
+    <p-table [value]="schools" responsiveLayout="scroll">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Name</th>
+          <th>Applications Open</th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-school>
+        <tr>
+          <td>{{school.name}}</td>
+          <td>{{school.applicationOpen ? 'Yes': 'No'}}</td>
+          <td>Action</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <tr>
+          <th [colSpan]="3">
+            There are {{schools.length}} schools
+          </th>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <p-dialog [(visible)]="showSchoolDialog" header="Add new School" [modal]="true" styleClass="p-fluid w-50 max-h-screen">
+      <ng-template pTemplate="content">
+        <form [formGroup]="schoolForm" (submit)="addNewSchoolAction(true)">
+          <div class="field">
+            <label class="block">Name</label>
+            <p-dropdown placeholder="Select an admin to manage this school" [options]="admins" [optionValue]="'id'" [optionLabel]="'username'" [formControlName]="'owner'"></p-dropdown>
+          </div>
+          <div class="field">
+            <label>Name</label>
+            <input type="text" pInputText [formControlName]="'name'">
+            <small class="p-error" *ngIf="!schoolForm.get('name')">Name is required.</small>
+          </div>
+          <div class="field">
+            <label>Max Grade</label>
+            <input type="text" pInputText [formControlName]="'maxGrade'">
+          </div>
+          <button [disabled]="!schoolForm.valid" pButton label="Save" icon="pi pi-add"></button>
+        </form>
+      </ng-template>
+    </p-dialog>
+  </div>
+
+  <p-divider></p-divider>
+
+  <!-- Academic Years -->
   <p-panel [header]="'Academic Years'" [toggleable]="true" [styleClass]="'py-4'">
     <div *ngFor="let year of academicYears" class="my-2">
       <div class="d-flex align-middle form-group">
