@@ -4,7 +4,6 @@ import {School} from "../../../../models/dto/school.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {LocalStorageUtil} from "../../../../utils/local-storage.util";
 import {Router} from "@angular/router";
-import {AuthService} from "../../../../services/auth.service";
 import {ReportCardService} from "../../../../services/report-card.service";
 import {UserService} from "../../../../services/user.service";
 import {User} from "../../../../models/dto/user.model";

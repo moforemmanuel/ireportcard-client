@@ -1,1 +1,29 @@
-<p>admin-users works!</p>
+<div class="surface-section px-2 py-5">
+  <div class="shadow-2 border-round">
+    <p-table [value]="users" responsiveLayout="scroll" styleClass="p-datatable-striped">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Username</th>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th>Approved</th>
+          <th>Role</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body">
+        <tr *ngFor="let u of users">
+          <td>{{u.username}}</td>
+          <td>{{u.firstName + ' ' + u.lastName}}</td>
+          <td>{{u.phone}}</td>
+          <td>{{u.address}}</td>
+          <td>
+            <p-inputSwitch [(ngModel)]="u.approved" (ngModelChange)="toggleApprovedAction(u.id)"
+                           [disabled]="u.role.toString().toLowerCase().includes('admin')"></p-inputSwitch>
+          </td>
+          <td>{{u.role.toString() | titlecase}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
