@@ -12,7 +12,7 @@ import {RcBodyIntroComponent} from './components/rc-body-intro/rc-body-intro.com
 import {RcApplicationsComponent} from './components/rc-applications/rc-applications.component';
 import {SubjectComponent} from "./components/rc-subjects/subject/subject.component";
 import {StudentComponent} from "./components/rc-students/student/student.component";
-import {ClassLevelComponent} from "./components/rc-classes/class-level/class-level.component";
+import {ViewClassLevelComponent} from "./components/rc-classes/view-class-level/view-class-level.component";
 import {SectionComponent} from "./components/rc-settings/section/section.component";
 import {AddStudentComponent} from './components/rc-students/add-student/add-student.component';
 import {AddApplicationComponent} from './components/rc-applications/add-application/add-application.component';
@@ -25,7 +25,6 @@ import {
   RcViewApplicationComponent
 } from './components/rc-applications/rc-view-application/rc-view-application.component';
 import {RcSelectSchoolComponent} from "./components/rc-select-school/rc-select-school.component";
-
 
 @NgModule({
   declarations: [
@@ -42,7 +41,7 @@ import {RcSelectSchoolComponent} from "./components/rc-select-school/rc-select-s
     RcApplicationsComponent,
     SubjectComponent,
     StudentComponent,
-    ClassLevelComponent,
+    ViewClassLevelComponent,
     SectionComponent,
     AddStudentComponent,
     AddApplicationComponent,

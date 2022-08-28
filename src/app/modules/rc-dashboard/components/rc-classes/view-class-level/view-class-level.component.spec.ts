@@ -1,20 +1,20 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {ClassLevelComponent} from './class-level.component';
+import {ViewClassLevelComponent} from './view-class-level.component';
 
 describe('SaveClassComponent', () => {
-  let component: ClassLevelComponent;
-  let fixture: ComponentFixture<ClassLevelComponent>;
+  let component: ViewClassLevelComponent;
+  let fixture: ComponentFixture<ViewClassLevelComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ClassLevelComponent]
+      declarations: [ViewClassLevelComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ClassLevelComponent);
+    fixture = TestBed.createComponent(ViewClassLevelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
