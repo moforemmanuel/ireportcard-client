@@ -1,21 +1,37 @@
-<p>student-subjects works!</p>
-<div *ngIf="currentTrial">
-  <p-table [value]="subjectsRegistered" responsiveLayout="scroll">
-    <ng-template pTemplate="header">
-      <tr>
-        <th>Subject</th>
-        <th>Code</th>
-        <th>Coeff</th>
-        <th>Registered On</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-sr>
-      <tr>
-        <td>{{sr.subject.name}}</td>
-        <td>{{sr.subject.code}}</td>
-        <td>{{sr.subject.coefficient}}</td>
-        <td>{{sr.registration.createdAt}}</td>
-      </tr>
-    </ng-template>
-  </p-table>
+<div *ngIf="!currentTrial" class="surface-section">
+  <div class="p-2 lg:p-4 m-2 lg:m-4 text-center">
+    <span class="text-2xl">
+      You have not completed your application for this academic year.
+      <a href="">Apply now</a>
+    </span>
+  </div>
+</div>
+<div *ngIf="currentTrial" class="surface-section">
+  <div class="p-2 lg:p-4 m-2 lg:m-4">
+    <div class="flex justify-content-between mb-2">
+      <button pButton label="Register Subject" icon="pi pi-plus"></button>
+    </div>
+    <div class="mb-2">
+      <p-table [value]="subjectsRegistered" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Subject</th>
+            <th>Code</th>
+            <th>Coeff</th>
+            <th>Action</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-sr>
+          <tr>
+            <td>{{sr.subject.name}}</td>
+            <td>{{sr.subject.code}}</td>
+            <td>{{sr.subject.coefficient}}</td>
+            <td>
+              <button pButton label="Drop" icon="pi pi-times" class="p-button-danger p-button-icon-left"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
 </div>
