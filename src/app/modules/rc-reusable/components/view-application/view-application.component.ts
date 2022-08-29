@@ -46,7 +46,7 @@ export class ViewApplicationComponent implements OnInit {
     private studentService: StudentService,
     private termService: TermService,
     private _studentApplicationService: StudentApplicationService,
-    private subjectRegistrationService: SubjectRegistrationService,
+    private _subjectRegistrationService: SubjectRegistrationService,
   ) {
   }
 
@@ -63,6 +63,7 @@ export class ViewApplicationComponent implements OnInit {
   loadStudentApplicationTrial = (satId: number) => {
     this._studentApplicationService.getTrial(satId).subscribe((sat) => {
       this.studentApplicationTrial = sat;
+      this.loadRegisteredSubjects(satId);
       this._studentApplicationService.get(sat.applicationKey).subscribe((application) => {
         this.studentApplication = application;
         this.student = application.student;
@@ -70,10 +71,9 @@ export class ViewApplicationComponent implements OnInit {
     });
   }
 
-
   loadRegisteredSubjects = (satId: number) => {
     this.registeredSubjects = [];
-    this.subjectRegistrationService.getBySatId(satId).subscribe((subjectRegs) => {
+    this._subjectRegistrationService.getBySatId(satId).subscribe((subjectRegs) => {
       subjectRegs.forEach(subjectReg => {
         this.subjectService.getById(subjectReg.subjectId).subscribe((subject) => {
           this.registeredSubjects.push({registration: subjectReg, subject: subject});
@@ -83,7 +83,7 @@ export class ViewApplicationComponent implements OnInit {
   }
 
   unregisterSubjectAction(subject: RcSubjectRegistered) {
-    this.subjectRegistrationService.delete(subject.registration.id).subscribe(() => this.loadRegisteredSubjects(subject.registration.satId));
+    this._subjectRegistrationService.delete(subject.registration.id).subscribe(() => this.loadRegisteredSubjects(subject.registration.satId));
   }
 
   addSubjectToRegisterAction(subjectDropDown: Dropdown) {
@@ -109,7 +109,7 @@ export class ViewApplicationComponent implements OnInit {
       this.subjectsToRegister.forEach(s => subjectRegs.push({
         subjectId: s.id, satId: satId, id: 0
       }));
-      this.subjectRegistrationService.saveMultiple(subjectRegs).subscribe(() => {
+      this._subjectRegistrationService.saveMultiple(subjectRegs).subscribe(() => {
         this.loadRegisteredSubjects(satId);
         this.subjectsToRegister = [];
       });

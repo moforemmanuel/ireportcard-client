@@ -29,8 +29,8 @@ export class StudentResultsComponent implements OnInit {
   constructor(
     private _userService: UserService,
     private _termService: TermService,
-    private _academicYearService: AcademicYearService,
     private _reportCardService: ReportCardService,
+    private _academicYearService: AcademicYearService,
     private _studentApplicationService: StudentApplicationService,
   ) {
     this.rcRequest = {termId: -1, academicYearId: -1, classLevelSubId: -1}

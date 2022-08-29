@@ -31,6 +31,7 @@ import {ImageModule} from "primeng/image";
 import {HttpClientModule} from "@angular/common/http";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {DialogModule} from "primeng/dialog";
+import {ToolbarModule} from "primeng/toolbar";
 
 // TODO find duplicates and remove
 
@@ -98,6 +99,7 @@ import {DialogModule} from "primeng/dialog";
     FormsModule,
     ToggleButtonModule,
     DialogModule,
+    ToolbarModule,
   ],
   exports: [
     MenubarModule,
@@ -160,6 +162,7 @@ import {DialogModule} from "primeng/dialog";
     FormsModule,
     ToggleButtonModule,
     DialogModule,
+    ToolbarModule,
   ]
 })
 export class RcSharedModule {
