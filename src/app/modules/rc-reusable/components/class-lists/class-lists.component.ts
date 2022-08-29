@@ -37,7 +37,7 @@ export class ClassListsComponent implements OnInit {
   ) {
     this.classListRequest = new ClassListRequest(-1, -1, -1, -1);
     this.classListResponse = {
-      classLevel: {id: -1, name: '', sectionId: -1},
+      classLevel: {id: -1, name: '', order: 0, sectionId: -1},
       classLevelSub: {id: -1, classLevelId: -1, name: ''},
       subject: {id: -1, name: '', code: '', coefficient: 0, sectionId: -1},
       className: '', sequenceName: '', studentGrades: []

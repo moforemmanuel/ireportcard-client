@@ -40,7 +40,7 @@ export class AddClassLevelComponent implements OnInit {
 
   saveClassAction() {
     const classLevel: ClassLevel = {
-      id: -1, name: this.classForm.get('name')?.value,
+      id: -1, name: this.classForm.get('name')?.value, order: 0,
       sectionId: this.classForm.get('section')?.value
     }
     console.log(classLevel);

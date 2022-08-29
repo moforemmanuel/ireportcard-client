@@ -19,7 +19,7 @@ import {SubjectService} from "../../../../../services/subject.service";
 export class ViewClassLevelComponent implements OnInit {
   classForm: FormGroup;
   msFormControl: FormControl;
-  classLevel: ClassLevel = {id: -1, name: '', sectionId: -1};
+  classLevel: ClassLevel = {id: -1, name: '', order: 0, sectionId: -1};
   section: Section;
   classLevelSubs: ClassLevelSub[] = [];
 
