@@ -6,6 +6,7 @@ import {FooterComponent} from "./components/footer/footer.component";
 import {ViewApplicationComponent} from "./components/view-application/view-application.component";
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { ClassListsComponent } from './components/class-lists/class-lists.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
     FooterComponent,
     ViewApplicationComponent,
     ChangePasswordComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    ClassListsComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,8 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
     FooterComponent,
     ViewApplicationComponent,
     ChangePasswordComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    ClassListsComponent
   ]
 })
 export class RcReusableModule {
