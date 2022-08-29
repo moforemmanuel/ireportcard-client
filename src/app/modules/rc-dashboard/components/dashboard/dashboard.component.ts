@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {LocalStorageUtil} from "../../../../utils/local-storage.util";
 import {UserComplete} from "../../../../models/dto/user.model";
@@ -34,7 +34,7 @@ import {SchoolService} from "../../../../services/school.service";
     </footer>
   `
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   showSchoolsDialog: boolean = LocalStorageUtil.readSchoolId() == null;
   user?: UserComplete;
   schools: School[] = [];
@@ -46,6 +46,11 @@ export class DashboardComponent implements OnInit {
     private _schoolService: SchoolService,
   ) {
   }
+
+  ngOnDestroy(): void {
+    LocalStorageUtil.deleteSchoolId();
+  }
+
 
   ngOnInit(): void {
     this.menuItems = [
@@ -112,11 +117,11 @@ export class DashboardComponent implements OnInit {
   }
 
   loadUser = () => this._userService.getCompleteFromSession().subscribe((u) => {
-    if (u.account instanceof Teacher) {
-      LocalStorageUtil.writeSchoolId(u.account.schoolId);
+    if (u.user.role.toLowerCase() == Role.TEACHER.toLowerCase()) {
+      LocalStorageUtil.writeSchoolId((u.account as Teacher).schoolId);
       this.showSchoolsDialog = false;
     } else {
-      if (u.user.role == Role.RC_ADMIN) {
+      if (u.user.role.toLowerCase() == Role.ADMIN.toLowerCase()) {
         this._schoolService.getAllByOwner(u.user.id).subscribe(schools => this.schools = schools);
       } else {
         this._schoolService.getAll().subscribe(schools => this.schools = schools);
