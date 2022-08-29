@@ -5,23 +5,25 @@
         <label>Username</label>
         <input pInputText [formControlName]="'username'">
       </div>
-      <div class="md:col-6 field">
+      <div class="col-12 md:col-6 field">
         <label>First Name</label>
         <input pInputText [formControlName]="'firstname'">
       </div>
-      <div class="md:col-6 field">
+      <div class="col-12 md:col-6 field">
         <label>Last Name</label>
         <input pInputText [formControlName]="'lastname'">
       </div>
-      <div class="md:col-6 field">
+      <div class="col-12 md:col-6 field">
         <label>Phone</label>
         <input pInputText [formControlName]="'phone'">
       </div>
-      <div class="md:col-6 field">
+      <div class="col-12 md:col-6 field">
         <label>Address</label>
         <input pInputText [formControlName]="'address'">
       </div>
+      <div class="col-12 field">
+        <button [disabled]="!userForm.valid && !userForm.dirty" pButton label="Save"></button>
+      </div>
     </div>
-    <button [disabled]="!userForm.valid && !userForm.dirty" pButton label="Save"></button>
   </form>
 </div>
