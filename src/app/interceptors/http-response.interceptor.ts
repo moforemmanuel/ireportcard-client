@@ -9,7 +9,6 @@ import {
 } from '@angular/common/http';
 import {catchError, Observable, of, tap} from 'rxjs';
 import {Message, MessageService} from "primeng/api";
-import {EntityResponse} from "../models/dto/entity.response";
 import {LocalStorageUtil} from "../utils/local-storage.util";
 import {Router} from "@angular/router";
 
@@ -34,7 +33,7 @@ export class HttpResponseInterceptor implements HttpInterceptor {
     try {
       const message: Message = {severity: 'success', summary: 'Success', detail: ''};
       if (event.status === 200 || event.status === 201) {
-        message.detail = event.body == null ? '': (event.body.message ? event.body.message : '');
+        message.detail = event.body == null ? '' : (event.body.message ? event.body.message : '');
       }
       if (event.status === 204) {
         message.severity = 'warn';
