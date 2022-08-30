@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ClassListsComponent } from './class-lists.component';
+import {ClassListsComponent} from './class-lists.component';
 
 describe('ClassListsComponent', () => {
   let component: ClassListsComponent;
@@ -8,9 +8,9 @@ describe('ClassListsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ClassListsComponent ]
+      declarations: [ClassListsComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -4,11 +4,6 @@ import {Subject} from "../../../../models/dto/subject.model";
 import {Sequence} from "../../../../models/dto/sequence.model";
 import {Grade} from "../../../../models/dto/grade.model";
 import {addToMessageService} from "../../../../utils/message-service.util";
-import {AcademicYearService} from "../../../../services/academic-year.service";
-import {ClassLevelService} from "../../../../services/class-level.service";
-import {ClassLevelSubService} from "../../../../services/class-level-sub.service";
-import {SubjectService} from "../../../../services/subject.service";
-import {SequenceService} from "../../../../services/sequence.service";
 import {ClassListService} from "../../../../services/class-list.service";
 import {GradeService} from "../../../../services/grade.service";
 import {MessageService} from "primeng/api";
@@ -30,6 +25,7 @@ export class ClassListsComponent implements OnInit {
   @Input() academicYears: AcademicYear[] = [];
   @Input() subjects: Subject[] = [];
   @Input() sequences: Sequence[] = [];
+
   constructor(
     private classListService: ClassListService,
     private gradeService: GradeService,

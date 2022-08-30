@@ -1,8 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {User, UserComplete} from "../../../../models/dto/user.model";
+import {User} from "../../../../models/dto/user.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../../../services/user.service";
-import {Role} from "../../../../models/enum/role.enum";
 
 @Component({
   selector: 'app-user-details',
@@ -13,6 +12,7 @@ export class UserDetailsComponent implements OnInit {
   @Input() user?: User;
   @Output() onUserSaved = new EventEmitter<boolean>();
   userForm: FormGroup = this._fb.group({});
+
   constructor(
     private _fb: FormBuilder,
     private _userService: UserService
@@ -20,7 +20,7 @@ export class UserDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.user) this.setupAdminForm(this.user);
+    if (this.user) this.setupAdminForm(this.user);
   }
 
   setupAdminForm = (user: User) => {
