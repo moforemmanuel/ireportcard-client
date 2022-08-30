@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ClassListRequest, ClassListResponse} from "../../../../models/dto/classlist.model";
 import {AcademicYearService} from "../../../../services/academic-year.service";
 import {ClassLevelService} from "../../../../services/class-level.service";
 import {SubjectService} from "../../../../services/subject.service";
@@ -8,11 +7,6 @@ import {AcademicYear} from "../../../../models/dto/academic-year.model";
 import {Subject} from "../../../../models/dto/subject.model";
 import {Sequence} from "../../../../models/dto/sequence.model";
 import {ClassLevelSubService} from "../../../../services/class-level-sub.service";
-import {ClassListService} from "../../../../services/class-list.service";
-import {Grade} from "../../../../models/dto/grade.model";
-import {GradeService} from "../../../../services/grade.service";
-import {MessageService} from "primeng/api";
-import {addToMessageService} from "../../../../utils/message-service.util";
 
 @Component({
   selector: 'app-rc-classlists',

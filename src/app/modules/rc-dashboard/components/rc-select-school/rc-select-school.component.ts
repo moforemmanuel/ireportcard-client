@@ -18,12 +18,12 @@ export class RcSelectSchoolComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const schoolsOb = new Observable<School[]>( (schools) => {
+    const schoolsOb = new Observable<School[]>((schools) => {
       setTimeout(() => schools.next(this.schools), 1000);
     });
 
     schoolsOb.subscribe((s) => {
-      if(s.length == 1) {
+      if (s.length == 1) {
         this.selectedSchoolId = this.schools[0].id;
         this.setSchoolAction();
       }

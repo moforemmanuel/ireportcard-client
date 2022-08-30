@@ -69,7 +69,7 @@ export class ViewClassLevelComponent implements OnInit {
 
   loadSubjects(classLevelId: number) {
     this.classLevelService.getSubjects(classLevelId).subscribe((mSubjects) => {
-      this.mandatorySubjects = mSubjects.map((s): {subject: Subject, added: boolean} => {
+      this.mandatorySubjects = mSubjects.map((s): { subject: Subject, added: boolean } => {
         return {subject: s, added: true}
       });
       console.log(this.mandatorySubjects)

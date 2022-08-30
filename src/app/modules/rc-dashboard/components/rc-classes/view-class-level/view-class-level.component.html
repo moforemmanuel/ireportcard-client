@@ -12,13 +12,14 @@
           <span class="block mb-4" *ngIf="classLevelSubForms.length == 0">No sub classes for this class yet</span>
         </div>
         <div *ngFor="let classLevelSub of classLevelSubForms.controls; let i = index">
-          <form  class="my-2" [formGroupName]="i">
+          <form class="my-2" [formGroupName]="i">
             <div class="grid">
               <div class="col-4 md:col-6 lg:col-8">
                 <input [formControlName]="'name'" pInputText>
               </div>
               <div class="col-4 md:col-3 lg:col-2">
-                <button (click)="saveClassLevelSub(i)" [disabled]="!classLevelSub.valid" class="btn" label="Save" pButton type="button"></button>
+                <button (click)="saveClassLevelSub(i)" [disabled]="!classLevelSub.valid" class="btn" label="Save"
+                        pButton type="button"></button>
               </div>
               <div class="col-4 md:col-3 lg:col-2">
                 <button class="p-button-danger" label="Delete" pButton type="button"></button>
@@ -30,7 +31,8 @@
         <button (click)="setClassLevelSubForm(-1, '')" icon="pi pi-plus-circle" pButton></button>
       </div>
       <div class="field">
-        <button [disabled]="!classForm.valid" class="btn" icon="pi pi-check" label="Save Class" pButton type="button"></button>
+        <button [disabled]="!classForm.valid" class="btn" icon="pi pi-check" label="Save Class" pButton
+                type="button"></button>
       </div>
       <div class="form-text text-center">
         <span class="font-bold text-primary">This class will be saved to the <u>{{section.name}}</u> section</span>
@@ -64,10 +66,12 @@
     </p-table>
     <p-toolbar styleClass="border-round-bottom">
       <ng-template pTemplate="left">
-        <p-dropdown styleClass="w-24rem" [formControl]="msFormControl" [options]="nonMandatorySubjects" [optionValue]="'id'" [optionLabel]="'name'"></p-dropdown>
+        <p-dropdown styleClass="w-24rem" [formControl]="msFormControl" [options]="nonMandatorySubjects"
+                    [optionValue]="'id'" [optionLabel]="'name'"></p-dropdown>
       </ng-template>
       <ng-template pTemplate="right">
-        <p-button [disabled]="!msFormControl.valid" (click)="addMandatorySubjectAction()" label="Add" class="m-2"></p-button>
+        <p-button [disabled]="!msFormControl.valid" (click)="addMandatorySubjectAction()" label="Add"
+                  class="m-2"></p-button>
         <p-button (click)="saveMandatorySubjectAction()" label="Save" class="m-2"></p-button>
       </ng-template>
     </p-toolbar>
