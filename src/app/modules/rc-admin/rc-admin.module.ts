@@ -9,9 +9,9 @@ import {AdminHomeComponent} from './components/admin-home/admin-home.component';
 import {RcSharedModule} from "../rc-shared.module";
 import {RcReusableModule} from "../rc-reusable/rc-reusable.module";
 import {ToolbarModule} from "primeng/toolbar";
-import { AdminTeachersComponent } from './components/admin-teachers/admin-teachers.component';
-import { AdminAddTeacherComponent } from './components/admin-teachers/admin-add-teacher/admin-add-teacher.component';
-import { AdminViewTeacherComponent } from './components/admin-teachers/admin-view-teacher/admin-view-teacher.component';
+import {AdminTeachersComponent} from './components/admin-teachers/admin-teachers.component';
+import {AdminAddTeacherComponent} from './components/admin-teachers/admin-add-teacher/admin-add-teacher.component';
+import {AdminViewTeacherComponent} from './components/admin-teachers/admin-view-teacher/admin-view-teacher.component';
 
 
 @NgModule({

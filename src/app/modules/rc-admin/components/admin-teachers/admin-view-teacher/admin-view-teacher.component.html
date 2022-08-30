@@ -7,13 +7,15 @@
       </ng-template>
       <ng-template pTemplate="right"></ng-template>
     </p-toolbar>
-    <p-dialog header="Assign a Subject" styleClass=" w-25rem" (close)="closeDialogAction()" [(visible)]="showSubjectDialog" [modal]="true">
+    <p-dialog header="Assign a Subject" styleClass=" w-25rem" (close)="closeDialogAction()"
+              [(visible)]="showSubjectDialog" [modal]="true">
       <ng-template pTemplate="content">
         <div class="surface-card p-4">
           <form [formGroup]="assignSubjectForm" (submit)="assignSubjectAction()" class="p-fluid">
             <div class="field">
               <label>Subjects</label>
-              <p-dropdown placeholder="Select a Subject" [options]="unassignedSubjects" [optionValue]="'id'" [optionLabel]="'name'" [formControlName]="'subject'"></p-dropdown>
+              <p-dropdown placeholder="Select a Subject" [options]="unassignedSubjects" [optionValue]="'id'"
+                          [optionLabel]="'name'" [formControlName]="'subject'"></p-dropdown>
             </div>
             <button pButton [disabled]="!assignSubjectForm.valid" label="Assign"></button>
           </form>
