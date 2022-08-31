@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MenuItem} from "primeng/api";
 
 @Component({
@@ -19,7 +19,9 @@ import {MenuItem} from "primeng/api";
 })
 export class TeacherDashboardComponent implements OnInit {
   teacherMenuItems: MenuItem[] = [];
-  constructor() { }
+
+  constructor() {
+  }
 
   ngOnInit(): void {
     console.log("qsd")

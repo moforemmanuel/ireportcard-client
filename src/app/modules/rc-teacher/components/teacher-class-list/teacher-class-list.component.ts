@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AcademicYearService} from "../../../../services/academic-year.service";
 import {ClassLevelService} from "../../../../services/class-level.service";
 import {ClassLevelSubService} from "../../../../services/class-level-sub.service";
@@ -8,7 +8,6 @@ import {AcademicYear} from "../../../../models/dto/academic-year.model";
 import {Subject} from "../../../../models/dto/subject.model";
 import {Sequence} from "../../../../models/dto/sequence.model";
 import {SubjectTeacherService} from "../../../../services/subject-teacher.service";
-import {UserComplete} from "../../../../models/dto/user.model";
 import {UserService} from "../../../../services/user.service";
 import {Teacher} from "../../../../models/dto/teacher.model";
 
@@ -33,7 +32,8 @@ export class TeacherClassListComponent implements OnInit {
     private classLevelService: ClassLevelService,
     private classLevelSubService: ClassLevelSubService,
     private subjectTeacherService: SubjectTeacherService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.userService.getCompleteFromSession().subscribe(u => {

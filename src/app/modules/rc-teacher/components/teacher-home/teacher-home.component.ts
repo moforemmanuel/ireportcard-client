@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {Teacher} from "../../../../models/dto/teacher.model";
+import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../../services/user.service";
-import {User, UserComplete} from "../../../../models/dto/user.model";
+import {UserComplete} from "../../../../models/dto/user.model";
 
 @Component({
   selector: 'app-teacher-home',
@@ -10,9 +9,11 @@ import {User, UserComplete} from "../../../../models/dto/user.model";
 })
 export class TeacherHomeComponent implements OnInit {
   teacher?: UserComplete;
+
   constructor(
     private _userService: UserService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadUserComplete();
