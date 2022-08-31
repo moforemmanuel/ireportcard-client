@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {RC_SETTINGS_API_URL} from "../app.constants";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {EntityResponse} from "../models/dto/entity.response";
+import {ApiResponse} from "../models/dto/api.response";
 import {SchoolSettings} from "../models/dto/school-settings.model";
 
 @Injectable({
@@ -21,7 +21,7 @@ export class SchoolSettingsService {
     return this.http.post<SchoolSettings>(`${this.apiUrl}`, schoolSettings);
   }
 
-  update(schoolSettings: SchoolSettings): Observable<EntityResponse> {
-    return this.http.put<EntityResponse>(`${this.apiUrl}`, schoolSettings);
+  update(schoolSettings: SchoolSettings): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(`${this.apiUrl}`, schoolSettings);
   }
 }

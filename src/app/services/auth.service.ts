@@ -10,7 +10,7 @@ import {
   UserRegisterResponse
 } from "../models/dto/user.model";
 import {Student} from "../models/dto/student.model";
-import {EntityResponse} from "../models/dto/entity.response";
+import {ApiResponse} from "../models/dto/api.response";
 import {Teacher} from "../models/dto/teacher.model";
 
 @Injectable({
@@ -45,7 +45,7 @@ export class AuthService {
     return this.http.post<UserAuth>(`${this.apiUrl}/logout`, logout);
   }
 
-  changePassword = (creds: UserChangePassword): Observable<EntityResponse> => {
-    return this.http.put<EntityResponse>(`${this.apiUrl}/change-password`, creds);
+  changePassword = (creds: UserChangePassword): Observable<ApiResponse> => {
+    return this.http.put<ApiResponse>(`${this.apiUrl}/change-password`, creds);
   }
 }

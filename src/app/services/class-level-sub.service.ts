@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {RC_CLASS_LEVEL_SUB_API_URL} from "../app.constants";
 import {Observable} from "rxjs";
 import {ClassLevelSub} from "../models/dto/class-level-sub.model";
-import {EntityResponse} from "../models/dto/entity.response";
+import {ApiResponse} from "../models/dto/api.response";
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +21,12 @@ export class ClassLevelSubService {
     return this.http.get<ClassLevelSub[]>(this.apiUrl + "/level/" + classLevelId);
   }
 
-  update(classLevelSub: ClassLevelSub): Observable<EntityResponse> {
-    return this.http.put<EntityResponse>(`${this.apiUrl}/${classLevelSub.id}`, classLevelSub);
+  update(classLevelSub: ClassLevelSub): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(`${this.apiUrl}/${classLevelSub.id}`, classLevelSub);
   }
 
-  save(classLevelSub: ClassLevelSub): Observable<EntityResponse> {
-    return this.http.post<EntityResponse>(`${this.apiUrl}`, classLevelSub);
+  save(classLevelSub: ClassLevelSub): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`${this.apiUrl}`, classLevelSub);
   }
 
   delete(id: number) {

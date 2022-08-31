@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {RC_STUDENT_API_URL} from "../app.constants";
 import {Observable} from "rxjs";
 import {Student} from "../models/dto/student.model";
-import {EntityResponse} from "../models/dto/entity.response";
+import {ApiResponse} from "../models/dto/api.response";
 
 @Injectable({
   providedIn: 'root'
@@ -21,15 +21,15 @@ export class StudentService {
     return this.http.get<Student>(`${this.apiUrl}/${id}`);
   }
 
-  save(student: Student): Observable<EntityResponse> {
-    return this.http.post<EntityResponse>(this.apiUrl, student);
+  save(student: Student): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.apiUrl, student);
   }
 
-  update(student: Student): Observable<EntityResponse> {
-    return this.http.put<EntityResponse>(`${this.apiUrl}`, student);
+  update(student: Student): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(`${this.apiUrl}`, student);
   }
 
-  delete(id: number): Observable<EntityResponse> {
-    return this.http.delete<EntityResponse>(`${this.apiUrl}/${id}`);
+  delete(id: number): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(`${this.apiUrl}/${id}`);
   }
 }

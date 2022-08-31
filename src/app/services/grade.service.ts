@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {RC_GRADE_API_URL} from "../app.constants";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {EntityResponse} from "../models/dto/entity.response";
+import {ApiResponse} from "../models/dto/api.response";
 import {Grade} from "../models/dto/grade.model";
 
 @Injectable({
@@ -13,11 +13,11 @@ export class GradeService {
   constructor(@Inject(RC_GRADE_API_URL) private apiUrl: string, private http: HttpClient) {
   }
 
-  save(grade: Grade): Observable<EntityResponse> {
-    return this.http.post<EntityResponse>(`${this.apiUrl}`, grade);
+  save(grade: Grade): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`${this.apiUrl}`, grade);
   }
 
-  update(grade: Grade): Observable<EntityResponse> {
-    return this.http.put<EntityResponse>(`${this.apiUrl}`, grade);
+  update(grade: Grade): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(`${this.apiUrl}`, grade);
   }
 }

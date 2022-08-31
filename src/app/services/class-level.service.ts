@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {RC_CLASS_LEVEL_API_URL} from "../app.constants";
 import {Observable} from "rxjs";
 import {ClassLevel} from "../models/dto/class-level.model";
-import {EntityResponse} from "../models/dto/entity.response";
+import {ApiResponse} from "../models/dto/api.response";
 import {Subject} from "../models/dto/subject.model";
 
 @Injectable({
@@ -34,12 +34,12 @@ export class ClassLevelService {
     return this.http.get<ClassLevel>(`${this.classLevelApiUrl}/${id}`);
   }
 
-  save(classLevel: ClassLevel): Observable<EntityResponse> {
-    return this.http.post<EntityResponse>(`${this.classLevelApiUrl}`, classLevel);
+  save(classLevel: ClassLevel): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`${this.classLevelApiUrl}`, classLevel);
   }
 
-  update(classLevel: ClassLevel): Observable<EntityResponse> {
-    return this.http.put<EntityResponse>(`${this.classLevelApiUrl}/${classLevel.id}`, classLevel);
+  update(classLevel: ClassLevel): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(`${this.classLevelApiUrl}/${classLevel.id}`, classLevel);
   }
 
   delete(classLevel: ClassLevel): Observable<any> {
@@ -50,10 +50,10 @@ export class ClassLevelService {
   getSubjects = (id: number): Observable<Subject[]> => {
     return this.http.get<Subject[]>(`${this.classLevelApiUrl}/${id}/subjects`)
   }
-  updateSubject = (id: number, subjectId: number): Observable<EntityResponse> => {
-    return this.http.put<EntityResponse>(`${this.classLevelApiUrl}/${id}/subjects/${subjectId}`, {})
+  updateSubject = (id: number, subjectId: number): Observable<ApiResponse> => {
+    return this.http.put<ApiResponse>(`${this.classLevelApiUrl}/${id}/subjects/${subjectId}`, {})
   }
-  updateSubjects = (id: number, subjectIds: number[]): Observable<EntityResponse> => {
-    return this.http.put<EntityResponse>(`${this.classLevelApiUrl}/${id}/subjects`, subjectIds)
+  updateSubjects = (id: number, subjectIds: number[]): Observable<ApiResponse> => {
+    return this.http.put<ApiResponse>(`${this.classLevelApiUrl}/${id}/subjects`, subjectIds)
   }
 }

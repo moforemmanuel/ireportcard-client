@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {RC_SUBJECT_API_URL} from "../app.constants";
 import {Observable} from "rxjs";
 import {Subject} from "../models/dto/subject.model";
-import {EntityResponse} from "../models/dto/entity.response";
+import {ApiResponse} from "../models/dto/api.response";
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +21,12 @@ export class SubjectService {
     return this.http.get<Subject>(`${this.subjectApiUrl}/${id}`);
   }
 
-  save(subject: Subject): Observable<EntityResponse> {
-    return this.http.post<EntityResponse>(this.subjectApiUrl, subject);
+  save(subject: Subject): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.subjectApiUrl, subject);
   }
 
-  update(subject: Subject): Observable<EntityResponse> {
-    return this.http.put<EntityResponse>(this.subjectApiUrl, subject);
+  update(subject: Subject): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(this.subjectApiUrl, subject);
   }
 
   delete(id: number): Observable<any> {

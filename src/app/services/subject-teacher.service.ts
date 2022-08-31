@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {RC_SUBJECT_TEACHER_API_URL} from "../app.constants";
 import {HttpClient} from "@angular/common/http";
 import {SubjectTeacher, SubjectTeacherKey} from "../models/dto/subject-teacher.model";
-import {EntityResponse} from "../models/dto/entity.response";
+import {ApiResponse} from "../models/dto/api.response";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -16,7 +16,7 @@ export class SubjectTeacherService {
   ) {
   }
 
-  create = (subjectTeacher: SubjectTeacher): Observable<EntityResponse> => this.http.post<EntityResponse>(this.apiUrl, subjectTeacher);
+  create = (subjectTeacher: SubjectTeacher): Observable<ApiResponse> => this.http.post<ApiResponse>(this.apiUrl, subjectTeacher);
   getByKey = (key: SubjectTeacherKey): Observable<SubjectTeacher> => this.http.get<SubjectTeacher>(`${this.apiUrl}`, {
     params: {subjectId: key.subjectId, teacherId: key.teacherId}
   });
