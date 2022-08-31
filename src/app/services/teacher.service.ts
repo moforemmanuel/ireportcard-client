@@ -13,7 +13,8 @@ export class TeacherService {
   constructor(
     @Inject(RC_TEACHER_API_URL) private apiUrl: string,
     private http: HttpClient
-  ) { }
+  ) {
+  }
 
   create = (teacher: Teacher): Observable<EntityResponse> => this.http.post<EntityResponse>(this.apiUrl, teacher);
   getAll = (): Observable<Teacher[]> => this.http.get<Teacher[]>(this.apiUrl);
