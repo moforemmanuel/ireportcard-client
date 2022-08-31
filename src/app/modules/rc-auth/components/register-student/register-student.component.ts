@@ -27,7 +27,7 @@ export class RegisterStudentComponent implements OnInit {
     private authService: AuthService,
   ) {
     this.studentForm = this.fb.group({
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
@@ -54,7 +54,7 @@ export class RegisterStudentComponent implements OnInit {
     console.log(this.studentForm.value);
 
     const user: User = new User(
-      -1, this.studentForm.get('username')?.value,
+      -1, this.studentForm.get('email')?.value, '',
       this.studentForm.get('firstname')?.value, this.studentForm.get('lastname')?.value,
       this.studentForm.get('phone')?.value, this.studentForm.get('address')?.value, false, Role.STUDENT
     );
