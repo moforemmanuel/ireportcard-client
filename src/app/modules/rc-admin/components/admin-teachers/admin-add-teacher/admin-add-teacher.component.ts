@@ -38,7 +38,7 @@ export class AdminAddTeacherComponent implements OnInit {
   registerAction() {
     const password = this.registerForm.get("password")?.value;
     const user: User = {
-      id: -1, role: Role.TEACHER, username: this.registerForm.get("username")?.value,
+      id: -1, role: Role.TEACHER, email: this.registerForm.get("email")?.value, username: '',
       firstName: this.registerForm.get("firstName")?.value, lastName: this.registerForm.get("lastName")?.value,
       phone: this.registerForm.get("phone")?.value, address: this.registerForm.get("address")?.value, approved: false
     }
