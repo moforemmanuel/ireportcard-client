@@ -3,7 +3,7 @@ import {RC_SUBJECT_REGISTRATION_API_URL} from "../app.constants";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {SubjectRegistration} from "../models/dto/subject-registration.model";
-import {EntityResponse} from "../models/dto/entity.response";
+import {ApiResponse} from "../models/dto/api.response";
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +21,12 @@ export class SubjectRegistrationService {
     return this.http.get<SubjectRegistration[]>(`${this.apiUrl}/sat/${satId}`);
   }
 
-  save(subjectRegistration: SubjectRegistration): Observable<EntityResponse> {
-    return this.http.post<EntityResponse>(`${this.apiUrl}`, subjectRegistration);
+  save(subjectRegistration: SubjectRegistration): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`${this.apiUrl}`, subjectRegistration);
   }
 
-  saveMultiple(subjectRegistrations: SubjectRegistration[]): Observable<EntityResponse[]> {
-    return this.http.post<EntityResponse[]>(`${this.apiUrl}/multiple`, subjectRegistrations);
+  saveMultiple(subjectRegistrations: SubjectRegistration[]): Observable<ApiResponse[]> {
+    return this.http.post<ApiResponse[]>(`${this.apiUrl}/multiple`, subjectRegistrations);
   }
 
   delete(id: number): Observable<void> {

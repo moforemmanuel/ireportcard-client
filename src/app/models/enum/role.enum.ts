@@ -1,5 +1,5 @@
 export enum Role {
-  BASIC, RC_STUDENT, RC_TEACHER, RC_ADMIN, RC_SUPER_ADMIN
+  BASIC = "Basic", STUDENT = "Student", TEACHER = "Teacher", ADMIN = "Admin", SUPER_ADMIN = "Super Admin"
 }
 
 export enum TeacherPosition {

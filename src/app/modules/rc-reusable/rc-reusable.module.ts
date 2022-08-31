@@ -4,12 +4,18 @@ import {RcSharedModule} from "../rc-shared.module";
 import {TopMenuComponent} from "./components/top-menu/top-menu.component";
 import {FooterComponent} from "./components/footer/footer.component";
 import {ViewApplicationComponent} from "./components/view-application/view-application.component";
+import {ChangePasswordComponent} from './components/change-password/change-password.component';
+import {UserDetailsComponent} from './components/user-details/user-details.component';
+import {ClassListsComponent} from './components/class-lists/class-lists.component';
 
 @NgModule({
   declarations: [
     TopMenuComponent,
     FooterComponent,
-    ViewApplicationComponent
+    ViewApplicationComponent,
+    ChangePasswordComponent,
+    UserDetailsComponent,
+    ClassListsComponent
   ],
   imports: [
     CommonModule,
@@ -18,7 +24,10 @@ import {ViewApplicationComponent} from "./components/view-application/view-appli
   exports: [
     TopMenuComponent,
     FooterComponent,
-    ViewApplicationComponent
+    ViewApplicationComponent,
+    ChangePasswordComponent,
+    UserDetailsComponent,
+    ClassListsComponent
   ]
 })
 export class RcReusableModule {

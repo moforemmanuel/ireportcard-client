@@ -6,6 +6,9 @@ import {AdminSettingComponent} from "./components/admin-setting/admin-setting.co
 import {AdminUsersComponent} from "./components/admin-users/admin-users.component";
 import {AdminHomeComponent} from "./components/admin-home/admin-home.component";
 import {AuthAdminGuard} from "../../guards/auth/auth-admin.guard";
+import {AdminTeachersComponent} from "./components/admin-teachers/admin-teachers.component";
+import {AdminAddTeacherComponent} from "./components/admin-teachers/admin-add-teacher/admin-add-teacher.component";
+import {AdminViewTeacherComponent} from "./components/admin-teachers/admin-view-teacher/admin-view-teacher.component";
 
 const routes: Routes = [
   {
@@ -15,6 +18,9 @@ const routes: Routes = [
       {component: AdminHomeComponent, path: ''},
       {component: AdminSettingComponent, path: 'settings'},
       {component: AdminUsersComponent, path: 'users'},
+      {component: AdminTeachersComponent, path: 'teachers'},
+      {component: AdminAddTeacherComponent, path: 'teachers/add'},
+      {component: AdminViewTeacherComponent, path: 'teachers/view/:id'},
     ]
   }
 ];

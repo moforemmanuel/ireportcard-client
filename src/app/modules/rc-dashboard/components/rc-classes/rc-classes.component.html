@@ -16,11 +16,10 @@
       <p-dropdown [options]="sections" [optionLabel]="'name'" [optionValue]="'id'" (onChange)="loadClasses()"
                   [placeholder]="'Select School Section'" [(ngModel)]="sectionId"
                   [styleClass]="'lg:w-29rem'"></p-dropdown>
-      <button (click)="loadClasses()" class="mx-4" pButton>Load Classes</button>
     </div>
-    <div *ngIf="classes.length == 0" class="py-2">
+    <p-card *ngIf="classes.length == 0" class="py-2">
       <span class="text-center">No classes for this section</span>
-    </div>
+    </p-card>
     <div *ngFor="let c of classes" class="py-2">
       <p-panel [header]="c.classLevel.name" [toggleable]="true">
         <ng-template pTemplate="icons">

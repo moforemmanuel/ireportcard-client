@@ -14,9 +14,7 @@ import {StudentSubjectsComponent} from "./components/student-subjects/student-su
 const routes: Routes = [
   {
     component: StudentDashboardComponent, path: 'student',
-    canActivate: [
-      AuthGuard, AuthStudentGuard
-    ],
+    canActivate: [AuthGuard, AuthStudentGuard],
     children: [
       {component: StudentHomeComponent, path: 'home'},
       {component: StudentApplicationsComponent, path: 'application'},

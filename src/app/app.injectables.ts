@@ -17,6 +17,8 @@ import {
   RC_STUDENT_APPLICATION_API_URL,
   RC_SUBJECT_API_URL,
   RC_SUBJECT_REGISTRATION_API_URL,
+  RC_SUBJECT_TEACHER_API_URL,
+  RC_TEACHER_API_URL,
   RC_TERM_API_URL,
   RC_USER_API_URL
 } from "./app.constants";
@@ -36,6 +38,8 @@ import {ReportCardService} from "./services/report-card.service";
 import {StudentApplicationService} from "./services/student-application.service";
 import {AuthService} from "./services/auth.service";
 import {UserService} from "./services/user.service";
+import {TeacherService} from "./services/teacher.service";
+import {SubjectTeacherService} from "./services/subject-teacher.service";
 
 const academicYearInjectables: Array<any> = [
   {provide: AcademicYearService, useClass: AcademicYearService},
@@ -99,6 +103,14 @@ const subjectRegistrationInjectables: Array<any> = [
   {provide: SubjectRegistrationService, useClass: SubjectRegistrationService},
   {provide: RC_SUBJECT_REGISTRATION_API_URL, useValue: RC_SUBJECT_REGISTRATION_API_URL}
 ];
+const subjectTeacherInjectables: Array<any> = [
+  {provide: SubjectTeacherService, useClass: SubjectTeacherService},
+  {provide: RC_SUBJECT_TEACHER_API_URL, useValue: RC_SUBJECT_TEACHER_API_URL}
+];
+const teacherInjectables: Array<any> = [
+  {provide: TeacherService, useClass: TeacherService},
+  {provide: RC_TEACHER_API_URL, useValue: RC_TEACHER_API_URL}
+];
 const termInjectables: Array<any> = [
   {provide: TermService, useClass: TermService},
   {provide: RC_TERM_API_URL, useValue: RC_TERM_API_URL}
@@ -124,6 +136,8 @@ export const injectables = [
   studentApplicationInjectables,
   subjectInjectables,
   subjectRegistrationInjectables,
+  subjectTeacherInjectables,
   termInjectables,
+  teacherInjectables,
   userInjectables
 ];

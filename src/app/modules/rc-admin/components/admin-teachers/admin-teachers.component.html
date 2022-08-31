@@ -1,0 +1,36 @@
+<div class="surface-section px-2 py-5">
+  <div class="shadow-2 border-round p-2 lg:p-4">
+    <p-toolbar styleClass="mb-4">
+      <ng-template pTemplate="left">
+        <p-dropdown [optionLabel]="'name'" [optionValue]="'id'" [options]="schools"
+                    (onChange)="loadTeachers(schoolId)" [(ngModel)]="schoolId" placeholder="Select School"></p-dropdown>
+      </ng-template>
+      <ng-template pTemplate="right">
+        <p-button [routerLink]="['/admin/teachers/add']" label="Add Teacher"></p-button>
+      </ng-template>
+    </p-toolbar>
+    <p-divider></p-divider>
+    <p-table [value]="teachers" responsiveLayout="scroll" styleClass="p-datatable-striped">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Username</th>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+      <ng-template let-t pTemplate="body">
+        <tr>
+          <td>{{t.user.username}}</td>
+          <td>{{t.user.firstName + ' ' + t.user.lastName}}</td>
+          <td>{{t.user.phone}}</td>
+          <td>{{t.user.address}}</td>
+          <td>
+            <p-button [routerLink]="['/admin/teachers/view', t.id]" label="View"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

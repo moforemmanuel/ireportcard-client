@@ -3,7 +3,7 @@ import {School} from "../models/dto/school.model";
 import {HttpClient} from "@angular/common/http";
 import {RC_SCHOOL_API_URL} from "../app.constants";
 import {Observable} from "rxjs";
-import {EntityResponse} from "../models/dto/entity.response";
+import {ApiResponse} from "../models/dto/api.response";
 
 @Injectable({
   providedIn: 'root'
@@ -21,16 +21,16 @@ export class SchoolService {
     return this.http.get<School>(`${this.apiUrl}/${id}`)
   }
 
-  save(school: School): Observable<EntityResponse> {
-    return this.http.post<EntityResponse>(this.apiUrl, school)
+  save(school: School): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.apiUrl, school)
   }
 
-  update(school: School): Observable<EntityResponse> {
-    return this.http.put<EntityResponse>(`${this.apiUrl}`, school)
+  update(school: School): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(`${this.apiUrl}`, school)
   }
 
-  deleteSchool(id: number): Observable<EntityResponse> {
-    return this.http.delete<EntityResponse>(`${this.apiUrl}/${id}`)
+  deleteSchool(id: number): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(`${this.apiUrl}/${id}`)
   }
 
   getAllByOwner(ownerId: number): Observable<School[]> {

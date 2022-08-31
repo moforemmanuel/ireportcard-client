@@ -11,8 +11,8 @@
           <th>Role</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body">
-        <tr *ngFor="let u of users">
+      <ng-template pTemplate="body" let-u>
+        <tr>
           <td>{{u.username}}</td>
           <td>{{u.firstName + ' ' + u.lastName}}</td>
           <td>{{u.phone}}</td>

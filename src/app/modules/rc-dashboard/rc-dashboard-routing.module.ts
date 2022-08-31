@@ -4,7 +4,7 @@ import {DashboardComponent} from "./components/dashboard/dashboard.component";
 import {AuthGuard} from "../../guards/auth.guard";
 import {RcSubjectsComponent} from "./components/rc-subjects/rc-subjects.component";
 import {RcClassesComponent} from "./components/rc-classes/rc-classes.component";
-import {ClassLevelComponent} from "./components/rc-classes/class-level/class-level.component";
+import {ViewClassLevelComponent} from "./components/rc-classes/view-class-level/view-class-level.component";
 import {RcStudentsComponent} from "./components/rc-students/rc-students.component";
 import {RcApplicationsComponent} from "./components/rc-applications/rc-applications.component";
 import {AddApplicationComponent} from "./components/rc-applications/add-application/add-application.component";
@@ -16,14 +16,14 @@ import {StudentComponent} from "./components/rc-students/student/student.compone
 import {AddClassLevelComponent} from "./components/rc-classes/add-class-level/add-class-level.component";
 import {SubjectComponent} from "./components/rc-subjects/subject/subject.component";
 import {AddSubjectComponent} from "./components/rc-subjects/add-subject/add-subject.component";
-import {AuthTeacherGuard} from "../../guards/auth/auth-teacher.guard";
 import {
   RcViewApplicationComponent
 } from "./components/rc-applications/rc-view-application/rc-view-application.component";
+import {AuthAdminGuard} from "../../guards/auth/auth-admin.guard";
 
 const routes: Routes = [
   {
-    component: DashboardComponent, path: 'dashboard', canActivate: [AuthGuard, AuthTeacherGuard],
+    component: DashboardComponent, path: 'dashboard', canActivate: [AuthGuard, AuthAdminGuard],
     children: [
       {component: RcHomeComponent, path: ''},
       {component: RcSubjectsComponent, path: 'subject'},
@@ -31,7 +31,7 @@ const routes: Routes = [
       {component: SubjectComponent, path: 'subject/view/:id'},
       {component: RcClassesComponent, path: 'class'},
       {component: AddClassLevelComponent, path: 'class/add'},
-      {component: ClassLevelComponent, path: 'class/view/:id'},
+      {component: ViewClassLevelComponent, path: 'class/view/:id'},
       {component: RcStudentsComponent, path: 'student'},
       {component: AddStudentComponent, path: 'student/add'},
       {component: StudentComponent, path: 'student/view/:id'},

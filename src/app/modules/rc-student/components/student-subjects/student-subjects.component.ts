@@ -49,7 +49,7 @@ export class StudentSubjectsComponent implements OnInit {
   loadSubjects = (satId: number) => {
     this.subjectRegistrationService.getBySatId(satId).subscribe((res) => {
       this.subjectsRegistered = [];
-      res.forEach(sr => this.subjectService.getById(sr.id).subscribe(subject => {
+      res.forEach(sr => this.subjectService.getById(sr.subjectId).subscribe(subject => {
         this.subjectsRegistered.push({registration: sr, subject: subject});
       }));
       console.log(this.subjectsRegistered)

@@ -20,23 +20,10 @@ export class AuthTeacherGuard implements CanActivate {
     this.reportCardService.testAuthTeacher().subscribe({
       next: (res) => {
         if (!res) { // from here, my eyes are paining! :(
-          this.reportCardService.testAuthAdmin().subscribe({
-            next: (adminRes) => {
-              if (!adminRes) {
-                this.router.navigate(['/auth/login']).then();
-              }
-              isTeacherOrAdmin.next(adminRes);
-              isTeacherOrAdmin.complete();
-            }, error: () => {
-              this.router.navigate(['/auth/login']).then();
-              isTeacherOrAdmin.next(false);
-              isTeacherOrAdmin.complete();
-            }
-          });
-        } else {
-          isTeacherOrAdmin.next(res);
-          isTeacherOrAdmin.complete();
+          this.router.navigate(['/auth/login']).then()
         }
+        isTeacherOrAdmin.next(res);
+        isTeacherOrAdmin.complete();
       }, error: () => {
         this.router.navigate(['/auth/login']).then();
         isTeacherOrAdmin.next(false);

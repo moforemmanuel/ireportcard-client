@@ -23,7 +23,8 @@ import {RcSharedModule} from "../rc-shared.module";
     RcSharedModule
   ],
   exports: [
-    AuthComponent
+    AuthComponent,
+    RegisterTeacherComponent
   ]
 })
 export class RcAuthModule {

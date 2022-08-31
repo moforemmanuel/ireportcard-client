@@ -9,7 +9,7 @@ import {
 } from "../models/dto/student-application.model";
 import {RC_STUDENT_APPLICATION_API_URL} from "../app.constants";
 import {HttpClient} from "@angular/common/http";
-import {EntityResponse} from "../models/dto/entity.response";
+import {ApiResponse} from "../models/dto/api.response";
 
 @Injectable({
   providedIn: 'root'
@@ -47,12 +47,12 @@ export class StudentApplicationService {
     });
   }
 
-  save(application: ApplicationRequest): Observable<EntityResponse> {
-    return this.http.post<EntityResponse>(`${this.apiUrl}`, application);
+  save(application: ApplicationRequest): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`${this.apiUrl}`, application);
   }
 
-  update(application: ApplicationRequest): Observable<EntityResponse> {
-    return this.http.put<EntityResponse>(`${this.apiUrl}`, application);
+  update(application: ApplicationRequest): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(`${this.apiUrl}`, application);
   }
 
   delete(applicationKey: StudentApplicationKey): Observable<void> {

@@ -3,7 +3,7 @@ import {RC_SEQUENCE_API_URL} from "../app.constants";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Sequence} from "../models/dto/sequence.model";
-import {EntityResponse} from "../models/dto/entity.response";
+import {ApiResponse} from "../models/dto/api.response";
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +21,11 @@ export class SequenceService {
     return this.http.get<Sequence[]>(`${this.apiUrl}/term/${termId}`);
   }
 
-  save(sequence: Sequence): Observable<EntityResponse> {
-    return this.http.post<EntityResponse>(`${this.apiUrl}`, sequence);
+  save(sequence: Sequence): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`${this.apiUrl}`, sequence);
   }
 
-  update(sequence: Sequence): Observable<EntityResponse> {
-    return this.http.put<EntityResponse>(`${this.apiUrl}/${sequence.id}`, sequence);
+  update(sequence: Sequence): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(`${this.apiUrl}/${sequence.id}`, sequence);
   }
 }

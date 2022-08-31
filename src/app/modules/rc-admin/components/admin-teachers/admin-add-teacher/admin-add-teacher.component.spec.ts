@@ -1,20 +1,20 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {ClassLevelComponent} from './class-level.component';
+import {AdminAddTeacherComponent} from './admin-add-teacher.component';
 
-describe('SaveClassComponent', () => {
-  let component: ClassLevelComponent;
-  let fixture: ComponentFixture<ClassLevelComponent>;
+describe('AdminAddTeacherComponent', () => {
+  let component: AdminAddTeacherComponent;
+  let fixture: ComponentFixture<AdminAddTeacherComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ClassLevelComponent]
+      declarations: [AdminAddTeacherComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ClassLevelComponent);
+    fixture = TestBed.createComponent(AdminAddTeacherComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
