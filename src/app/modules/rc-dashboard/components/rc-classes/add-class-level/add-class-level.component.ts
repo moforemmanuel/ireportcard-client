@@ -35,7 +35,7 @@ export class AddClassLevelComponent implements OnInit {
 
   loadSections = () => {
     const schoolId = LocalStorageUtil.getSchoolId();
-    this.sectionService.getBySchoolId(schoolId).subscribe(sections => this.sections = sections);
+    this.sectionService.getAllBySchoolId(schoolId).subscribe(sections => this.sections = sections);
   }
 
   saveClassAction() {

@@ -1,10 +1,10 @@
 <div class="surface-section ">
   <div class="mx-4 lg:mx-8 my-2 lg:my-4">
     <div class="text-4xl p-2 m-2 text-black-alpha-60">
-      Welcome, <span class="text-black-alpha-70" *ngIf="student">{{student.user.username}}</span>
+      Welcome, <span class="text-black-alpha-70" *ngIf="student">{{student.user.email}}</span>
     </div>
     <p-divider></p-divider>
     <app-user-details *ngIf="student" [user]="student.user" (onUserSaved)="loadUserComplete()"></app-user-details>
-    <app-change-password *ngIf="student" [username]="student.user.username"></app-change-password>
+    <app-change-password *ngIf="student" [username]="student.user.email"></app-change-password>
   </div>
 </div>

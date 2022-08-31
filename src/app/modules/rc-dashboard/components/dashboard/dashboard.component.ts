@@ -113,6 +113,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
 
     ];
+    LocalStorageUtil.deleteSchoolId();
     this.loadUser();
   }
 

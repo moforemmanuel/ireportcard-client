@@ -12,10 +12,7 @@ import {addToMessageService} from "../../../../utils/message-service.util";
 })
 export class RcSubjectsComponent implements OnInit {
   subjects: Subject[] = [];
-  currentSubject: Subject = {id: -1, name: '', coefficient: 1, code: '', sectionId: -1};
-
   constructor(
-    private modalService: NgbModal,
     private subjectService: SubjectService, private msgService: MessageService) {
   }
 
@@ -36,14 +33,7 @@ export class RcSubjectsComponent implements OnInit {
   deleteSubjectAction(subject: Subject) {
     const confirmDelete: boolean = confirm("Are you sure want to delete " + subject.name);
     if (confirmDelete) {
-      this.subjectService.delete(subject.id).subscribe({
-        // TODO remove this logs
-        next: (res) => {
-          addToMessageService(this.msgService, 'error', 'Error', res.message);
-          this.loadSubjects();
-        },
-        error: (err) => addToMessageService(this.msgService, 'error', 'Error', err.message)
-      });
+      this.subjectService.delete(subject.id).subscribe(() => this.loadSubjects());
     }
   }
 }

@@ -66,6 +66,7 @@ export class ClassListsComponent implements OnInit {
             error: (err) => addToMessageService(this.msg, 'error', 'Update grade failed', err.message)
           });
         } else {
+          console.log("setting new grade")
           grade.score = newScore
           this.gradeService.save(grade).subscribe({
             next: (res) => {

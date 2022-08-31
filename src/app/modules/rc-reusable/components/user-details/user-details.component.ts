@@ -25,7 +25,7 @@ export class UserDetailsComponent implements OnInit {
 
   setupAdminForm = (user: User) => {
     this.userForm = this._fb.group({
-      username: [user.username, Validators.required],
+      username: [user.email, Validators.required],
       firstname: [user.firstName, Validators.required],
       lastname: [user.lastName, Validators.required],
       phone: [user.phone, Validators.required],

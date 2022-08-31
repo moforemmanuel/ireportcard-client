@@ -5,6 +5,7 @@ import {Student} from "./student.model";
 export class User {
   constructor(
     public id: number,
+    public email: string,
     public username: string,
     public firstName: string,
     public lastName: string,

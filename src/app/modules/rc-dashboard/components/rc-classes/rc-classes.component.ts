@@ -9,6 +9,7 @@ import {SectionService} from "../../../../services/section.service";
 import {Section} from "../../../../models/dto/section.model";
 import {Router} from "@angular/router";
 import {RcClassLevel} from "../../../../app.types";
+import {LocalStorageUtil} from "../../../../utils/local-storage.util";
 
 @Component({
   selector: 'app-rc-classes',
@@ -35,11 +36,12 @@ export class RcClassesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadSections();
+    const schoolId: number = LocalStorageUtil.getSchoolId();
+    this.loadSections(schoolId);
   }
 
-  loadSections(): void {
-    this.sectionService.getAll().subscribe({
+  loadSections(schoolId: number): void {
+    this.sectionService.getAllBySchoolId(schoolId).subscribe({
       next: (sections) => {
         this.sections = sections;
         if (sections.length > 0) {

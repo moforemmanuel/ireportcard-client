@@ -79,7 +79,7 @@ export class RcSettingsComponent implements OnInit {
   }
 
   loadSettingsInfo(): void {
-    this.sectionService.getBySchoolId(this.schoolId).subscribe((sections) => this.sections = sections)
+    this.sectionService.getAllBySchoolId(this.schoolId).subscribe((sections) => this.sections = sections)
     this.sequenceService.getAll().subscribe((sequences) => this.sequences = sequences);
     this.termService.getAll().subscribe((terms) => {
       this.sequencesByTerms = [];

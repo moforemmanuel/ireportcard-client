@@ -20,7 +20,7 @@ export class SectionService {
     return this.http.get<Section>(`${this.sectionApiUrl}/${id}`);
   }
 
-  getBySchoolId(schoolId: number): Observable<Section[]> {
+  getAllBySchoolId(schoolId: number): Observable<Section[]> {
     return this.http.get<Section[]>(`${this.sectionApiUrl}/school/${schoolId}`);
   }
 

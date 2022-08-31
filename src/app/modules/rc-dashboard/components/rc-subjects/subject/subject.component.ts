@@ -44,7 +44,7 @@ export class SubjectComponent implements OnInit {
 
   loadSections = () => {
     if (this.schoolId > 0) {
-      this.sectionService.getBySchoolId(this.schoolId).subscribe((sections) => this.sections = sections);
+      this.sectionService.getAllBySchoolId(this.schoolId).subscribe((sections) => this.sections = sections);
     }
   }
 
