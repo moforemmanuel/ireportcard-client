@@ -36,8 +36,8 @@ export class RcClassesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const schoolId: number = LocalStorageUtil.getSchoolId();
-    this.loadSections(schoolId);
+    const schoolId = LocalStorageUtil.readSchoolId();
+    if (schoolId) this.loadSections(schoolId);
   }
 
   loadSections(schoolId: number): void {

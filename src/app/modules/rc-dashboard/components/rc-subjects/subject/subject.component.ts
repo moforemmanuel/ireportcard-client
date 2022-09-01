@@ -16,7 +16,7 @@ export class SubjectComponent implements OnInit {
   subject!: Subject;
   subjectForm: FormGroup = this.fb.group({});
   sections: Section[] = [];
-  private readonly schoolId = LocalStorageUtil.getSchoolId();
+  private readonly schoolId = LocalStorageUtil.readSchoolId();
 
   constructor(
     private fb: FormBuilder,
@@ -43,7 +43,7 @@ export class SubjectComponent implements OnInit {
   }
 
   loadSections = () => {
-    if (this.schoolId > 0) {
+    if (this.schoolId) {
       this.sectionService.getAllBySchoolId(this.schoolId).subscribe((sections) => this.sections = sections);
     }
   }

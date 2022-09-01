@@ -16,7 +16,7 @@ import {LocalStorageUtil} from "../../../../utils/local-storage.util";
   styleUrls: ['./rc-applications.component.scss']
 })
 export class RcApplicationsComponent implements OnInit {
-  schoolId: number = -1;
+  schoolId = LocalStorageUtil.readSchoolId();
   applicationsQueried: boolean = false;
 
   studentApplicationTrials: StudentApplicationTrial[] = [];
@@ -34,7 +34,6 @@ export class RcApplicationsComponent implements OnInit {
     private academicYearService: AcademicYearService,
     private studentApplicationService: StudentApplicationService
   ) {
-    this.schoolId = LocalStorageUtil.getSchoolId();
     this.applicationsRequest = {yearId: -1, classSubId: -1}
   }
 
@@ -59,23 +58,18 @@ export class RcApplicationsComponent implements OnInit {
   }
 
   loadClasses() {
-    this.classService.getBySchool(this.schoolId).subscribe({
-      next: (classes) => {
-        classes.forEach(c => this.classSubService.getAllByClassLevelId(c.id)
-          .subscribe((classSubs) => {
-            classSubs.forEach((cs) => {
-              this.classes.push({
-                id: c.id,
-                sub_id: cs.id,
-                name: `${c.name} ${cs.name}`,
-                classLevel: c,
-                classLevelSub: cs
-              });
+    if (this.schoolId) {
+      this.classService.getBySchool(this.schoolId).subscribe((classes) => {
+        classes.forEach(c => this.classSubService.getAllByClassLevelId(c.id).subscribe((classSubs) => {
+          classSubs.forEach((cs) => {
+            this.classes.push({
+              id: c.id, sub_id: cs.id, name: `${c.name} ${cs.name}`, classLevel: c, classLevelSub: cs
             });
-            if (this.classes.length > 0) this.applicationsRequest.classSubId = this.classes[0].sub_id
-          }))
-      }
-    });
+          });
+          if (this.classes.length > 0) this.applicationsRequest.classSubId = this.classes[0].sub_id
+        }));
+      });
+    }
   }
 
   loadApplications() {

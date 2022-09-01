@@ -7,6 +7,7 @@ import {Teacher} from "../../../../models/dto/teacher.model";
 import {School} from "../../../../models/dto/school.model";
 import {Role} from "../../../../models/enum/role.enum";
 import {SchoolService} from "../../../../services/school.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-dashboard',
@@ -25,7 +26,7 @@ import {SchoolService} from "../../../../services/school.service";
 
       <p-dialog [visible]="showSchoolsDialog" [modal]="true" [header]="'Select School'">
         <ng-template pTemplate="content">
-          <rc-app-select-school [schools]="schools" (onSchoolSelect)="onSchoolSelectAction()"></rc-app-select-school>
+          <rc-app-select-school [schools]="schools" (onSchoolSelect)="onSchoolSelectAction($event)"></rc-app-select-school>
         </ng-template>
       </p-dialog>
     </main>
@@ -35,7 +36,7 @@ import {SchoolService} from "../../../../services/school.service";
   `
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  showSchoolsDialog: boolean = LocalStorageUtil.readSchoolId() == null;
+  showSchoolsDialog: boolean = true;
   user?: UserComplete;
   schools: School[] = [];
   menuItems: MenuItem[] = [];
@@ -45,7 +46,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private _userService: UserService,
     private _schoolService: SchoolService,
   ) {
-    LocalStorageUtil.deleteSchoolId();
   }
 
   ngOnDestroy(): void {
@@ -130,7 +130,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   });
 
-  onSchoolSelectAction() {
-    this.showSchoolsDialog = false;
+  onSchoolSelectAction($event: boolean) {
+    const showOb = new Observable<boolean>((subscriber) => {
+      subscriber.next($event);
+      subscriber.complete();
+    });
+    showOb.subscribe((show) => this.showSchoolsDialog = show);
   }
 }

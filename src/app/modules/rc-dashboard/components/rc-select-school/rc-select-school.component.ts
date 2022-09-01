@@ -9,27 +9,29 @@ import {LocalStorageUtil} from "../../../../utils/local-storage.util";
 })
 export class RcSelectSchoolComponent implements OnInit, OnChanges {
 
-  selectedSchoolId: number = -1;
+  schoolId: number = -1;
   @Input() schools: School[] = [];
-  @Output() onSchoolSelect = new EventEmitter<boolean>();
+  @Output() onSchoolSelect = new EventEmitter<boolean>(true);
 
   constructor() {
   }
 
   ngOnInit(): void {
+    const sid = LocalStorageUtil.readSchoolId();
+    if (sid) this.schoolId = sid;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.schools.length == 1) {
-      this.selectedSchoolId = this.schools[0].id;
+      this.schoolId = this.schools[0].id;
       this.setSchoolAction();
     }
   }
 
   setSchoolAction() {
-    if (this.selectedSchoolId > 0) {
-      LocalStorageUtil.writeSchoolId(this.selectedSchoolId);
-      this.onSchoolSelect.emit(true);
+    if (this.schoolId > 0) {
+      LocalStorageUtil.writeSchoolId(this.schoolId);
+      this.onSchoolSelect.emit(false);
     } else {
       alert("Select a school to continue");
     }

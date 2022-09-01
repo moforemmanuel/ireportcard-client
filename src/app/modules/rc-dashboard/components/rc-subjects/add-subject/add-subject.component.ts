@@ -48,7 +48,7 @@ export class AddSubjectComponent implements OnInit {
       coefficient: this.subjectForm.get('coeff')?.value, sectionId: this.subjectForm.get('section')?.value
     }
     this.subjectService.save(subject).subscribe((res) => {
-      this.router.navigate([`/dashboard/subject/view/${res.id}`]).then();
+      this.router.navigate([`/dashboard/subject`]).then();
     });
   }
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {MessageService} from "primeng/api";
 import {Sequence} from "../../../../models/dto/sequence.model";
 import {SequenceService} from "../../../../services/sequence.service";
@@ -21,7 +21,7 @@ import {SectionService} from "../../../../services/section.service";
 })
 export class RcSettingsComponent implements OnInit {
 
-  schoolId: number = LocalStorageUtil.getSchoolId();
+  schoolId: number | null = LocalStorageUtil.readSchoolId();
   settingsForm: FormGroup = this.fb.group({});
   school?: School;
   sections: Section[] = [];
@@ -51,35 +51,38 @@ export class RcSettingsComponent implements OnInit {
       term: ["", Validators.required], sequence: [0, Validators.required],
       maxGrade: [0, Validators.compose([Validators.min(0), Validators.max(100)])]
     });
-
+    this.settingsForm = this.fb.group({
+      applicationsOpen: [this.school ? this.school.applicationOpen : false, Validators.required],
+      name: [this.school? this.school.name : '', Validators.required],
+      year: [this.school ? (this.school.currentYearId ? this.school.currentYearId : -1) : -1, Validators.required],
+      term: [this.school ? (this.school.currentTerm ? this.school.currentTerm : 'None') : 'None'],
+      sequence: [this.school ? (this.school.currentSequenceId ? this.school.currentSequenceId : -1) : -1, Validators.required],
+      maxGrade: [this.school ? this.school.maxGrade : -1, Validators.compose([Validators.min(0), Validators.max(100)])]
+    });
   }
 
-  initSchoolForm = () => {
-    if (this.school) {
-      this.settingsForm = this.fb.group({
-        applicationsOpen: [this.school.applicationOpen, Validators.required],
-        name: [this.school.name ? this.school.name : '', Validators.required],
-        year: [this.school.currentYearId ? this.school.currentYearId : -1, Validators.required],
-        term: [this.school.currentTerm ? this.school.currentTerm : 'None'],
-        sequence: [this.school.currentSequenceId ? this.school : -1, Validators.required],
-        maxGrade: [this.school.maxGrade ? this.school.maxGrade : -1, Validators.compose([Validators.min(0), Validators.max(100)])]
-      });
-    }
+  patchSettingsForm = (school: School) => {
+    this.settingsForm.patchValue({maxGrade: school.maxGrade});
+    this.settingsForm.patchValue({name: school.name});
+    if (school.currentSequenceId) this.settingsForm.patchValue({sequence: school.currentSequenceId});
+    if (school.currentTerm) this.settingsForm.patchValue({term: school.currentTerm});
+    if (school.currentYearId) this.settingsForm.patchValue({year: school.currentYearId});
   }
 
   loadSchool(): void {
-    this.schoolId = LocalStorageUtil.getSchoolId();
-    if (this.schoolId > 0) {
+    this.schoolId = LocalStorageUtil.readSchoolId();
+    if (this.schoolId) {
       this.schoolService.getById(this.schoolId).subscribe((school) => {
-        localStorage.setItem("school", JSON.stringify(school))
         this.school = school;
-        this.initSchoolForm();
+        this.patchSettingsForm(school);
       });
     }
   }
 
   loadSettingsInfo(): void {
-    this.sectionService.getAllBySchoolId(this.schoolId).subscribe((sections) => this.sections = sections)
+    if (this.schoolId) {
+      this.sectionService.getAllBySchoolId(this.schoolId).subscribe((sections) => this.sections = sections);
+    }
     this.sequenceService.getAll().subscribe((sequences) => this.sequences = sequences);
     this.termService.getAll().subscribe((terms) => {
       this.sequencesByTerms = [];
@@ -94,7 +97,7 @@ export class RcSettingsComponent implements OnInit {
   saveSettingsAction() {
     if (this.school) {
       const school: School = {
-        id: this.schoolId,
+        id: this.school.id,
         name: this.settingsForm.get('name')?.value,
         applicationOpen: this.settingsForm.get('applicationsOpen')?.value,
         currentYearId: parseInt(this.settingsForm.get("year")?.value),
@@ -102,24 +105,26 @@ export class RcSettingsComponent implements OnInit {
         currentSequenceId: parseInt(this.settingsForm.get("sequence")?.value),
         ownerId: this.school.ownerId
       }
-      this.schoolService.update(school).subscribe(() => document.location.reload());
+      this.schoolService.update(school).subscribe(() => this.loadSchool());
     }
   }
 
   saveSection(sectionInput: HTMLInputElement | Section, blocked: boolean) {
-    if (blocked) {
-      if (sectionInput instanceof HTMLInputElement) {
-        if (sectionInput.hidden && sectionInput.value !== "") {
-          const section: Section = {
-            id: -1, name: sectionInput.value, schoolId: this.schoolId, category: ""
+    if (this.school) {
+      if (blocked) {
+        if (sectionInput instanceof HTMLInputElement) {
+          if (sectionInput.hidden && sectionInput.value !== "") {
+            const section: Section = {
+              id: -1, name: sectionInput.value, schoolId: this.school?.id, category: ""
+            }
+            this.sectionService.save(section).subscribe(() => {
+              sectionInput.value = "";
+              this.loadSettingsInfo();
+            });
           }
-          this.sectionService.save(section).subscribe(() => {
-            sectionInput.value = "";
-            this.loadSettingsInfo();
-          });
+        } else {
+          this.sectionService.update(sectionInput).subscribe(() => this.loadSettingsInfo());
         }
-      } else {
-        this.sectionService.update(sectionInput).subscribe(() => this.loadSettingsInfo());
       }
     }
   }

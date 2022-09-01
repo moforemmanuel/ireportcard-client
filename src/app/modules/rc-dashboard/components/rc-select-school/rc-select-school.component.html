@@ -10,8 +10,8 @@
     </div>
     <div class="max-h-30rem overflow-y-scroll">
       <div *ngFor="let school of schools" class="m-3">
-        <input [checked]="school.id == selectedSchoolId" name="school" value="{{school.id}}"
-               [(ngModel)]="selectedSchoolId" type="radio" class="p-radiobutton">&nbsp;
+        <input [checked]="school.id == schoolId" name="school" value="{{school.id}}"
+               [(ngModel)]="schoolId" type="radio" class="p-radiobutton">&nbsp;
         <label class="p-radiobutton-label">{{school.name}}</label>
       </div>
     </div>

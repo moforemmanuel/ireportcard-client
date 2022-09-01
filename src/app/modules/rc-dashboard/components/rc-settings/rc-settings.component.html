@@ -1,4 +1,4 @@
-<div class="rc-subjects" *ngIf="schoolId > 0">
+<div class="rc-subjects" *ngIf="schoolId">
   <div class="py-2 d-flex">
     <span class="h3">Settings</span>
     <span class="spacer"></span>
@@ -10,44 +10,45 @@
   <div class="py-4">
     <span *ngIf="!school" class="text-danger fst-italic">School settings have not been added</span>
     <form (submit)="saveSettingsAction()" [formGroup]="settingsForm">
-      <label class="block text-800 font-medium mb-2">School Name</label>
-      <input pInputText [formControlName]="'name'" [value]="school? school.name: ''" class="w-100 mb-2">
+      <div class="grid formgrid p-fluid pb-3">
+        <div class="col-12 py-2 field">
+          <label class="block text-800 font-medium mb-2">School Name</label>
+          <input pInputText [formControlName]="'name'" [value]="school? school.name: ''" class="w-full mb-2">
+        </div>
 
-      <div class="grid formgrid pb-3">
-        <div class="md:col-4 py-2">
+        <div class="col-12 md:col-4 py-2 field">
           <label
             class="block text-800 font-medium mb-2">Applications {{settingsForm.get('applicationsOpen')?.value ? 'Open' : 'Closed'}}</label>
           <p-inputSwitch [formControlName]="'applicationsOpen'"></p-inputSwitch>
         </div>
-        <div class="md:col-4">
+        <div class="col-12 md:col-4 field">
           <label class="block text-800 font-medium mb-2">Min Grade Score</label>
-          <input pInputText type="number" [value]="0" [class]="'w-100'" [disabled]="true">
+          <input pInputText type="number" [value]="0" class="w-full" [disabled]="true">
         </div>
-        <div class="md:col-4">
+        <div class="col-12 md:col-4 field">
           <label class="block text-800 font-medium mb-2">Max Grade Score</label>
-          <input pInputText [formControlName]="'maxGrade'" class="w-100">
+          <input pInputText [formControlName]="'maxGrade'" class="w-full">
         </div>
 
-      </div>
-
-      <div class="grid formgrid pb-3">
-        <div class="md:col-4">
+        <div class="col-12 md:col-4 field">
           <label class="block text-800 font-medium mb-2">Current Academic Year</label>
           <p-dropdown [formControlName]="'year'" [options]="academicYears" [optionLabel]="'name'" [optionValue]="'id'"
                       [styleClass]="'w-100'"></p-dropdown>
         </div>
-        <div class="md:col-4">
-          <label class="block text-800 font-medium mb-2">Current Term</label>
-          <input class="w-100" pInputText [value]="school ? (school.currentTerm ? school.currentTerm : 'None') : ''"
-                 disabled>
-        </div>
-        <div class="md:col-4">
+        <div class="col-12 md:col-4 field">
           <label class="block text-800 font-medium mb-2">Current Sequence</label>
           <p-dropdown [formControlName]="'sequence'" [options]="sequences" [optionLabel]="'name'" [optionValue]="'id'"
                       [styleClass]="'w-100'"></p-dropdown>
         </div>
+        <div class="col-12 md:col-4 field">
+          <label class="block text-800 font-medium mb-2">Current Term</label>
+          <input class="w-full" pInputText [value]="school ? (school.currentTerm ? school.currentTerm : 'None') : ''"
+                 disabled>
+        </div>
+        <div class="col-12">
+          <button [disabled]="!settingsForm.valid" class="w-full md:w-10rem lg:w-20rem" pButton type="submit" label="Save"></button>
+        </div>
       </div>
-      <button [disabled]="!settingsForm.valid" class="" pButton type="submit" label="Save"></button>
     </form>
   </div>
 
