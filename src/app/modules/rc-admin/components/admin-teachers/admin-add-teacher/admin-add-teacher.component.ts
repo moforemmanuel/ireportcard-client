@@ -25,7 +25,7 @@ export class AdminAddTeacherComponent implements OnInit {
   ) {
     this.registerForm = this.fb.group({
       firstName: ["", Validators.required], lastName: ["", Validators.required],
-      username: ["", Validators.required], school: [0, Validators.required],
+      email: ["", Validators.required], school: [0, Validators.required],
       password: ["", Validators.required], rpassword: ["", Validators.required],
       phone: ["", Validators.required], address: [""],
     });

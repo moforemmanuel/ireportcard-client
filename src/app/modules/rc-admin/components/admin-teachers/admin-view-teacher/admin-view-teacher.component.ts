@@ -16,6 +16,7 @@ import {TeacherPosition} from "../../../../../models/enum/role.enum";
 })
 export class AdminViewTeacherComponent implements OnInit {
 
+  teacherId?: number;
   showSubjectDialog: boolean = false;
   teacher?: Teacher;
   subjects: Subject[] = [];
@@ -33,13 +34,13 @@ export class AdminViewTeacherComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const teacherId = this._activatedRoute.snapshot.params['id'];
-    this.loadTeacher(teacherId);
+    this.teacherId = this._activatedRoute.snapshot.params['id'];
+    if (this.teacherId) {
+      this.loadTeacher(this.teacherId);
+      this.loadAssignedSubjects(this.teacherId);
+    }
 
     this._subjectService.getAll().subscribe(subjects => this.subjects = subjects);
-    this._subjectTeacherService.getAllByTeacher(teacherId).subscribe((sts) => sts.forEach(st => {
-      this._subjectService.getById(st.key.subjectId).subscribe(subject => this.assignedSubjects.push(subject));
-    }));
     this.assignSubjectForm = this._fb.group({subject: [0, [Validators.required, Validators.min(0)]]})
   }
 
@@ -47,17 +48,18 @@ export class AdminViewTeacherComponent implements OnInit {
     if (id > 0) this._teacherService.getById(id).subscribe(teacher => this.teacher = teacher);
   }
 
+  loadAssignedSubjects(teacherId: number) {
+    this.assignedSubjects = [];
+    this._subjectTeacherService.getAllByTeacher(teacherId).subscribe((sts) => sts.forEach(st => {
+      this._subjectService.getById(st.key.subjectId).subscribe(subject => this.assignedSubjects.push(subject));
+    }));
+  }
   loadUnassignedSubjects() {
     this.showSubjectDialog = true
     this.unassignedSubjects = this.subjects.filter(s => !this.assignedSubjects.find((aS) => aS.id == s.id));
-
-    console.log(this.subjects)
-    console.log(this.assignedSubjects)
-    console.log(this.unassignedSubjects)
   }
 
   assignSubjectAction() {
-    console.log(this.teacher)
     if (this.teacher) {
       const subjectId = this.assignSubjectForm.get('subject')?.value;
       console.log(subjectId)
@@ -66,6 +68,7 @@ export class AdminViewTeacherComponent implements OnInit {
         TeacherPosition.STAFF
       );
       this._subjectTeacherService.create(subjectTeacher).subscribe(() => {
+        this.loadAssignedSubjects(subjectTeacher.key.teacherId);
         this.showSubjectDialog = false;
       });
     }
