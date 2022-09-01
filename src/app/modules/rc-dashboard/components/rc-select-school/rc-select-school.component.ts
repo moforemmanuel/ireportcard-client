@@ -31,7 +31,7 @@ export class RcSelectSchoolComponent implements OnInit, OnChanges {
       LocalStorageUtil.writeSchoolId(this.selectedSchoolId);
       this.onSchoolSelect.emit(true);
     } else {
-      alert("Select a school to continue") // TODO produce a modal component for alerts, confirmations and messages
+      alert("Select a school to continue");
     }
   }
 }

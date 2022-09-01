@@ -23,7 +23,7 @@ import {SchoolService} from "../../../../services/school.service";
         </div>
       </div>
 
-      <p-dialog [visible]="showSchoolsDialog" [modal]="true">
+      <p-dialog [visible]="showSchoolsDialog" [modal]="true" [header]="'Select School'">
         <ng-template pTemplate="content">
           <rc-app-select-school [schools]="schools" (onSchoolSelect)="onSchoolSelectAction()"></rc-app-select-school>
         </ng-template>

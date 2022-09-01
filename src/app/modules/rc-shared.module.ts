@@ -32,6 +32,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {DialogModule} from "primeng/dialog";
 import {ToolbarModule} from "primeng/toolbar";
+import {ProgressSpinnerModule} from "primeng/progressspinner";
 
 // TODO find duplicates and remove
 
@@ -100,6 +101,7 @@ import {ToolbarModule} from "primeng/toolbar";
     ToggleButtonModule,
     DialogModule,
     ToolbarModule,
+    ProgressSpinnerModule,
   ],
   exports: [
     MenubarModule,
@@ -163,6 +165,7 @@ import {ToolbarModule} from "primeng/toolbar";
     ToggleButtonModule,
     DialogModule,
     ToolbarModule,
+    ProgressSpinnerModule,
   ]
 })
 export class RcSharedModule {
