@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {RC_SCHOOL_API_URL} from "../app.constants";
 import {Observable} from "rxjs";
 import {ApiResponse} from "../models/dto/api.response";
+import {LocalStorageUtil} from "../utils/local-storage.util";
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,22 @@ export class SchoolService {
 
   getAllByOwner(ownerId: number): Observable<School[]> {
     return this.http.get<School[]>(`${this.apiUrl}/owner/${ownerId}`)
+  }
+
+  loadSchoolIdLocalStorage(): Observable<number> {
+    return new Observable<number>((subscriber) => {
+      let i = 0;
+      const interval = setInterval(() => {
+        let schoolId = LocalStorageUtil.readSchoolId();
+        if (schoolId || i >= 100) {
+          clearInterval(interval);
+          if (schoolId) {
+            subscriber.next(schoolId);
+            subscriber.complete();
+          }
+        }
+        i++;
+      }, 250);
+    });
   }
 }
