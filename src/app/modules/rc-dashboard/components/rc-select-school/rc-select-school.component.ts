@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {School} from "../../../../models/dto/school.model";
 import {LocalStorageUtil} from "../../../../utils/local-storage.util";
 import {Observable} from "rxjs";
@@ -8,7 +8,7 @@ import {Observable} from "rxjs";
   templateUrl: './rc-select-school.component.html',
   styleUrls: ['./rc-select-school.component.scss']
 })
-export class RcSelectSchoolComponent implements OnInit {
+export class RcSelectSchoolComponent implements OnInit, OnChanges {
 
   selectedSchoolId: number = -1;
   @Input() schools: School[] = [];
@@ -18,18 +18,14 @@ export class RcSelectSchoolComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const schoolsOb = new Observable<School[]>((schools) => {
-      setTimeout(() => schools.next(this.schools), 1000);
-    });
-
-    schoolsOb.subscribe((s) => {
-      if (s.length == 1) {
-        this.selectedSchoolId = this.schools[0].id;
-        this.setSchoolAction();
-      }
-    });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.schools.length == 1) {
+      this.selectedSchoolId = this.schools[0].id;
+      this.setSchoolAction();
+    }
+  }
 
   setSchoolAction() {
     if (this.selectedSchoolId > 0) {
