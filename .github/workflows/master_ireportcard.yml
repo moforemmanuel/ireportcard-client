@@ -28,7 +28,8 @@ jobs:
 
       - name: Zip built artifact for deployment job
         run: |
-          zip app.zip ./dist/reportcard/* -r
+          cd ./dist/reportcard/
+          zip app.zip ./* -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
