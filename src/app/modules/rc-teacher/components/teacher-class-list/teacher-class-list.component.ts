@@ -10,6 +10,7 @@ import {Sequence} from "../../../../models/dto/sequence.model";
 import {SubjectTeacherService} from "../../../../services/subject-teacher.service";
 import {UserService} from "../../../../services/user.service";
 import {Teacher} from "../../../../models/dto/teacher.model";
+import {StudentClassLevel} from "../../../../app.types";
 
 @Component({
   selector: 'app-teacher-class-list',
@@ -19,7 +20,7 @@ import {Teacher} from "../../../../models/dto/teacher.model";
 export class TeacherClassListComponent implements OnInit {
   teacher?: Teacher;
 
-  classes: { id: number, name: string }[] = [];
+  classes: StudentClassLevel[] = [];
   academicYears: AcademicYear[] = [];
   subjects: Subject[] = [];
   sequences: Sequence[] = [];
@@ -49,12 +50,12 @@ export class TeacherClassListComponent implements OnInit {
       this.subjectService.getById(st.key.subjectId).subscribe(subject => this.subjects.push(subject));
     }));
     this.classLevelSubService.getAll().subscribe((classLevelSubs) => {
-      classLevelSubs.forEach(classSub => {
-        this.classLevelService.getById(classSub.classLevelId).subscribe((classLevel) => {
-          this.classes.push({id: classSub.id, name: `${classLevel.name} - ${classSub.name}`});
-          this.classes.sort((a, b) => a.name < b.name ? -1 : 1);
+      classLevelSubs.forEach(cls => this.classLevelService.getById(cls.classLevelId).subscribe((cl) => {
+        this.classes.push({
+          id: cls.id, name: `${cl.name} - ${cls.name}`, sub_id: cls.id, classLevel: cl, classLevelSub: cls
         });
-      });
+        this.classes.sort((a, b) => a.name < b.name ? -1 : 1);
+      }));
     });
   }
 

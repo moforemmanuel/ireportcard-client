@@ -9,6 +9,7 @@ import {GradeService} from "../../../../services/grade.service";
 import {MessageService} from "primeng/api";
 import {ClassListRequest, ClassListResponse} from "../../../../models/dto/classlist.model";
 import {Teacher} from "../../../../models/dto/teacher.model";
+import {StudentClassLevel} from "../../../../app.types";
 
 @Component({
   selector: 'app-class-lists',
@@ -21,7 +22,7 @@ export class ClassListsComponent implements OnInit {
   classListResponse: ClassListResponse;
 
   @Input() teacher?: Teacher;
-  @Input() classes: { id: number, name: string }[] = [];
+  @Input() classes: StudentClassLevel[] = [];
   @Input() academicYears: AcademicYear[] = [];
   @Input() subjects: Subject[] = [];
   @Input() sequences: Sequence[] = [];
