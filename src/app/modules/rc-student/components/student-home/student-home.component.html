@@ -4,7 +4,7 @@
       Welcome, <span class="text-black-alpha-70" *ngIf="student">{{student.user.email}}</span>
     </div>
     <p-divider></p-divider>
-    <app-user-details *ngIf="student" [user]="student.user" (onUserSaved)="loadUserComplete()"></app-user-details>
-    <app-change-password *ngIf="student" [username]="student.user.email"></app-change-password>
+    <app-user-details *ngIf="student && student.account" [user]="student.user" (onUserSaved)="loadUserComplete()"></app-user-details>
+    <app-change-password *ngIf="student && student.account" [username]="student.user.email"></app-change-password>
   </div>
 </div>

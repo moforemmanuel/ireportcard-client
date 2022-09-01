@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserComplete} from "../../../../models/dto/user.model";
 import {UserService} from "../../../../services/user.service";
-import {FormBuilder} from "@angular/forms";
 
 @Component({
   selector: 'app-admin-home',
@@ -12,7 +11,6 @@ export class AdminHomeComponent implements OnInit {
   admin?: UserComplete;
 
   constructor(
-    private _fb: FormBuilder,
     private _userService: UserService
   ) {
   }
@@ -21,7 +19,5 @@ export class AdminHomeComponent implements OnInit {
     this.loadUserComplete();
   }
 
-  loadUserComplete = () => this._userService.getCompleteFromSession().subscribe(u => {
-    this.admin = u;
-  });
+  loadUserComplete = () => this._userService.getCompleteFromSession().subscribe(u => this.admin = u);
 }

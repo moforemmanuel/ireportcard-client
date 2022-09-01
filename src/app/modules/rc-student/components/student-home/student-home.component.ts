@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../../services/user.service";
-import {Student} from "../../../../models/dto/student.model";
+import {UserComplete} from "../../../../models/dto/user.model";
 
 @Component({
   selector: 'app-student-home',
@@ -8,10 +8,10 @@ import {Student} from "../../../../models/dto/student.model";
   styleUrls: ['./student-home.component.scss']
 })
 export class StudentHomeComponent implements OnInit {
-  student!: Student;
+  student?: UserComplete;
 
   constructor(
-    private userService: UserService,
+    private _userService: UserService,
   ) {
   }
 
@@ -19,10 +19,7 @@ export class StudentHomeComponent implements OnInit {
     this.loadUserComplete();
   }
 
-  loadUserComplete = () => this.userService.getCompleteFromSession().subscribe(user => {
-    console.log(user)
-    this.student = user.account as Student
-  });
+  loadUserComplete = () => this._userService.getCompleteFromSession().subscribe(u => this.student = u);
 
 
 }
