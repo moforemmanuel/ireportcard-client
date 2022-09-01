@@ -65,20 +65,32 @@
 
   <!-- Academic Years -->
   <p-panel [header]="'Academic Years'" [toggleable]="true" [styleClass]="'py-4'">
-    <div *ngFor="let year of academicYears" class="my-2">
-      <div class="d-flex align-middle form-group">
-        <input pInputText #yearInput [disabled]="true" [value]="year.name" class="w-full">&nbsp;
-        <p-toggleButton [(ngModel)]="yearInput.disabled" [onLabel]="'Edit'" [offLabel]="'Save'"
-                        (click)="editYTSAction(0, year, yearInput)">
-        </p-toggleButton>&nbsp;
-        <button pButton (click)="deleteATSAction(0, year)" class="p-button-danger">Delete</button>
+    <div *ngFor="let year of academicYears" class="grid my-2">
+      <div class="col-12 md:col-4 lg:col-5">
+        <input type="number" pInputText placeholder="20XY" class="w-full" [(ngModel)]="year.startYear" [max]="today.getFullYear()">
+      </div>
+      <div class="col-12 md:col-4 lg:col-5">
+        <input pInputText placeholder="20XY" class="w-full" [value]="year.startYear + 1" [(ngModel)]="year.endYear" disabled>
+      </div>
+      <div class="col-12 md:col-4 lg:col-2">
+        <p-button (click)="saveYearAction(year)" label="Save" styleClass="w-full"></p-button>
       </div>
     </div>
     <p-divider></p-divider>
-    <div class="d-flex justify-content-between">
-      <input pInputText #yearAddInput [hidden]="true" placeholder="20XX/20XY">&nbsp;
-      <p-toggleButton [(ngModel)]="yearAddInput.hidden" [onLabel]="'Add'" [offLabel]="'Save'"
-                      (click)="addYTSAction(0, yearAddInput)"></p-toggleButton>
+    <div class="my-2 bg-indigo-50 border-round shadow">
+      <form [formGroup]="academicYearForm" (submit)="saveYearAction()">
+        <div class="grid ">
+          <div class="col-12 md:col-4 lg:col-5">
+            <input type="number" pInputText placeholder="20XX" class="w-full" [formControlName]="'startYear'">
+          </div>
+          <div class="col-12 md:col-4 lg:col-5">
+            <input pInputText placeholder="20XY" class="w-full" [value]="academicYearForm.get('startYear')?.value + 1" [max]="today.getFullYear()" [formControlName]="'endYear'">
+          </div>
+          <div class="col-12 md:col-4 lg:col-2">
+            <button [disabled]="!academicYearForm.valid" pButton label="Add" class="w-full bg-green-500 border-green-500"></button>
+          </div>
+        </div>
+      </form>
     </div>
   </p-panel>
 

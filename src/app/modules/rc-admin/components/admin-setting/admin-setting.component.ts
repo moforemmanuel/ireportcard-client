@@ -23,11 +23,14 @@ enum ATSName {YEAR, TERM, SEQUENCE,}
   styleUrls: ['./admin-setting.component.scss']
 })
 export class AdminSettingComponent implements OnInit {
+
+  readonly today = new Date();
   showSchoolDialog: boolean = false;
   schools: School[] = [];
   admins: User[] = [];
   schoolForm: FormGroup = this._fb.group({});
   sequenceForm: FormGroup = this._fb.group({});
+  academicYearForm: FormGroup = this._fb.group({});
   terms: Term[] = [];
   years: AcademicYear[] = [];
   sequences: Sequence[] = [];
@@ -47,6 +50,10 @@ export class AdminSettingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.academicYearForm = this._fb.group({
+      startYear: [this.today.getFullYear(), [Validators.required, Validators.max(this.today.getFullYear())]],
+      endYear: [{value: this.today.getFullYear() + 1, disabled: true}, Validators.required],
+    });
     this.sequenceForm = this._fb.group({
       name: ['', Validators.required], term: [0, Validators.required], type: [SequenceType.OPENING, Validators.required]
     });
@@ -91,16 +98,28 @@ export class AdminSettingComponent implements OnInit {
     }
   }
 
+  saveYearAction(academicYear?: AcademicYear) {
+    if (!academicYear) {
+      const year: AcademicYear = {
+        id: -1, name: '',
+        startYear: this.academicYearForm.get('startYear')?.value,
+        endYear: 0
+      }
+      year.endYear = year.startYear + 1;
+      this._academicYearService.save(year).subscribe(() => this.loadSettings());
+    } else {
+      academicYear.endYear = academicYear.startYear + 1;
+      console.log(academicYear)
+      this._academicYearService.update(academicYear).subscribe();
+    }
+
+  }
+
   addYTSAction(atsOrdinal: ATSName, inputElement: HTMLInputElement) {
     if (inputElement.hidden && inputElement.value !== '') {
       const elValue = inputElement.value;
       if (atsOrdinal == ATSName.YEAR) {
-        const year: AcademicYear = {id: -1, name: elValue};
-        if (AcademicYearUtil.isValid(elValue)) {
-          this._academicYearService.save(year).subscribe(() => this.loadSettings());
-        } else {
-          addToMessageService(this.msgService, 'warn', 'Invalid Year', `The value '${elValue}' is not valid!`);
-        }
+
       } else if (atsOrdinal == ATSName.TERM) {
         const term: Term = {id: -1, name: elValue};
         this._termService.save(term).subscribe(() => this.loadSettings());
@@ -114,7 +133,7 @@ export class AdminSettingComponent implements OnInit {
     }
   }
 
-  deleteATSAction(number: number, year: AcademicYear) {
+  deleteATSAction(number: number, year: ATS) {
 
   }
 
