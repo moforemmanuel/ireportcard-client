@@ -22,7 +22,7 @@ export class AcademicYearService {
   }
 
   update(academicYear: AcademicYear): Observable<ApiResponse> {
-    return this.http.put<ApiResponse>(`${this.apiUrl}/${academicYear.id}`, academicYear);
+    return this.http.put<ApiResponse>(`${this.apiUrl}`, academicYear);
   }
 
   getById(id: number): Observable<AcademicYear> {

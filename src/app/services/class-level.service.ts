@@ -39,7 +39,7 @@ export class ClassLevelService {
   }
 
   update(classLevel: ClassLevel): Observable<ApiResponse> {
-    return this.http.put<ApiResponse>(`${this.classLevelApiUrl}/${classLevel.id}`, classLevel);
+    return this.http.put<ApiResponse>(`${this.classLevelApiUrl}`, classLevel);
   }
 
   delete(classLevel: ClassLevel): Observable<any> {

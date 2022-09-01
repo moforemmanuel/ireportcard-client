@@ -22,7 +22,7 @@ export class ClassLevelSubService {
   }
 
   update(classLevelSub: ClassLevelSub): Observable<ApiResponse> {
-    return this.http.put<ApiResponse>(`${this.apiUrl}/${classLevelSub.id}`, classLevelSub);
+    return this.http.put<ApiResponse>(`${this.apiUrl}`, classLevelSub);
   }
 
   save(classLevelSub: ClassLevelSub): Observable<ApiResponse> {
