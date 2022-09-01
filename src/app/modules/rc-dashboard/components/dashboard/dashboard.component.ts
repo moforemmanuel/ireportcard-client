@@ -45,6 +45,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private _userService: UserService,
     private _schoolService: SchoolService,
   ) {
+    LocalStorageUtil.deleteSchoolId();
   }
 
   ngOnDestroy(): void {
@@ -113,7 +114,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
 
     ];
-    LocalStorageUtil.deleteSchoolId();
     this.loadUser();
   }
 

@@ -28,14 +28,14 @@
 
           </form>
         </div>
-        <button (click)="setClassLevelSubForm(-1, '')" icon="pi pi-plus-circle" pButton></button>
+        <button (click)="setClassLevelSubForm(-1, '')" icon="pi pi-plus-circle" pButton label="Add Sub Class"></button>
       </div>
-      <div class="field">
-        <button [disabled]="!classForm.valid" class="btn" icon="pi pi-check" label="Save Class" pButton
+      <div>
+        <button [disabled]="!classForm.valid" class="lg:w-24rem" icon="pi pi-check" label="Save Class" pButton
                 type="button"></button>
       </div>
       <div class="form-text text-center">
-        <span class="font-bold text-primary">This class will be saved to the <u>{{section.name}}</u> section</span>
+        <span class="font-bold text-2xl">This class will be saved to the <u>{{section.name}}</u> section</span>
       </div>
     </form>
   </div>

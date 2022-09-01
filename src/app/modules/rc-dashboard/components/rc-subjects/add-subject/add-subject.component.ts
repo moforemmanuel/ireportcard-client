@@ -6,6 +6,8 @@ import {LocalStorageUtil} from "../../../../../utils/local-storage.util";
 import {Subject} from "../../../../../models/dto/subject.model";
 import {SubjectService} from "../../../../../services/subject.service";
 import {Router} from "@angular/router";
+import {Observable} from "rxjs";
+import {SchoolService} from "../../../../../services/school.service";
 
 @Component({
   selector: 'app-add-subject',
@@ -15,15 +17,14 @@ import {Router} from "@angular/router";
 export class AddSubjectComponent implements OnInit {
   subjectForm: FormGroup = this.fb.group({});
   sections: Section[] = [];
-  private readonly schoolId = LocalStorageUtil.getSchoolId();
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
+    private _schoolService: SchoolService,
     private sectionService: SectionService,
     private subjectService: SubjectService
   ) {
-    this.loadSections();
     this.subjectForm = this.fb.group({
       name: ['', Validators.required], code: ['', Validators.required],
       coeff: ['', Validators.required], section: [0, Validators.required]
@@ -31,11 +32,13 @@ export class AddSubjectComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const schoolIdOb = this._schoolService.loadSchoolIdLocalStorage();
+    schoolIdOb.subscribe((id) => this.loadSections(id));
   }
 
-  loadSections = () => {
-    if (this.schoolId > 0) {
-      this.sectionService.getAllBySchoolId(this.schoolId).subscribe((sections) => this.sections = sections);
+  loadSections = (schoolId: number) => {
+    if (schoolId) {
+      this.sectionService.getAllBySchoolId(schoolId).subscribe((sections) => this.sections = sections);
     }
   }
 
@@ -44,9 +47,8 @@ export class AddSubjectComponent implements OnInit {
       id: -1, name: this.subjectForm.get('name')?.value, code: this.subjectForm.get('code')?.value,
       coefficient: this.subjectForm.get('coeff')?.value, sectionId: this.subjectForm.get('section')?.value
     }
-    console.log(subject)
     this.subjectService.save(subject).subscribe((res) => {
-      this.router.navigate([`/dashboard/subject/view/${res.id}`])
+      this.router.navigate([`/dashboard/subject/view/${res.id}`]).then();
     });
   }
 }
