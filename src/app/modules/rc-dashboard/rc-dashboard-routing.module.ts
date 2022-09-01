@@ -8,7 +8,7 @@ import {ViewClassLevelComponent} from "./components/rc-classes/view-class-level/
 import {RcStudentsComponent} from "./components/rc-students/rc-students.component";
 import {RcApplicationsComponent} from "./components/rc-applications/rc-applications.component";
 import {AddApplicationComponent} from "./components/rc-applications/add-application/add-application.component";
-import {RcClasslistsComponent} from "./components/rc-classlists/rc-classlists.component";
+import {RcClassListsComponent} from "./components/rc-class-lists/rc-class-lists.component";
 import {RcSettingsComponent} from "./components/rc-settings/rc-settings.component";
 import {RcHomeComponent} from "./components/rc-home/rc-home.component";
 import {AddStudentComponent} from "./components/rc-students/add-student/add-student.component";
@@ -38,7 +38,7 @@ const routes: Routes = [
       {component: RcApplicationsComponent, path: 'application'},
       {component: AddApplicationComponent, path: 'application/add'},
       {component: RcViewApplicationComponent, path: 'application/view/:id'},
-      {component: RcClasslistsComponent, path: 'class-list'},
+      {component: RcClassListsComponent, path: 'class-list'},
       {component: RcSettingsComponent, path: 'settings'},
     ]
   },

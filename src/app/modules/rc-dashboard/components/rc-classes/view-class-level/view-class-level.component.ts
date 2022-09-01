@@ -32,7 +32,7 @@ export class ViewClassLevelComponent implements OnInit {
     private fb: FormBuilder,
     private _subjectService: SubjectService,
     private classLevelService: ClassLevelService, private sectionService: SectionService,
-    private classLevelSubService: ClassLevelSubService, private msg: MessageService
+    private classLevelSubService: ClassLevelSubService
   ) {
     this.section = {id: -1, name: '', category: '', schoolId: -1}
     this.classForm = this.fb.group({

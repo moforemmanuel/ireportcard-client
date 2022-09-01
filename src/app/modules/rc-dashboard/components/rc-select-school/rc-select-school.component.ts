@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {School} from "../../../../models/dto/school.model";
 import {LocalStorageUtil} from "../../../../utils/local-storage.util";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'rc-app-select-school',

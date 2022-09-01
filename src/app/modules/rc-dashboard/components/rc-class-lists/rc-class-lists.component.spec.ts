@@ -1,20 +1,20 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {RcClasslistsComponent} from './rc-classlists.component';
+import {RcClassListsComponent} from './rc-class-lists.component';
 
 describe('RcClasslistsComponent', () => {
-  let component: RcClasslistsComponent;
-  let fixture: ComponentFixture<RcClasslistsComponent>;
+  let component: RcClassListsComponent;
+  let fixture: ComponentFixture<RcClassListsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RcClasslistsComponent]
+      declarations: [RcClassListsComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RcClasslistsComponent);
+    fixture = TestBed.createComponent(RcClassListsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -6,7 +6,7 @@ import {RcHomeComponent} from './components/rc-home/rc-home.component';
 import {RcSubjectsComponent} from './components/rc-subjects/rc-subjects.component';
 import {RcStudentsComponent} from './components/rc-students/rc-students.component';
 import {RcClassesComponent} from './components/rc-classes/rc-classes.component';
-import {RcClasslistsComponent} from './components/rc-classlists/rc-classlists.component';
+import {RcClassListsComponent} from './components/rc-class-lists/rc-class-lists.component';
 import {RcSettingsComponent} from './components/rc-settings/rc-settings.component';
 import {RcBodyIntroComponent} from './components/rc-body-intro/rc-body-intro.component';
 import {RcApplicationsComponent} from './components/rc-applications/rc-applications.component';
@@ -35,7 +35,7 @@ import {RcSelectSchoolComponent} from "./components/rc-select-school/rc-select-s
     RcSubjectsComponent,
     RcStudentsComponent,
     RcClassesComponent,
-    RcClasslistsComponent,
+    RcClassListsComponent,
     RcSettingsComponent,
     RcBodyIntroComponent,
     RcApplicationsComponent,
