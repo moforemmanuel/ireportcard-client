@@ -17,6 +17,7 @@ import {RcAdminModule} from "./modules/rc-admin/rc-admin.module";
 import {RcStudentModule} from "./modules/rc-student/rc-student.module";
 import {RcReusableModule} from "./modules/rc-reusable/rc-reusable.module";
 import {RcSharedModule} from "./modules/rc-shared.module";
+import {LocationStrategy, PathLocationStrategy} from "@angular/common";
 
 
 @NgModule({
@@ -39,8 +40,9 @@ import {RcSharedModule} from "./modules/rc-shared.module";
     injectables,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true},
+    {provide: LocationStrategy, useClass: PathLocationStrategy},
     {provide: MessageService, useClass: MessageService},
-    {provide: NgbActiveModal, useClass: NgbActiveModal}
+    {provide: NgbActiveModal, useClass: NgbActiveModal},
   ],
   bootstrap: [AppComponent]
 })
