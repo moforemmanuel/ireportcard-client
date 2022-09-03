@@ -75,6 +75,6 @@
   </div>
   <p-divider></p-divider>
   <div class="col flex justify-content-end">
-    <button [disabled]="!studentForm.valid" pButton class="" label="Submit" icon="pi pi-check"></button>
+    <button [disabled]="!studentForm.valid" pButton class="" [loading]="isLoading" label="Submit" [icon]="studentForm.valid?'pi pi-check':''"></button>
   </div>
 </form>

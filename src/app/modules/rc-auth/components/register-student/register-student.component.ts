@@ -19,6 +19,7 @@ export class RegisterStudentComponent implements OnInit {
   studentForm: FormGroup;
   genders: string[] = Object.keys(Gender);
   schools: School[] = [];
+  isLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -48,9 +49,12 @@ export class RegisterStudentComponent implements OnInit {
     this.loadSchools();
   }
 
+  toggleLoading = () => this.isLoading = !this.isLoading;
+
   loadSchools = () => this.schoolService.getAll().subscribe((schools) => this.schools = schools);
 
   registerStudentAction() {
+    this.toggleLoading();
     console.log(this.studentForm.value);
 
     const user: User = new User(
@@ -75,8 +79,12 @@ export class RegisterStudentComponent implements OnInit {
       info: info, user: user
     }
     const password = this.studentForm.get('password')?.value;
-    this.authService.registerStudent(student, password).subscribe(() => {
-      this.router.navigate(['/auth/login']).then();
+    this.authService.registerStudent(student, password).subscribe(
+      {
+      next:() => {
+        this.router.navigate(['/auth/login']).then();
+      },
+        complete: () => this.toggleLoading(),
     });
   }
 }
