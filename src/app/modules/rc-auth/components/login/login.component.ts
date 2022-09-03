@@ -13,6 +13,7 @@ import {ReportCardService} from "../../../../services/report-card.service";
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
+  isLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -28,6 +29,8 @@ export class LoginComponent implements OnInit {
     this.initLogForm();
   }
 
+  toggleLoading = () => this.isLoading = !this.isLoading;
+
   initLogForm() {
     this.loginForm = this.fb.group({
       username: ["", Validators.required],
@@ -36,6 +39,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginAction() {
+    this.toggleLoading();
     const userLogin: UserLoginRequest = {
       username: this.loginForm.get('username')?.value,
       password: this.loginForm.get('password')?.value,
@@ -48,6 +52,9 @@ export class LoginComponent implements OnInit {
       },
       error: (e) => {
         console.log(e)
+      },
+      complete: () => {
+        this.toggleLoading();
       }
     });
   }
